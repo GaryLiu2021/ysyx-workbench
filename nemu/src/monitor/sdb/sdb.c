@@ -77,8 +77,33 @@ static int cmd_info(char *args) {
   } else {
     if(*args=='r'){
       isa_reg_display();
+    } else if(*args=='w') {
+
     }
     return 0;
+  }
+}
+
+static int cmd_x(char* args) {
+  if(args == NULL) {
+    printf("Need Args for info.\n");
+    return -1;
+  } else {
+    int steps;
+    uint32_t address;
+    int result = sscanf(args, "%d %x", &steps, &address);
+
+    if (result == 2) {
+      printf("Steps: %d\n", steps);
+      printf("Address: 0x%x\n", address);
+      for (int i = 0; i < steps; i++) {
+        printf("%x: %x", address + i, vaddr_ifetch(address, 4));
+      }
+      return 0;
+    } else {
+      printf("Invalid input format.\n");
+      return -1;
+    }
   }
 }
 
@@ -92,6 +117,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute CPU by steps(defaault 1)", cmd_si },
   { "info", "print information", cmd_info},
+  { "x", "print memory", cmd_x},
 
   /* TODO: Add more commands */
 

@@ -54,6 +54,59 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args) {
+  char *endptr;
+  if (args == NULL) {
+    cpu_exec(1);
+  }
+  else {
+    int cpu_exec_cycle = (uint64_t)(strtol(args, &endptr, 10));
+    if (*endptr != '\0') {
+      printf("Conversion failed. Non-numeric characters detected.\n");
+      return -1;
+    }
+    cpu_exec(cpu_exec_cycle);
+  }
+  return 0;
+}
+
+static int cmd_info(char *args) {
+  if(args == NULL) {
+    printf("Need Args for info.\n");
+    return -1;
+  } else {
+    if(*args=='r'){
+      isa_reg_display();
+    } else if(*args=='w') {
+
+    }
+    return 0;
+  }
+}
+
+static int cmd_x(char* args) {
+  if(args == NULL) {
+    printf("Need Args for info.\n");
+    return -1;
+  } else {
+    int steps;
+    uint32_t address;
+    int result = sscanf(args, "%d %x", &steps, &address);
+
+    if (result == 2) {
+      printf("Steps: %d\n", steps);
+      printf("Address: 0x%x\n", address);
+      for (int i = 0; i < steps; i++) {
+        printf("%x: %x\n", address + i, vaddr_ifetch(address, 4));
+      }
+      return 0;
+    } else {
+      printf("Invalid input format.\n");
+      return -1;
+    }
+  }
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -62,6 +115,9 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "execute CPU by steps(defaault 1)", cmd_si },
+  { "info", "print information", cmd_info},
+  { "x", "print memory", cmd_x},
 
   /* TODO: Add more commands */
 

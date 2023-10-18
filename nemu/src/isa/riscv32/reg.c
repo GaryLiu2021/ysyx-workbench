@@ -27,7 +27,7 @@ void isa_reg_display() {
   printf("PC=%x\n", cpu.pc);
   int i, j;
   for (i = 0; i < 32; i+=4) {
-    for (j = i; j < 4; j++) {
+    for (j = i; j < i + 4; j++) {
       printf("%s=%x\t", regs[j], cpu.gpr[j]);
     }
     printf("\n");

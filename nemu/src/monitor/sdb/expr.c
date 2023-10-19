@@ -25,6 +25,22 @@ enum {
 
   /* TODO: Add more token types */
 
+  TK_PLUS,         // 加号
+  TK_MINUS,        // 减号
+  TK_MUL,          // 乘号
+  TK_DIV,          // 除号
+  TK_LT,           // 小于
+  TK_GT,           // 大于
+  TK_LE,           // 小于等于
+  TK_GE,           // 大于等于
+  TK_NEQ,          // 不等于
+  TK_AND,          // 逻辑与
+  TK_OR,           // 逻辑或
+  TK_LPAREN,       // 左括号
+  TK_RPAREN,       // 右括号
+  TK_NUM,          // 数字
+  TK_ID,           // 标识符
+
 };
 
 static struct rule {
@@ -37,8 +53,22 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"<=", TK_LE},        // 小于等于
+  {">=", TK_GE},        // 大于等于
+  {"<", TK_LT},         // 小于
+  {">", TK_GT},         // 大于
   {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},       // 不等于
+  {"&&", TK_AND},       // 逻辑与
+  {"\\|\\|", TK_OR},    // 逻辑或
+  {"\\(", TK_LPAREN},   // 左括号
+  {"\\)", TK_RPAREN},   // 右括号
+  {"\\+", TK_PLUS},     // 加号
+  {"-", TK_MINUS},      // 减号
+  {"\\*", TK_MUL},      // 乘号
+  {"/", TK_DIV},        // 除号
+  {"[0-9]+", TK_NUM},   // 数字
+  {"[a-zA-Z]+", TK_ID}, // 标识符
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -94,8 +124,47 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
+          // {" +", TK_NOTYPE},    // spaces
+          // {"<=", TK_LE},        // 小于等于
+          // {">=", TK_GE},        // 大于等于
+          // {"<", TK_LT},         // 小于
+          // {">", TK_GT},         // 大于
+          // {"==", TK_EQ},        // equal
+          // {"!=", TK_NEQ},       // 不等于
+          // {"&&", TK_AND},       // 逻辑与
+          // {"\\|\\|", TK_OR},    // 逻辑或
+          // {"\\(", TK_LPAREN},   // 左括号
+          // {"\\)", TK_RPAREN},   // 右括号
+          // {"\\+", TK_PLUS},         // plus
+          // {"-", TK_MINUS},      // 减号
+          // {"\\*", TK_MUL},      // 乘号
+          // {"/", TK_DIV},        // 除号
+          // {"[0-9]+", TK_NUM},   // 数字
+          // {"[a-zA-Z]+", TK_ID}, // 标识符
+
         switch (rules[i].token_type) {
-          default: TODO();
+          case TK_PLUS:
+          case TK_MINUS:
+          case TK_MUL:
+          case TK_DIV:
+            tokens[nr_token].type = rules[i].token_type;
+            nr_token++;
+            break;
+          case TK_NUM:
+            tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          case TK_ID:
+            tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          default:
+            // 处理其他未知令牌类型，或者抛出错误
+            // 例如：报告未知标记或记录错误信息
+            printf("Unknown token at position %d: %.*s\n", position, substr_len, substr_start);
+            return false;
         }
 
         break;
@@ -111,15 +180,177 @@ static bool make_token(char *e) {
   return true;
 }
 
+// 定义一个栈结构
+typedef struct
+{
+  word_t data[32];
+  int top;
+} Stack;
 
-word_t expr(char *e, bool *success) {
-  if (!make_token(e)) {
+// 初始化栈
+void init_stack(Stack *stack)
+{
+  stack->top = -1;
+}
+
+// 将元素压入栈
+void push(Stack *stack, word_t value)
+{
+  stack->data[++stack->top] = value;
+}
+
+// 从栈中弹出元素
+word_t pop(Stack *stack)
+{
+  assert(stack->top != -1);
+  return stack->data[stack->top--];
+}
+
+int precedence(int type){
+  switch (type) {
+    case TK_LE:
+    case TK_GE:
+    case TK_LT:
+    case TK_GT:
+    case TK_EQ:
+    case TK_NEQ:
+    case TK_AND:
+    case TK_OR:
+      return 2;
+    case TK_PLUS:
+    case TK_MINUS:
+      return 0;
+    case TK_MUL:
+    case TK_DIV:
+      return 1;
+    default:
+      panic("precedence error: Unknown type %d\n", type);
+    }
+}
+
+word_t perform_operation(word_t op1, word_t operator, word_t op2) {
+  switch (operator) {
+    case TK_LE:
+      return op1 <= op2;
+    case TK_GE:
+      return op1 >= op2;
+    case TK_LT:
+      return op1 < op2;
+    case TK_GT:
+      return op1 > op2;
+    case TK_EQ:
+      return op1 = op2;
+    case TK_NEQ:
+      return op1 != op2;
+    case TK_AND:
+      return op1 && op2;
+    case TK_OR:
+      return op1 || op2;
+    case TK_PLUS:
+      return op1 + op2;
+    case TK_MINUS:
+      return op1 - op2;
+    case TK_MUL:
+      return op1 * op2;
+    case TK_DIV:
+      return op1 / op2;
+    default:
+      printf("precedence error: Unknown type %d\n", operator);
+      return 0;
+    }
+}
+
+word_t expr(char *e, bool *success)
+{
+  if (!make_token(e))
+  {
     *success = false;
     return 0;
   }
 
-  /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  Stack operand_stack;  // 操作数栈
+  Stack operator_stack; // 操作符栈
 
-  return 0;
+  init_stack(&operand_stack);
+  init_stack(&operator_stack);
+
+  int pos = 0;
+
+  while (pos < nr_token)
+  {
+    Token token = tokens[pos];
+
+    switch (token.type) {
+      case TK_NUM:
+        push(&operand_stack, atoi(token.str));
+        break;
+      case TK_LE:
+      case TK_GE:
+      case TK_LT:
+      case TK_GT:
+      case TK_EQ:
+      case TK_NEQ:
+      case TK_AND:
+      case TK_OR:
+      case TK_PLUS:
+      case TK_MINUS:
+      case TK_MUL:
+      case TK_DIV:
+        while (operator_stack.top >= 0 &&
+              precedence(token.type) <= precedence(operator_stack.data[operator_stack.top])) {
+          word_t op2 = pop(&operand_stack);
+          word_t op1 = pop(&operand_stack);
+          word_t operator= pop(&operator_stack);
+          push(&operand_stack, perform_operation(op1, operator, op2));
+        }
+        push(&operator_stack, token.type);
+        break;
+
+      case TK_LPAREN:
+        push(&operator_stack, token.type);
+        break;
+
+      case TK_RPAREN:
+        while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] != TK_LPAREN) {
+          word_t op2 = pop(&operand_stack);
+          word_t op1 = pop(&operand_stack);
+          word_t operator= pop(&operator_stack);
+          push(&operand_stack, perform_operation(op1, operator, op2));
+        }
+        break;
+
+      default:
+        break;
+    }
+    pos++;
+  }
+
+  // 处理剩余的操作符和操作数
+  while (operator_stack.top >= 0)
+  {
+    word_t op2 = pop(&operand_stack);
+    word_t op1 = pop(&operand_stack);
+    word_t operator= pop(&operator_stack);
+    push(&operand_stack, perform_operation(op1, operator, op2));
+  }
+
+  // 最终结果在操作数栈中
+  assert(operand_stack.top != 0);
+  if (operand_stack.top == 0) {
+    return operand_stack.data[0];
+  }
+  else
+    return 0;
 }
+
+// word_t expr(char *e, bool *success) {
+//   if (!make_token(e)) {
+//     *success = false;
+//     return 0;
+//   }
+
+//   /* TODO: Insert codes to evaluate the expression. */
+//   TODO();
+
+//   return 0;
+// }

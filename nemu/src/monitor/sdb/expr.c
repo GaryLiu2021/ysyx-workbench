@@ -160,6 +160,8 @@ static bool make_token(char *e) {
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;
             break;
+          case TK_NOTYPE:
+            break;
           default:
             // 处理其他未知令牌类型，或者抛出错误
             // 例如：报告未知标记或记录错误信息

@@ -107,6 +107,19 @@ static int cmd_x(char* args) {
   }
 }
 
+static int cmd_p(char *args) {
+  if(args == NULL) {
+    return -1;
+  }
+  else {
+    bool *success = NULL;
+    int result = expr(args, success);
+    if(*success)
+      printf("$1 = %d", result);
+    return *success;
+  }
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -118,7 +131,7 @@ static struct {
   { "si", "execute CPU by steps(defaault 1)", cmd_si },
   { "info", "print information", cmd_info},
   { "x", "print memory", cmd_x},
-  { "p", "print "}
+  { "p", "print", cmd_p},
 
   /* TODO: Add more commands */
 
@@ -154,7 +167,7 @@ void sdb_set_batch_mode() {
 }
 
 void expr_check() {
-  
+
 }
 
 void sdb_mainloop() {

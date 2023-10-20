@@ -310,7 +310,7 @@ word_t expr(char *e, bool *success)
         word_t result = atoi(token.str);
         while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] == TK_REV) {
           pop(&operator_stack);
-          result = -result;
+          result = (word_t)(-result);
         }
         push(&operand_stack, result);
         break;

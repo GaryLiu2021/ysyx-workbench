@@ -346,9 +346,14 @@ word_t expr(char *e, bool *success)
   // 处理剩余的操作符和操作数
   while (operator_stack.top >= 0)
   {
+    word_t operator= pop(&operator_stack);
+    if(operator == TK_LPAREN) {
+      printf("')' expected in expression\n");
+      *success = false;
+      return 0;
+    }
     word_t op2 = pop(&operand_stack);
     word_t op1 = pop(&operand_stack);
-    word_t operator= pop(&operator_stack);
     push(&operand_stack, perform_operation(op1, operator, op2));
   }
 

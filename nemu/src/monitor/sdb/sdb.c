@@ -114,7 +114,7 @@ static int cmd_p(char *args) {
   else {
     bool *success = NULL;
     word_t result = expr(args, success);
-    if(*success)
+    if(*(success)==true)
       printf("$1 = %d", result);
     return *success;
   }

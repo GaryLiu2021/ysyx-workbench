@@ -339,10 +339,13 @@ word_t expr(char *e, bool *success)
   // 最终结果在操作数栈中
   assert(operand_stack.top == 0);
   if (operand_stack.top == 0) {
+    *success = true;
     return operand_stack.data[0];
   }
-  else
+  else {
+    *success = false;
     return 0;
+  }
 }
 
 // word_t expr(char *e, bool *success) {

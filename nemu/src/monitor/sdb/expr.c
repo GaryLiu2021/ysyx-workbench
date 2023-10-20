@@ -331,6 +331,8 @@ word_t expr(char *e, bool *success)
           word_t operator= pop(&operator_stack);
           push(&operand_stack, perform_operation(op1, operator, op2));
         }
+        assert(operator_stack.data[operator_stack.top] == TK_LPAREN);
+        pop(&operator_stack);
         break;
 
       default:

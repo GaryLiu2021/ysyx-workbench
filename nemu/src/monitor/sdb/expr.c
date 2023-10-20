@@ -39,7 +39,6 @@ enum {
   TK_LPAREN,       // 左括号
   TK_RPAREN,       // 右括号
   TK_NUM,          // 数字
-  TK_ID,           // 标识符
   TK_DEREF,        // 解引用
   TK_REV,          // 负数
   TK_REG,
@@ -73,7 +72,6 @@ static struct rule {
     {"/", TK_DIV},      // 除号
     {"0x[0-9a-fA-F]+", TK_HEX},
     {"[0-9]+", TK_NUM},   // 数字
-    {"[a-zA-Z]+", TK_ID}, // 标识符
     {"$[a-z$][0-9a-z][0-9a-z]", TK_REG},
 
 };
@@ -162,11 +160,6 @@ static bool make_token(char *e) {
           case TK_REG:
           case TK_HEX:
           case TK_NUM:
-            tokens[nr_token].type = rules[i].token_type;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
-            nr_token++;
-            break;
-          case TK_ID:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;

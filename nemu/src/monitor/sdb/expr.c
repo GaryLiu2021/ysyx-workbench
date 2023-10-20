@@ -40,6 +40,8 @@ enum {
   TK_RPAREN,       // 右括号
   TK_NUM,          // 数字
   TK_ID,           // 标识符
+  TK_DEREF,        // 解引用
+  TK_REV,          // 负数
 
 };
 
@@ -134,10 +136,22 @@ static bool make_token(char *e) {
           case TK_AND:
           case TK_OR:
           case TK_PLUS:
-          case TK_MINUS:
-          case TK_MUL:
           case TK_DIV:
             tokens[nr_token].type = rules[i].token_type;
+            nr_token++;
+            break;
+          case TK_MINUS:
+            if (i == 0 || (tokens[i - 1].type != TK_NUM && tokens[i - 1].type != TK_RPAREN))
+              tokens[nr_token].type = TK_REV;
+            else
+              tokens[nr_token].type = rules[i].token_type;
+            nr_token++;
+            break;
+          case TK_MUL:
+            if (i == 0 || (tokens[i - 1].type != TK_NUM && tokens[i - 1].type != TK_RPAREN))
+              tokens[nr_token].type = TK_DEREF;
+            else
+              tokens[nr_token].type = rules[i].token_type;
             nr_token++;
             break;
           case TK_NUM:
@@ -203,6 +217,9 @@ word_t pop(Stack *stack)
 
 int precedence(int type){
   switch (type) {
+    case TK_REV:
+    case TK_DEREF:
+      return 3;
     case TK_LE:
     case TK_GE:
     case TK_LT:
@@ -212,12 +229,12 @@ int precedence(int type){
     case TK_AND:
     case TK_OR:
       return 2;
-    case TK_PLUS:
-    case TK_MINUS:
-      return 0;
     case TK_MUL:
     case TK_DIV:
       return 1;
+    case TK_PLUS:
+    case TK_MINUS:
+      return 0;
     default:
       panic("precedence error: Unknown type %d\n", type);
     }
@@ -285,8 +302,16 @@ word_t expr(char *e, bool *success)
     Token token = tokens[pos];
 
     switch (token.type) {
+      case TK_REV:
+      case TK_DEREF:
+        push(&operator_stack, token.type);
+        break;
       case TK_NUM:
-        push(&operand_stack, atoi(token.str));
+        while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] == TK_REV) {
+          pop(&operator_stack);
+          push(&operand_stack, (word_t)(-atoi(token.str)));
+        }
+          
         break;
       case TK_LE:
       case TK_GE:

@@ -72,7 +72,7 @@ static struct rule {
     {"/", TK_DIV},      // 除号
     {"0x[0-9a-fA-F]+", TK_HEX},
     {"[0-9]+", TK_NUM},   // 数字
-    {"$[a-z$][0-9a-z][0-9a-z]?", TK_REG},
+    {"\\$[a-z$][0-9a-z][0-9a-z]?", TK_REG},
 
 };
 

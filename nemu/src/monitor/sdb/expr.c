@@ -270,7 +270,7 @@ word_t perform_operation(word_t op1, word_t operator, word_t op2) {
     case TK_DIV:
       return op1 / op2;
     default:
-      printf("precedence error: Unknown type %d\n", operator);
+      printf("perform error: Unknown type %d\n", operator);
       return 0;
     }
 }
@@ -311,7 +311,7 @@ word_t expr(char *e, bool *success)
       case TK_MINUS:
       case TK_MUL:
       case TK_DIV:
-        while (operator_stack.top >= 0 &&
+        while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] != TK_LPAREN &&
               precedence(token.type) <= precedence(operator_stack.data[operator_stack.top])) {
           word_t op2 = pop(&operand_stack);
           word_t op1 = pop(&operand_stack);

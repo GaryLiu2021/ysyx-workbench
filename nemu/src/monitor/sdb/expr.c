@@ -336,6 +336,7 @@ word_t expr(char *e, bool *success)
         break;
 
       default:
+        assert(1);
         break;
     }
     pos++;

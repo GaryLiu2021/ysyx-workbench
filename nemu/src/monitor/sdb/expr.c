@@ -124,24 +124,6 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-          // {" +", TK_NOTYPE},    // spaces
-          // {"<=", TK_LE},        // 小于等于
-          // {">=", TK_GE},        // 大于等于
-          // {"<", TK_LT},         // 小于
-          // {">", TK_GT},         // 大于
-          // {"==", TK_EQ},        // equal
-          // {"!=", TK_NEQ},       // 不等于
-          // {"&&", TK_AND},       // 逻辑与
-          // {"\\|\\|", TK_OR},    // 逻辑或
-          // {"\\(", TK_LPAREN},   // 左括号
-          // {"\\)", TK_RPAREN},   // 右括号
-          // {"\\+", TK_PLUS},         // plus
-          // {"-", TK_MINUS},      // 减号
-          // {"\\*", TK_MUL},      // 乘号
-          // {"/", TK_DIV},        // 除号
-          // {"[0-9]+", TK_NUM},   // 数字
-          // {"[a-zA-Z]+", TK_ID}, // 标识符
-
         switch (rules[i].token_type) {
           case TK_LE:
           case TK_GE:
@@ -176,8 +158,6 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           default:
-            // 处理其他未知令牌类型，或者抛出错误
-            // 例如：报告未知标记或记录错误信息
             printf("Unknown token at position %d: %.*s\n", position, substr_len, substr_start);
             return false;
         }
@@ -243,7 +223,8 @@ int precedence(int type){
     }
 }
 
-word_t perform_operation(word_t op1, word_t operator, word_t op2) {
+word_t perform_operation(word_t op1, word_t operator, word_t op2, bool *success) {
+  *success = true;
   switch (operator) {
     case TK_LE:
       return op1 <= op2;
@@ -268,9 +249,17 @@ word_t perform_operation(word_t op1, word_t operator, word_t op2) {
     case TK_MUL:
       return op1 * op2;
     case TK_DIV:
-      return op1 / op2;
+      if(op2 == 0) {
+        printf("div 0 is not allowed!\n");
+        *success = false;
+        return 0;
+      } 
+      else {
+        return op1 / op2;
+      }
     default:
       printf("perform error: Unknown type %d\n", operator);
+      *success = false;
       return 0;
     }
 }
@@ -316,7 +305,13 @@ word_t expr(char *e, bool *success)
           word_t op2 = pop(&operand_stack);
           word_t op1 = pop(&operand_stack);
           word_t operator= pop(&operator_stack);
-          push(&operand_stack, perform_operation(op1, operator, op2));
+          word_t result = perform_operation(op1, operator, op2, success);
+          if(*success) {
+            push(&operand_stack, result);
+          }
+          else {
+            return 0;
+          }
         }
         push(&operator_stack, token.type);
         break;
@@ -330,7 +325,13 @@ word_t expr(char *e, bool *success)
           word_t op2 = pop(&operand_stack);
           word_t op1 = pop(&operand_stack);
           word_t operator= pop(&operator_stack);
-          push(&operand_stack, perform_operation(op1, operator, op2));
+          word_t result = perform_operation(op1, operator, op2, success);
+          if(*success) {
+            push(&operand_stack, result);
+          }
+          else {
+            return 0;
+          }
         }
         assert(operator_stack.data[operator_stack.top] == TK_LPAREN);
         pop(&operator_stack);
@@ -354,7 +355,13 @@ word_t expr(char *e, bool *success)
     }
     word_t op2 = pop(&operand_stack);
     word_t op1 = pop(&operand_stack);
-    push(&operand_stack, perform_operation(op1, operator, op2));
+    word_t result = perform_operation(op1, operator, op2, success);
+    if(*success) {
+      push(&operand_stack, result);
+    }
+    else {
+      return 0;
+    }
   }
 
   // 最终结果在操作数栈中
@@ -368,15 +375,3 @@ word_t expr(char *e, bool *success)
     return 0;
   }
 }
-
-// word_t expr(char *e, bool *success) {
-//   if (!make_token(e)) {
-//     *success = false;
-//     return 0;
-//   }
-
-//   /* TODO: Insert codes to evaluate the expression. */
-//   TODO();
-
-//   return 0;
-// }

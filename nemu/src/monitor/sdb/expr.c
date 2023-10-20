@@ -307,11 +307,12 @@ word_t expr(char *e, bool *success)
         push(&operator_stack, token.type);
         break;
       case TK_NUM:
+        word_t result = atoi(token.str);
         while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] == TK_REV) {
           pop(&operator_stack);
-          push(&operand_stack, (word_t)(-atoi(token.str)));
+          result = -result;
         }
-          
+        push(&operand_stack, result);
         break;
       case TK_LE:
       case TK_GE:

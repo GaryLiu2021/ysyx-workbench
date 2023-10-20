@@ -115,7 +115,7 @@ static int cmd_p(char *args) {
     bool success;
     word_t result = expr(args, &success);
     if(success == true)
-      printf("$1 = %d", result);
+      printf("$1 = %d\n", result);
     return success;
   }
 }

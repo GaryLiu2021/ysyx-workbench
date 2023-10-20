@@ -129,9 +129,10 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute CPU by steps(defaault 1)", cmd_si },
-  { "info", "print information", cmd_info},
-  { "x", "print memory", cmd_x},
-  { "p", "print", cmd_p},
+  { "info", "print information", cmd_info },
+  { "x", "print memory", cmd_x },
+  { "p", "print", cmd_p },
+  // { "w", "add a watchpoint", cmd_w },
 
   /* TODO: Add more commands */
 

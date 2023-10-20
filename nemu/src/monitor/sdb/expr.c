@@ -42,6 +42,8 @@ enum {
   TK_ID,           // 标识符
   TK_DEREF,        // 解引用
   TK_REV,          // 负数
+  TK_REG,
+  TK_HEX,
 
 };
 
@@ -50,27 +52,30 @@ static struct rule {
   int token_type;
 } rules[] = {
 
-  /* TODO: Add more rules.
-   * Pay attention to the precedence level of different rules.
-   */
+    /* TODO: Add more rules.
+     * Pay attention to the precedence level of different rules.
+     */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"<=", TK_LE},        // 小于等于
-  {">=", TK_GE},        // 大于等于
-  {"<", TK_LT},         // 小于
-  {">", TK_GT},         // 大于
-  {"==", TK_EQ},        // equal
-  {"!=", TK_NEQ},       // 不等于
-  {"&&", TK_AND},       // 逻辑与
-  {"\\|\\|", TK_OR},    // 逻辑或
-  {"\\(", TK_LPAREN},   // 左括号
-  {"\\)", TK_RPAREN},   // 右括号
-  {"\\+", TK_PLUS},     // 加号
-  {"-", TK_MINUS},      // 减号
-  {"\\*", TK_MUL},      // 乘号
-  {"/", TK_DIV},        // 除号
-  {"[0-9]+", TK_NUM},   // 数字
-  {"[a-zA-Z]+", TK_ID}, // 标识符
+    {" +", TK_NOTYPE},  // spaces
+    {"<=", TK_LE},      // 小于等于
+    {">=", TK_GE},      // 大于等于
+    {"<", TK_LT},       // 小于
+    {">", TK_GT},       // 大于
+    {"==", TK_EQ},      // equal
+    {"!=", TK_NEQ},     // 不等于
+    {"&&", TK_AND},     // 逻辑与
+    {"\\|\\|", TK_OR},  // 逻辑或
+    {"\\(", TK_LPAREN}, // 左括号
+    {"\\)", TK_RPAREN}, // 右括号
+    {"\\+", TK_PLUS},   // 加号
+    {"-", TK_MINUS},    // 减号
+    {"\\*", TK_MUL},    // 乘号
+    {"/", TK_DIV},      // 除号
+    {"0x[0-9a-fA-F]+", TK_HEX},
+    {"[0-9]+", TK_NUM},   // 数字
+    {"[a-zA-Z]+", TK_ID}, // 标识符
+    {"$[a-z$][0-9a-z][0-9a-z]", TK_REG},
+
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -154,6 +159,8 @@ static bool make_token(char *e) {
               tokens[nr_token].type = rules[i].token_type;
             nr_token++;
             break;
+          case TK_REG:
+          case TK_HEX:
           case TK_NUM:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
@@ -302,12 +309,34 @@ word_t expr(char *e, bool *success)
     Token token = tokens[pos];
 
     switch (token.type) {
+      word_t result;
       case TK_REV:
       case TK_DEREF:
         push(&operator_stack, token.type);
         break;
+      case TK_REG:
+        result = isa_reg_str2val(token.str, success);
+        if(*success) {
+          while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] == TK_REV) {
+            pop(&operator_stack);
+            result = (word_t)(-result);
+          }
+          push(&operand_stack, result);
+          break;
+        }
+        else {
+          return 0;
+        }
+      case TK_HEX:
+        sscanf(token.str, "%x", &result);
+        while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] == TK_REV) {
+          pop(&operator_stack);
+          result = (word_t)(-result);
+        }
+        push(&operand_stack, result);
+        break;
       case TK_NUM:
-        word_t result = atoi(token.str);
+        result = atoi(token.str);
         while (operator_stack.top >= 0 && operator_stack.data[operator_stack.top] == TK_REV) {
           pop(&operator_stack);
           result = (word_t)(-result);
@@ -331,7 +360,7 @@ word_t expr(char *e, bool *success)
           word_t op2 = pop(&operand_stack);
           word_t op1 = pop(&operand_stack);
           word_t operator= pop(&operator_stack);
-          word_t result = perform_operation(op1, operator, op2, success);
+          result = perform_operation(op1, operator, op2, success);
           if(*success) {
             push(&operand_stack, result);
           }
@@ -351,7 +380,7 @@ word_t expr(char *e, bool *success)
           word_t op2 = pop(&operand_stack);
           word_t op1 = pop(&operand_stack);
           word_t operator= pop(&operator_stack);
-          word_t result = perform_operation(op1, operator, op2, success);
+          result = perform_operation(op1, operator, op2, success);
           if(*success) {
             push(&operand_stack, result);
           }

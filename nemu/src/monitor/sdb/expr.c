@@ -173,6 +173,7 @@ static bool make_token(char *e) {
           case TK_LPAREN:
           case TK_RPAREN:
             tokens[nr_token].type = rules[i].token_type;
+            nr_token++;
             break;
           default:
             // 处理其他未知令牌类型，或者抛出错误

@@ -143,6 +143,14 @@ static bool make_token(char *e) {
           // {"[a-zA-Z]+", TK_ID}, // 标识符
 
         switch (rules[i].token_type) {
+          case TK_LE:
+          case TK_GE:
+          case TK_LT:
+          case TK_GT:
+          case TK_EQ:
+          case TK_NEQ:
+          case TK_AND:
+          case TK_OR:
           case TK_PLUS:
           case TK_MINUS:
           case TK_MUL:
@@ -162,6 +170,9 @@ static bool make_token(char *e) {
             break;
           case TK_NOTYPE:
             break;
+          case TK_LPAREN:
+          case TK_RPAREN:
+            tokens[nr_token].type = rules[i].token_type;
           default:
             // 处理其他未知令牌类型，或者抛出错误
             // 例如：报告未知标记或记录错误信息

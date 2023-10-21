@@ -60,6 +60,7 @@ WP* new_wp(char *exp, bool *success) {
   wp->next = head;
   head = wp;
 
+  printf("New watchpoint added -- $w%d: %s\n", wp_value[wp->NO], wp->expr);
   *success = true;
   return wp;
 }

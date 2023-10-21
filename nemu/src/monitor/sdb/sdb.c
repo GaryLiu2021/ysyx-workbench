@@ -190,14 +190,7 @@ void sdb_set_batch_mode() {
   is_batch_mode = true;
 }
 
-void expr_check() {
-
-}
-
 void sdb_mainloop() {
-
-  expr_check();
-
   if (is_batch_mode) {
     cmd_c(NULL);
     return;

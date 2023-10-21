@@ -256,7 +256,7 @@ word_t perform_operation(word_t op1, word_t operator, word_t op2, bool *success)
     case TK_GT:
       return op1 > op2;
     case TK_EQ:
-      return op1 = op2;
+      return op1 == op2;
     case TK_NEQ:
       return op1 != op2;
     case TK_AND:

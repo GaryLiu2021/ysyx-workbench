@@ -47,6 +47,7 @@ WP* new_wp(char *exp, bool *success) {
   word_t result = expr(wp->expr, success);
   if(*success) {
     wp_value[wp->NO] = result;
+    printf("Initial value: %d\n", wp_value[wp->NO]);
   }
   else {
     wp = NULL;

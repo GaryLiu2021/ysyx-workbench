@@ -23,7 +23,6 @@ typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
   char expr[32];
-  word_t value;
 
 } WP;
 

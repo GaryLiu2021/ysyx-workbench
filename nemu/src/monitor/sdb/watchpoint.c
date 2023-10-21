@@ -103,7 +103,7 @@ void print_wp() {
   WP *wp = head;
   printf("Watchpoints:\n");
   while (wp != NULL) {
-    printf("NO.%d: %s = %d\n", wp->NO, wp->expr, wp->value);
+    printf("NO.%d: %s = %d\n", wp->NO, wp->expr, wp_value[wp->NO]);
     wp = wp->next;
   }
 }

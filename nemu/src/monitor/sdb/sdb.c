@@ -142,8 +142,6 @@ static int cmd_d(char *args) {
   else {
     bool success;
     free_wp(atoi(args), &success);
-    if (success == true)
-      printf("Watch point '%s' removed\n", args);
     return (int)(success)-1;
   }
 }

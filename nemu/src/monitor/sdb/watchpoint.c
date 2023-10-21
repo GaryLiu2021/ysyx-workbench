@@ -95,6 +95,7 @@ void free_wp(int num, bool *success) {
       free_ = pres;
     }
   }
+  printf("Watchpoint %s removed.\n", pres->expr);
   *success = true;
   return;
 }

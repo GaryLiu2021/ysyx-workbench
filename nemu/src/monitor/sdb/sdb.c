@@ -127,10 +127,6 @@ static int cmd_w(char *args) {
   else {
     bool success;
     new_wp(args, &success);
-    if (success == true)
-      printf("New watch point added: %s\n", args);
-    else
-      printf("Watch point %s added failed.\n", args);
     return (int)(success)-1;
   }
 }

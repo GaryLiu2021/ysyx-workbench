@@ -52,6 +52,7 @@ WP* new_wp(char *exp, bool *success) {
   else {
     wp = NULL;
     printf("Invalid expr: %s\n", exp);
+    *success = false;
     return NULL;
   }
 
@@ -59,6 +60,7 @@ WP* new_wp(char *exp, bool *success) {
   wp->next = head;
   head = wp;
 
+  *success = true;
   return wp;
 }
 

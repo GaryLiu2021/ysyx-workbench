@@ -14,21 +14,13 @@
 ***************************************************************************************/
 
 #include "sdb.h"
+#include "utils.h"
 
 #define NR_WP 32
 
-typedef struct watchpoint {
-  int NO;
-  struct watchpoint *next;
-  char expr[32];
-  word_t value;
-
-  /* TODO: Add more members if necessary */
-
-} WP;
-
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
+static word_t wp_value[NR_WP] = {};
 
 void init_wp_pool() {
   int i;
@@ -43,13 +35,25 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP* new_wp(char *expr) {
+WP* new_wp(char *exp, bool *success) {
   if(free_ == NULL) {
     fprintf(stderr, "No more free watchpoints available.\n");
+    *success = false;
     return NULL;
   }
 
   WP *wp = free_;
+  strcpy(wp->expr, exp);
+  word_t result = expr(wp->expr, success);
+  if(*success) {
+    wp_value[wp->NO] = result;
+  }
+  else {
+    wp = NULL;
+    printf("Invalid expr: %s\n", exp);
+    return NULL;
+  }
+
   free_ = free_->next;
   wp->next = head;
   head = wp;
@@ -57,26 +61,39 @@ WP* new_wp(char *expr) {
   return wp;
 }
 
-void free_wp(WP *wp) {
+void free_wp(int num, bool *success) {
 
-  assert(wp != NULL);
-
-  if (head == wp) {
-    head = head->next;
-  } else {
-    WP *prev = head;
-    while (prev != NULL && prev->next != wp) {
-      prev = prev->next;
-    }
-    if (prev == NULL) {
-      printf("Watch point not found.\n");
-    } else {
-      prev->next = wp->next;
-    }
+  if(head == NULL) {
+    printf("No watchpoints now.\n");
+    *success = false;
+    return;
   }
 
-  wp->next = free_;
-  free_ = wp;
+  WP *prev = head;
+  WP *pres = head;
+
+  if (head->NO == num) {
+    head = head->next;
+    prev->next = free_;
+    free_ = prev;
+  } else {
+    pres = prev->next;
+    while (pres != NULL && pres->NO != num) {
+      prev = pres;
+      pres = pres->next;
+    }
+    if (pres == NULL) {
+      printf("Watch point not found.\n");
+      *success = false;
+      return;
+    } else {
+      prev->next = pres->next;
+      pres->next = free_;
+      free_ = pres;
+    }
+  }
+  *success = true;
+  return;
 }
 
 void print_wp() {
@@ -85,5 +102,21 @@ void print_wp() {
   while (wp != NULL) {
     printf("NO.%d: %s = %d\n", wp->NO, wp->expr, wp->value);
     wp = wp->next;
+  }
+}
+
+void check_watchpoint(int *state) {
+  WP *wp = head;
+  bool success;
+  bool flag = true;
+  while (wp != NULL) {
+    word_t result = expr(wp->expr, &success);
+    if(result != wp_value[wp->NO]) {
+      printf("Watchpoint %s changed: %d --> %d\n", wp->expr, wp_value[wp->NO], result);
+      flag = false;
+    }
+  }
+  if(!flag) {
+    *state = NEMU_STOP;
   }
 }

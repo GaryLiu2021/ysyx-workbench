@@ -19,6 +19,20 @@
 #include <common.h>
 #include <memory/vaddr.h>
 
+typedef struct watchpoint {
+  int NO;
+  struct watchpoint *next;
+  char expr[32];
+  word_t value;
+
+} WP;
+
 word_t expr(char *e, bool *success);
+void init_regex();
+void init_wp_pool();
+WP *new_wp(char *args, bool *success);
+void free_wp(int num, bool *success);
+void print_wp();
+void check_watchpoint(int *state);
 
 #endif

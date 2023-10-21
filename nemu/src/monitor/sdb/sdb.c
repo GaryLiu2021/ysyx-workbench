@@ -21,9 +21,6 @@
 
 static int is_batch_mode = false;
 
-void init_regex();
-void init_wp_pool();
-
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -60,7 +57,7 @@ static int cmd_si(char *args) {
     cpu_exec(1);
   }
   else {
-    int cpu_exec_cycle = (uint64_t)(strtol(args, &endptr, 10));
+    int cpu_exec_cycle = (word_t)(strtol(args, &endptr, 10));
     if (*endptr != '\0') {
       printf("Conversion failed. Non-numeric characters detected.\n");
       return -1;
@@ -78,7 +75,10 @@ static int cmd_info(char *args) {
     if(*args=='r'){
       isa_reg_display();
     } else if(*args=='w') {
-
+      print_wp();
+    } else {
+      printf("Invalid input format.\n");
+      return -1;
     }
     return 0;
   }
@@ -116,7 +116,35 @@ static int cmd_p(char *args) {
     word_t result = expr(args, &success);
     if(success == true)
       printf("$1 = %d\n", result);
-    return success;
+    return (int)(success)-1;
+  }
+}
+
+static int cmd_w(char *args) {
+  if(args == NULL) {
+    return -1;
+  }
+  else {
+    bool success;
+    new_wp(args, &success);
+    if (success == true)
+      printf("New watch point added: %s\n", args);
+    else
+      printf("Watch point %s added failed.\n", args);
+    return (int)(success)-1;
+  }
+}
+
+static int cmd_d(char *args) {
+  if(args == NULL) {
+    return -1;
+  }
+  else {
+    bool success;
+    free_wp(atoi(args), &success);
+    if (success == true)
+      printf("Watch point '%s' removed\n", args);
+    return (int)(success)-1;
   }
 }
 
@@ -132,7 +160,8 @@ static struct {
   { "info", "print information", cmd_info },
   { "x", "print memory", cmd_x },
   { "p", "print", cmd_p },
-  // { "w", "add a watchpoint", cmd_w },
+  { "w", "add a watchpoint", cmd_w },
+  { "d", "delete a watchpoint", cmd_d },
 
   /* TODO: Add more commands */
 

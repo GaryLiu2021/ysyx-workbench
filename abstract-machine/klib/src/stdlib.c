@@ -29,6 +29,55 @@ int atoi(const char* nptr) {
   return x;
 }
 
+void itoa(int num, char *str, int base)
+{
+  int i = 0;
+  int isNegative = 0;
+
+  // 处理负数
+  if (num < 0 && base == 10)
+  {
+    isNegative = 1;
+    num = -num;
+  }
+
+  // 处理特殊情况：0
+  if (num == 0)
+  {
+    str[i++] = '0';
+  }
+  else
+  {
+    // 处理整数部分
+    while (num != 0)
+    {
+      int rem = num % base;
+      str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+      num = num / base;
+    }
+
+    // 如果是负数，添加负号
+    if (isNegative)
+    {
+      str[i++] = '-';
+    }
+
+    str[i] = '\0';
+
+    // 反转字符串
+    int start = 0;
+    int end = i - 1;
+    while (start < end)
+    {
+      char temp = str[start];
+      str[start] = str[end];
+      str[end] = temp;
+      start++;
+      end--;
+    }
+  }
+}
+
 void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:

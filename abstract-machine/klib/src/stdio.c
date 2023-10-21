@@ -6,42 +6,62 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  char buf[256]; // 假设最大输出不超过 256 个字符
-  int result = vsnprintf(buf, sizeof(buf), fmt, args);
-  va_end(args);
-  putstr(buf); // 输出字符串到终端
-  return result;
+  panic("Not implemented");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  return vsnprintf(out, SIZE_MAX, fmt, ap);
+  panic("Not implemented");
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  int result = vsprintf(out, fmt, args);
-  va_end(args);
-  return result;
+    va_list args;
+    va_start(args, fmt);
+
+    int written = 0;  // 记录写入的字符数
+    char buf[256];
+
+    while (*fmt) {
+        if (*fmt != '%') {
+            // 普通字符，直接复制到缓冲区
+            buf[written++] = *fmt++;
+        } else {
+            // 遇到 '%'，处理格式化符号
+            fmt++;  // 跳过 '%'
+            if (*fmt == '\0') {
+                break;  // 避免在字符串末尾的 '%' 导致无限循环
+            }
+
+            if (*fmt == 'd') {
+                // 处理整数格式化符号 %d
+                int num = va_arg(args, int);
+                char str[32] = {};
+                itoa(num, str, 10);
+                int i = 0;
+                while (str[i]!='\0') {
+                  buf[written++] = str[i++];
+                }
+            } else if (*fmt == 's') {
+                // 处理字符串格式化符号 %s
+                const char *str = va_arg(args, const char *);
+                while (*str) {
+                    buf[written++] = *str++;
+                }
+            }
+            fmt++;  // 移动到下一个字符
+        }
+    }
+    va_end(args);
+    buf[written] = '\0'; // 添加 null 终止符
+    strcpy(out, buf);
+    return written;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  int result = vsnprintf(out, n, fmt, args);
-  va_end(args);
-  return result;
+  panic("Not implemented");
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
-  int result = snprintf(out, n, fmt, ap);
-  if (result >= n) {
-      // 字符串被截断，返回实际需要的缓冲区大小
-      return result;
-  }
-  return result;  // 返回实际写入的字符数（不包括 null 终止符）
+  panic("Not implemented");
 }
 
 #endif

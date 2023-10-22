@@ -18,19 +18,19 @@
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
-#include "llvm-11/llvm/MC/MCAsmInfo.h"
-#include "llvm-11/llvm/MC/MCContext.h"
-#include "llvm-11/llvm/MC/MCDisassembler/MCDisassembler.h"
-#include "llvm-11/llvm/MC/MCInstPrinter.h"
+#include "llvm/MC/MCAsmInfo.h"
+#include "llvm/MC/MCContext.h"
+#include "llvm/MC/MCDisassembler/MCDisassembler.h"
+#include "llvm/MC/MCInstPrinter.h"
 #if LLVM_VERSION_MAJOR >= 14
 #include "llvm/MC/TargetRegistry.h"
 #if LLVM_VERSION_MAJOR >= 15
 #include "llvm/MC/MCSubtargetInfo.h"
 #endif
 #else
-#include "llvm-11/llvm/Support/TargetRegistry.h"
+#include "llvm/Support/TargetRegistry.h"
 #endif
-#include "llvm-11/llvm/Support/TargetSelect.h"
+#include "llvm/Support/TargetSelect.h"
 
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic pop

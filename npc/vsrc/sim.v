@@ -3,7 +3,7 @@ module sim;
 reg clk = 0;
 reg rstn = 0;
 
-always #(1) clk = ~clk;
+// always #(1) clk = ~clk;
 
 single_cycle_cpu  u_single_cycle_cpu (  
     .clk                     ( clk    ),

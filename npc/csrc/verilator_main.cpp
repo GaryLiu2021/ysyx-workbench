@@ -4,63 +4,60 @@
 #include "verilated_dpi.h"
 #include <stdio.h>
 #include <string>
+#include "difftest_ref.h"
 
-uint64_t sim_time = 0;
-uint32_t *cpu_gpr = NULL;
-uint32_t *inst_ptr = NULL;
+uint64_t cycles = 0;
+uint32_t* cpu_gpr = NULL;
+uint32_t* inst_ptr = NULL;
 
 bool c_break = false;
 
 extern "C" {
-    void set_gpr_ptr(const svOpenArrayHandle r)
-    {
-        cpu_gpr = (uint32_t *)(((VerilatedDpiOpenVar *)r)->datap());
+    void set_gpr_ptr(const svOpenArrayHandle r) {
+        cpu_gpr = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
     }
 
-    void set_inst_ptr(const svOpenArrayHandle r)
-    {
-        inst_ptr = (uint32_t *)(((VerilatedDpiOpenVar *)r)->datap());
+    void set_inst_ptr(const svOpenArrayHandle r) {
+        inst_ptr = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
     }
 
     void call_ebreak() {
         c_break = true;
     }
+
+    void call_ecall() {
+        c_break = true;
+    }
 }
 
-void dump_gpr()
-{
+void dump_gpr() {
     int i;
-    for (i = 0; i < 32; i++)
-    {
+    for (i = 0; i < 32; i++) {
         printf("gpr[%d] = 0x%x\n", i, cpu_gpr[i]);
     }
 }
 
-void dump_inst()
-{
+void dump_inst() {
     // char s[40];
     // itoa(*inst_ptr, s, 2);
     printf("inst = %x\n", inst_ptr);
 }
 
-int main(int argc, char **argv, char **env)
-{
+int main(int argc, char** argv, char** env) {
 
-    VerilatedContext *m_contextp = new VerilatedContext; // 环境
-    VerilatedVcdC *m_tracep = new VerilatedVcdC;         // 波形
-    Vsim *m_dut = new Vsim;
+    VerilatedVcdC* m_tracep = new VerilatedVcdC;         // 波形
+    Vsim* m_dut = new Vsim;
     int optype;
 
-    m_contextp->traceEverOn(true);
     m_dut->trace(m_tracep, 5);
     m_tracep->open("wave.vcd");
 
-    while (!m_contextp->gotFinish() && c_break == false)
-    {
-        m_contextp->timeInc(1);
-        m_dut->eval();
-        sim_time++;
-        printf("\t\tCurrent Cycle: %d\n", sim_time);
+    difftest_init(1234);
+
+    while (c_break == false) {
+        m_dut->clk = !m_dut->clk;
+        cycles++;
+        printf("\t\tCurrent Cycle: %d\n", cycles);
         dump_inst();
         // printf("Optype: %d", optype);
         dump_gpr();
@@ -84,6 +81,5 @@ int main(int argc, char **argv, char **env)
     // m_tracep->close();
     delete m_dut;
     // delete m_tracep;
-    delete m_contextp;
     return 0;
 }

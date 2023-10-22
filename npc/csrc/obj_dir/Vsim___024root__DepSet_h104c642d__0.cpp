@@ -18,17 +18,15 @@ void Vsim___024root___eval_triggers__act(Vsim___024root* vlSelf) {
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_triggers__act\n"); );
     // Body
-    vlSelf->__VactTriggered.set(0U, ((IData)(vlSelf->sim__DOT__clk) 
-                                     & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__sim__DOT__clk__0))));
-    vlSelf->__VactTriggered.set(1U, (((IData)(vlSelf->sim__DOT__clk) 
-                                      & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__sim__DOT__clk__0))) 
-                                     | ((~ (IData)(vlSelf->sim__DOT__rstn)) 
-                                        & (IData)(vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0))));
+    vlSelf->__VactTriggered.set(0U, ((IData)(vlSelf->clk) 
+                                     & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__clk__0))));
+    vlSelf->__VactTriggered.set(1U, (((IData)(vlSelf->clk) 
+                                      & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__clk__0))) 
+                                     | ((~ (IData)(vlSelf->rstn)) 
+                                        & (IData)(vlSelf->__Vtrigprevexpr___TOP__rstn__0))));
     vlSelf->__VactTriggered.set(2U, vlSelf->__VdlySched.awaitingCurrentTime());
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__clk__0 
-        = vlSelf->sim__DOT__clk;
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0 
-        = vlSelf->sim__DOT__rstn;
+    vlSelf->__Vtrigprevexpr___TOP__clk__0 = vlSelf->clk;
+    vlSelf->__Vtrigprevexpr___TOP__rstn__0 = vlSelf->rstn;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vsim___024root___dump_triggers__act(vlSelf);

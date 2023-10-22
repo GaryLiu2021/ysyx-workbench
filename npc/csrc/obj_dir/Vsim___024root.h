@@ -18,8 +18,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     Vsim___024unit* __PVT____024unit;
 
     // DESIGN SPECIFIC STATE
-    CData/*0:0*/ sim__DOT__clk;
-    CData/*0:0*/ sim__DOT__rstn;
+    VL_IN8(clk,0,0);
+    VL_IN8(rstn,0,0);
     CData/*5:0*/ sim__DOT__u_single_cycle_cpu__DOT__op_type;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_I_type;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_U_type;
@@ -29,8 +29,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_carry_in;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_carry_out;
     CData/*7:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte;
-    CData/*0:0*/ __Vtrigprevexpr___TOP__sim__DOT__clk__0;
-    CData/*0:0*/ __Vtrigprevexpr___TOP__sim__DOT__rstn__0;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__rstn__0;
     CData/*0:0*/ __VactContinue;
     SData/*15:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__pc_out;
@@ -60,7 +60,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     VlUnpacked<IData/*31:0*/, 8192> sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__ram;
     VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;
     VlDelayScheduler __VdlySched;
-    VlTriggerScheduler __VtrigSched_h34b1970b__0;
+    VlTriggerScheduler __VtrigSched_h3d404911__0;
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<3> __VactTriggered;
     VlTriggerVec<3> __VnbaTriggered;

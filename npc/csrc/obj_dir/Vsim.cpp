@@ -12,6 +12,8 @@
 Vsim::Vsim(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vsim__Syms(contextp(), _vcname__, this)}
+    , clk{vlSymsp->TOP.clk}
+    , rstn{vlSymsp->TOP.rstn}
     , __PVT____024unit{vlSymsp->TOP.__PVT____024unit}
     , rootp{&(vlSymsp->TOP)}
 {

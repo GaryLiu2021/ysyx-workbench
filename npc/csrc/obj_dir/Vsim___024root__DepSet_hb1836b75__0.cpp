@@ -21,10 +21,8 @@ void Vsim___024root___eval_initial(Vsim___024root* vlSelf) {
     vlSelf->__Vm_traceActivity[1U] = 1U;
     Vsim___024root___eval_initial__TOP__0(vlSelf);
     Vsim___024root___eval_initial__TOP__1(vlSelf);
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__clk__0 
-        = vlSelf->sim__DOT__clk;
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0 
-        = vlSelf->sim__DOT__rstn;
+    vlSelf->__Vtrigprevexpr___TOP__clk__0 = vlSelf->clk;
+    vlSelf->__Vtrigprevexpr___TOP__rstn__0 = vlSelf->rstn;
 }
 
 VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__0(Vsim___024root* vlSelf) {
@@ -32,15 +30,11 @@ VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__0(Vsim___024root* 
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_initial__TOP__0\n"); );
     // Body
-    co_await vlSelf->__VdlySched.delay(0xaULL, nullptr, 
-                                       "../vsrc/../vsrc/sim.v", 
-                                       14);
-    vlSelf->sim__DOT__rstn = 1U;
     co_await vlSelf->__VdlySched.delay(0x2710ULL, nullptr, 
                                        "../vsrc/../vsrc/sim.v", 
-                                       15);
+                                       14);
     VL_WRITEF("Time Out!!!\n");
-    VL_FINISH_MT("../vsrc/../vsrc/sim.v", 17, "");
+    VL_FINISH_MT("../vsrc/../vsrc/sim.v", 16, "");
 }
 
 VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* vlSelf) {
@@ -49,9 +43,9 @@ VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* 
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_initial__TOP__1\n"); );
     // Body
     while (1U) {
-        co_await vlSelf->__VtrigSched_h34b1970b__0.trigger(0U, 
+        co_await vlSelf->__VtrigSched_h3d404911__0.trigger(0U, 
                                                            nullptr, 
-                                                           "@(posedge sim.clk)", 
+                                                           "@(posedge clk)", 
                                                            "../vsrc/../vsrc/regs_i.v", 
                                                            62);
         if (VL_UNLIKELY(((0x27U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)) 
@@ -101,7 +95,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0U;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs__v0 = 0U;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs__v1 = 0U;
-    if ((1U & (~ (IData)(vlSelf->sim__DOT__rstn)))) {
+    if ((1U & (~ (IData)(vlSelf->rstn)))) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__i = 0x20U;
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i = 0U;
         while (VL_GTS_III(32, 0x1000U, vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i)) {
@@ -111,7 +105,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
                 = ((IData)(1U) + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i);
         }
     }
-    if (vlSelf->sim__DOT__rstn) {
+    if (vlSelf->rstn) {
         if (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_wr_en) {
             __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 
                 = ((0x29U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
@@ -1013,7 +1007,7 @@ void Vsim___024root___timing_commit(Vsim___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___timing_commit\n"); );
     // Body
     if ((! (1ULL & vlSelf->__VactTriggered.word(0U)))) {
-        vlSelf->__VtrigSched_h34b1970b__0.commit("@(posedge sim.clk)");
+        vlSelf->__VtrigSched_h3d404911__0.commit("@(posedge clk)");
     }
 }
 
@@ -1026,7 +1020,7 @@ void Vsim___024root___timing_resume(Vsim___024root* vlSelf) {
         vlSelf->__VdlySched.resume();
     }
     if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
-        vlSelf->__VtrigSched_h34b1970b__0.resume("@(posedge sim.clk)");
+        vlSelf->__VtrigSched_h3d404911__0.resume("@(posedge clk)");
     }
 }
 
@@ -1035,5 +1029,10 @@ void Vsim___024root___eval_debug_assertions(Vsim___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_debug_assertions\n"); );
+    // Body
+    if (VL_UNLIKELY((vlSelf->clk & 0xfeU))) {
+        Verilated::overWidthError("clk");}
+    if (VL_UNLIKELY((vlSelf->rstn & 0xfeU))) {
+        Verilated::overWidthError("rstn");}
 }
 #endif  // VL_DEBUG

@@ -8,27 +8,10 @@
 #include "Vsim__Syms.h"
 #include "Vsim___024root.h"
 
-VL_ATTR_COLD void Vsim___024root___eval_static__TOP(Vsim___024root* vlSelf);
-
 VL_ATTR_COLD void Vsim___024root___eval_static(Vsim___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_static\n"); );
-    // Body
-    Vsim___024root___eval_static__TOP(vlSelf);
-    vlSelf->__Vm_traceActivity[3U] = 1U;
-    vlSelf->__Vm_traceActivity[2U] = 1U;
-    vlSelf->__Vm_traceActivity[1U] = 1U;
-    vlSelf->__Vm_traceActivity[0U] = 1U;
-}
-
-VL_ATTR_COLD void Vsim___024root___eval_static__TOP(Vsim___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_static__TOP\n"); );
-    // Body
-    vlSelf->sim__DOT__clk = 0U;
-    vlSelf->sim__DOT__rstn = 0U;
 }
 
 VL_ATTR_COLD void Vsim___024root___eval_final(Vsim___024root* vlSelf) {
@@ -111,10 +94,10 @@ VL_ATTR_COLD void Vsim___024root___dump_triggers__act(Vsim___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge sim.clk)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge clk)\n");
     }
     if ((2ULL & vlSelf->__VactTriggered.word(0U))) {
-        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge sim.clk or negedge sim.rstn)\n");
+        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge clk or negedge rstn)\n");
     }
     if ((4ULL & vlSelf->__VactTriggered.word(0U))) {
         VL_DBG_MSGF("         'act' region trigger index 2 is active: @([true] __VdlySched.awaitingCurrentTime())\n");
@@ -132,10 +115,10 @@ VL_ATTR_COLD void Vsim___024root___dump_triggers__nba(Vsim___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge sim.clk)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge clk)\n");
     }
     if ((2ULL & vlSelf->__VnbaTriggered.word(0U))) {
-        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge sim.clk or negedge sim.rstn)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge clk or negedge rstn)\n");
     }
     if ((4ULL & vlSelf->__VnbaTriggered.word(0U))) {
         VL_DBG_MSGF("         'nba' region trigger index 2 is active: @([true] __VdlySched.awaitingCurrentTime())\n");
@@ -148,8 +131,8 @@ VL_ATTR_COLD void Vsim___024root___ctor_var_reset(Vsim___024root* vlSelf) {
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___ctor_var_reset\n"); );
     // Body
-    vlSelf->sim__DOT__clk = VL_RAND_RESET_I(1);
-    vlSelf->sim__DOT__rstn = VL_RAND_RESET_I(1);
+    vlSelf->clk = VL_RAND_RESET_I(1);
+    vlSelf->rstn = VL_RAND_RESET_I(1);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out = VL_RAND_RESET_I(32);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type = VL_RAND_RESET_I(6);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme = VL_RAND_RESET_I(32);
@@ -193,8 +176,8 @@ VL_ATTR_COLD void Vsim___024root___ctor_var_reset(Vsim___024root* vlSelf) {
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data = VL_RAND_RESET_I(32);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte = VL_RAND_RESET_I(8);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word = VL_RAND_RESET_I(16);
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__clk__0 = VL_RAND_RESET_I(1);
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0 = VL_RAND_RESET_I(1);
+    vlSelf->__Vtrigprevexpr___TOP__clk__0 = VL_RAND_RESET_I(1);
+    vlSelf->__Vtrigprevexpr___TOP__rstn__0 = VL_RAND_RESET_I(1);
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }

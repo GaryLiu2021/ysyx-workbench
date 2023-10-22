@@ -1,9 +1,9 @@
 #ifndef DIFF_INTERFACE_H
 #define DIFF_INTERFACE_H
 
-#include "mmu.h"
-#include "sim.h"
-#include "../../include/common.h"
+#include <mmu.h>
+#include <sim.h>
+#include <common.h>
 #include <difftest-def.h>
 
 #include <vector>
@@ -25,24 +25,25 @@ static debug_module_config_t difftest_dm_config = {
   .support_impebreak = true
 };
 
-// 函数声明
-extern "C" {
+// // 函数声明
+// extern "C" {
 
+
+
+// }
     // 初始化函数
-    void difftest_init(int port);
+extern void difftest_init(int port);
 
-    // 内存拷贝函数
-    void difftest_memcpy(paddr_t addr, void* buf, size_t n, bool direction);
+// 内存拷贝函数
+extern void difftest_memcpy(paddr_t addr, void* buf, size_t n, bool direction);
 
-    // 寄存器拷贝函数
-    void difftest_regcpy(void* dut, bool direction);
+// 寄存器拷贝函数
+extern void difftest_regcpy(void* dut, bool direction);
 
-    // 执行函数
-    void difftest_exec(uint64_t n);
+// 执行函数
+extern void difftest_exec(uint64_t n);
 
-    // 触发中断函数
-    void difftest_raise_intr(uint64_t NO);
-
-}
+// 触发中断函数
+extern void difftest_raise_intr(uint64_t NO);
 
 #endif // DIFF_INTERFACE_H

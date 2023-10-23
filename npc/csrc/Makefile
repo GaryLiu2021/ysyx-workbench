@@ -29,6 +29,15 @@ CFLAGS = -CFLAGS "${INC_PATH} -L${lib_dir} -l${lib_name} -g"
 sim:
 	verilator ${VERILATOR_FLAGS} ${VERILATOR_INC} ${VERILOG_VSRCS} --top-module ${VERILOG_TOP} ${VERILATOR_CSRCS} ${CFLAGS}
 	@echo "\n\n\tSimulation Begin!\n\n"
+	./obj_dir/V${VERILOG_TOP} > log.txt
+	@echo "\n\n\tSimulation Finished!\n\n"
+	mv -i -v *.vcd ${wave_dir}
+
+gdb:
+	verilator ${VERILATOR_FLAGS} ${VERILATOR_INC} ${VERILOG_VSRCS} --top-module ${VERILOG_TOP} ${VERILATOR_CSRCS} ${CFLAGS}
+	@echo "\n\n\tSimulation Begin!\n\n"
 	gdb ./obj_dir/V${VERILOG_TOP}
 	@echo "\n\n\tSimulation Finished!\n\n"
 	mv -i -v *.vcd ${wave_dir}
+
+.PHONY: sim gdb

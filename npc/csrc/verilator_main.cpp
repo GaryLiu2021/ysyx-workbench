@@ -7,7 +7,6 @@
 #include <iostream>
 #include <string>
 #include <dlfcn.h>
-#include "vpi_user.h"
 
 uint64_t cycles = 0;
 uint32_t* ptr_gpr[32] = { NULL };
@@ -16,12 +15,17 @@ uint32_t* ptr_pc = NULL;
 bool c_break = false;
 
 extern "C" {
-    void set_ptr_gpr(svLogicVecVal gpr[32]) {
-        printf("Fuck!\n");
-        for (int i = 0;i <= 32;i++) {
-            ptr_gpr[i] = &gpr[i]->aval;
-        }
+
+    void set_ptr_gpr(const svOpenArrayHandle r) {
+        printf("array dimension is %d\n", svDimensions(r));
+        assert(0);
+        // ptr_gpr = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
     }
+
+    // void set_ptr_gpr(const svOpenArrayHandle r, int i) {
+    //     printf("Fuck!\n");
+    //     ptr_gpr[i] = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
+    // }
 
     void set_ptr_pc(const svOpenArrayHandle r) {
         printf("Fuck!!!\n");
@@ -41,7 +45,7 @@ extern "C" {
 void dump_gpr() {
     int i;
     for (i = 0; i < 32; i++) {
-        printf("gpr[%d] = 0x%x\n", i, *ptr_gpr[i]);
+        printf("gpr[%d] = 0x%8x\n", i, *ptr_gpr[i]);
     }
 }
 
@@ -77,14 +81,19 @@ int main(int argc, char** argv, char** env) {
     // m_tracep->open("wave.vcd");
 
     difftest_init(1234);
+    m_dut->clk = 0;
 
     while (c_break == false) {
-        m_dut->clk = !m_dut->clk;
-        cycles++;
+
+        m_dut->clk = !m_dut->clk; // 0 -> 1
         m_dut->eval();
-        // printf("\t\tCurrent Cycle: %d\n", cycles);
         dump_inst();
         dump_gpr();
+        m_dut->clk = !m_dut->clk;
+        m_dut->eval();
+        // printf("\t\tCurrent Cycle: %d\n", cycles);
+        cycles++;
+
         // printf("Optype: %d", optype);
 
         // m_tracep->dump(m_contextp->time());

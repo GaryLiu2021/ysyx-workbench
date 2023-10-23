@@ -418,7 +418,7 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
                                 >> 0x1fU)));
     }
     bufp->chgBit(oldp+155,(vlSelf->clk));
-    bufp->chgBit(oldp+156,(vlSelf->rstn));
+    bufp->chgBit(oldp+156,(vlSelf->sim__DOT__rstn));
     bufp->chgIData(oldp+157,(((0U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
                                ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme
                                : ((1U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))

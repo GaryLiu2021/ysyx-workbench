@@ -25,7 +25,7 @@ module gpr (
 );
 
     reg [31:0] gpr [31:0];
-    import "DPI-C" function void set_ptr_gpr(input logic [31:0] gpr [31:0]);
+    import "DPI-C" function void set_ptr_gpr(input logic [31:0] gpr [32]);
 
     wire reg_wr_en;
     wire [31:0] reg_data_rd;
@@ -65,6 +65,12 @@ module gpr (
             #(1) $finish;
         end
     end
+
+    // initial  begin
+    //     integer i;
+    //     for(i=0;i<32;i=i+1)
+    //         set_ptr_gpr(gpr[i],i);
+    // end
 
     initial set_ptr_gpr(gpr);
 

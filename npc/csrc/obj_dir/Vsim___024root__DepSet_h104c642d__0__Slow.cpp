@@ -11,7 +11,7 @@
 
 void Vsim___024unit____Vdpiimwrap_set_ptr_pc__Vdpioc2_TOP____024unit(const IData/*31:0*/ &inst);
 void Vsim___024root____Vdpiimwrap_sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__set_ptr_gpr_TOP(VlUnpacked<IData/*31:0*/, 32> gpr);
-extern const VlWide<12>/*383:0*/ Vsim__ConstPool__CONST_h7c27e68b_0;
+extern const VlWide<11>/*351:0*/ Vsim__ConstPool__CONST_hc642ccba_0;
 
 VL_ATTR_COLD void Vsim___024root___eval_initial__TOP(Vsim___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
@@ -86,7 +86,7 @@ VL_ATTR_COLD void Vsim___024root___eval_initial__TOP(Vsim___024root* vlSelf) {
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[0x1dU] = 0x7434U;
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[0x1eU] = 0x7435U;
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[0x1fU] = 0x7436U;
-    VL_READMEM_N(false, 32, 8192, 0, VL_CVT_PACK_STR_NW(12, Vsim__ConstPool__CONST_h7c27e68b_0)
+    VL_READMEM_N(false, 32, 8192, 0, VL_CVT_PACK_STR_NW(11, Vsim__ConstPool__CONST_hc642ccba_0)
                  ,  &(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__ram)
                  , 0, ~0ULL);
 }

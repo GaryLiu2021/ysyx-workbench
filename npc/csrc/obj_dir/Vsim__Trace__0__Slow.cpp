@@ -12,7 +12,6 @@ VL_ATTR_COLD void Vsim___024root__trace_init_sub__TOP__0(Vsim___024root* vlSelf,
     const int c = vlSymsp->__Vm_baseCode;
     // Body
     tracep->declBit(c+156,"clk", false,-1);
-    tracep->declBit(c+157,"rstn", false,-1);
     tracep->pushNamePrefix("sim ");
     tracep->declBit(c+156,"clk", false,-1);
     tracep->declBit(c+157,"rstn", false,-1);
@@ -582,7 +581,7 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
     bufp->fullBit(oldp+155,((vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1 
                              >> 0x1fU)));
     bufp->fullBit(oldp+156,(vlSelf->clk));
-    bufp->fullBit(oldp+157,(vlSelf->rstn));
+    bufp->fullBit(oldp+157,(vlSelf->sim__DOT__rstn));
     bufp->fullIData(oldp+158,(((0U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
                                 ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme
                                 : ((1U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))

@@ -32,11 +32,12 @@ void Vsim___024root___eval_triggers__act(Vsim___024root* vlSelf) {
                                      & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__clk__0))));
     vlSelf->__VactTriggered.set(1U, (((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__clk__0))) 
-                                     | ((~ (IData)(vlSelf->rstn)) 
-                                        & (IData)(vlSelf->__Vtrigprevexpr___TOP__rstn__0))));
+                                     | ((~ (IData)(vlSelf->sim__DOT__rstn)) 
+                                        & (IData)(vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0))));
     vlSelf->__VactTriggered.set(2U, vlSelf->__VdlySched.awaitingCurrentTime());
     vlSelf->__Vtrigprevexpr___TOP__clk__0 = vlSelf->clk;
-    vlSelf->__Vtrigprevexpr___TOP__rstn__0 = vlSelf->rstn;
+    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0 
+        = vlSelf->sim__DOT__rstn;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vsim___024root___dump_triggers__act(vlSelf);

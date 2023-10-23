@@ -17,7 +17,7 @@ module mem_ddr (
     reg [31:0] ram [MEM_WIDTH-1:0];
 
     initial begin
-        $readmemb("/home/sgap/projects/simple-riscv/src/mem.init", ram);
+        $readmemb("/home/sgap/ysyx-workbench/npc/vsrc/mem.init", ram);
     end
     
     wire    [31:0] rd_data;

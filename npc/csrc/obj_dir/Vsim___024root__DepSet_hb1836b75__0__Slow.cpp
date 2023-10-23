@@ -146,13 +146,13 @@ VL_ATTR_COLD void Vsim___024root___ctor_var_reset(Vsim___024root* vlSelf) {
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_I_type = VL_RAND_RESET_I(1);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_U_type = VL_RAND_RESET_I(1);
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
-        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__i = VL_RAND_RESET_I(32);
+    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__i = VL_RAND_RESET_I(32);
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
-        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT____VdfgTmp_h1d7be2bd__0 = 0;
+    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT____VdfgTmp_h1d7be2bd__0 = 0;
     for (int __Vi0 = 0; __Vi0 < 4096; ++__Vi0) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs[__Vi0] = VL_RAND_RESET_I(32);
     }

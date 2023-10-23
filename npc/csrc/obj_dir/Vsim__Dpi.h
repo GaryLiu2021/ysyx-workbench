@@ -20,10 +20,10 @@ extern "C" {
     extern void call_ebreak();
     // DPI import at ../vsrc/../vsrc/top.v:4:30
     extern void call_ecall();
-    // DPI import at ../vsrc/../vsrc/regs_i.v:3:30
-    extern void set_gpr_ptr(const svOpenArrayHandle a);
+    // DPI import at ../vsrc/../vsrc/regs_i.v:28:34
+    extern void set_ptr_gpr(const svLogicVecVal* gpr);
     // DPI import at ../vsrc/../vsrc/top.v:2:30
-    extern void set_inst_ptr(const svOpenArrayHandle inst);
+    extern void set_ptr_pc(const svOpenArrayHandle inst);
 
 #ifdef __cplusplus
 }

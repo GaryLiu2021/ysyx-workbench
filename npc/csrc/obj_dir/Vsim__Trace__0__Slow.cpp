@@ -39,37 +39,7 @@ VL_ATTR_COLD void Vsim___024root__trace_init_sub__TOP__0(Vsim___024root* vlSelf,
     tracep->declBus(c+115,"mem_data_out", false,-1, 31,0);
     tracep->declBus(c+116,"mem_inst_out", false,-1, 31,0);
     tracep->declBus(c+117,"csr_rd_data", false,-1, 31,0);
-    tracep->pushNamePrefix("u_mem_ddr ");
-    tracep->declBit(c+156,"clk", false,-1);
-    tracep->declBit(c+157,"rstn", false,-1);
-    tracep->declBit(c+114,"mem_wr_en", false,-1);
-    tracep->declBus(c+103,"mem_rw_type", false,-1, 2,0);
-    tracep->declBus(c+111,"mem_data_addr", false,-1, 31,0);
-    tracep->declBus(c+113,"mem_data_in", false,-1, 31,0);
-    tracep->declBus(c+115,"mem_data_out", false,-1, 31,0);
-    tracep->declBus(c+65,"mem_inst_addr", false,-1, 31,0);
-    tracep->declBus(c+116,"mem_inst_out", false,-1, 31,0);
-    tracep->declBus(c+159,"MEM_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+118,"rd_data", false,-1, 31,0);
-    tracep->declBus(c+119,"wr_data_byte", false,-1, 31,0);
-    tracep->declBus(c+120,"wr_data_half_word", false,-1, 31,0);
-    tracep->declBus(c+121,"wr_data", false,-1, 31,0);
-    tracep->declBus(c+122,"rd_data_byte", false,-1, 7,0);
-    tracep->declBus(c+123,"rd_data_half_word", false,-1, 15,0);
-    tracep->declBus(c+124,"rd_data_byte_ext", false,-1, 31,0);
-    tracep->declBus(c+125,"rd_data_half_word_ext", false,-1, 31,0);
-    tracep->popNamePrefix(1);
-    tracep->pushNamePrefix("u_reg_pc ");
-    tracep->declBit(c+156,"clk", false,-1);
-    tracep->declBit(c+157,"rstn", false,-1);
-    tracep->declBus(c+102,"op_type", false,-1, 5,0);
-    tracep->declBus(c+111,"alu_data_out", false,-1, 31,0);
-    tracep->declBus(c+112,"alu_pc_out", false,-1, 31,0);
-    tracep->declBus(c+66,"alu_pc_seq", false,-1, 31,0);
-    tracep->declBus(c+65,"pc_out", false,-1, 31,0);
-    tracep->declBus(c+126,"pc_new", false,-1, 31,0);
-    tracep->popNamePrefix(1);
-    tracep->pushNamePrefix("u_regs ");
+    tracep->pushNamePrefix("u_gpr ");
     for (int i = 0; i < 32; ++i) {
         tracep->declBus(c+1+i*1,"reg_name", true,(i+0), 31,0);
     }
@@ -89,11 +59,41 @@ VL_ATTR_COLD void Vsim___024root__trace_init_sub__TOP__0(Vsim___024root* vlSelf,
     tracep->declBus(c+102,"op_type", false,-1, 5,0);
     tracep->declBus(c+101,"opcode", false,-1, 6,0);
     for (int i = 0; i < 32; ++i) {
-        tracep->declBus(c+67+i*1,"regs", true,(i+0), 31,0);
+        tracep->declBus(c+67+i*1,"gpr", true,(i+0), 31,0);
     }
-    tracep->declBit(c+127,"reg_wr_en", false,-1);
+    tracep->declBit(c+118,"reg_wr_en", false,-1);
     tracep->declBus(c+158,"reg_data_rd", false,-1, 31,0);
     tracep->declBus(c+99,"i", false,-1, 31,0);
+    tracep->popNamePrefix(1);
+    tracep->pushNamePrefix("u_mem_ddr ");
+    tracep->declBit(c+156,"clk", false,-1);
+    tracep->declBit(c+157,"rstn", false,-1);
+    tracep->declBit(c+114,"mem_wr_en", false,-1);
+    tracep->declBus(c+103,"mem_rw_type", false,-1, 2,0);
+    tracep->declBus(c+111,"mem_data_addr", false,-1, 31,0);
+    tracep->declBus(c+113,"mem_data_in", false,-1, 31,0);
+    tracep->declBus(c+115,"mem_data_out", false,-1, 31,0);
+    tracep->declBus(c+65,"mem_inst_addr", false,-1, 31,0);
+    tracep->declBus(c+116,"mem_inst_out", false,-1, 31,0);
+    tracep->declBus(c+159,"MEM_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+119,"rd_data", false,-1, 31,0);
+    tracep->declBus(c+120,"wr_data_byte", false,-1, 31,0);
+    tracep->declBus(c+121,"wr_data_half_word", false,-1, 31,0);
+    tracep->declBus(c+122,"wr_data", false,-1, 31,0);
+    tracep->declBus(c+123,"rd_data_byte", false,-1, 7,0);
+    tracep->declBus(c+124,"rd_data_half_word", false,-1, 15,0);
+    tracep->declBus(c+125,"rd_data_byte_ext", false,-1, 31,0);
+    tracep->declBus(c+126,"rd_data_half_word_ext", false,-1, 31,0);
+    tracep->popNamePrefix(1);
+    tracep->pushNamePrefix("u_reg_pc ");
+    tracep->declBit(c+156,"clk", false,-1);
+    tracep->declBit(c+157,"rstn", false,-1);
+    tracep->declBus(c+102,"op_type", false,-1, 5,0);
+    tracep->declBus(c+111,"alu_data_out", false,-1, 31,0);
+    tracep->declBus(c+112,"alu_pc_out", false,-1, 31,0);
+    tracep->declBus(c+66,"alu_pc_seq", false,-1, 31,0);
+    tracep->declBus(c+65,"pc_out", false,-1, 31,0);
+    tracep->declBus(c+127,"pc_new", false,-1, 31,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("u_regs_csr ");
     tracep->declBit(c+156,"clk", false,-1);
@@ -210,38 +210,38 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
     // Init
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode);
     // Body
-    bufp->fullIData(oldp+1,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[0]),32);
-    bufp->fullIData(oldp+2,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[1]),32);
-    bufp->fullIData(oldp+3,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[2]),32);
-    bufp->fullIData(oldp+4,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[3]),32);
-    bufp->fullIData(oldp+5,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[4]),32);
-    bufp->fullIData(oldp+6,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[5]),32);
-    bufp->fullIData(oldp+7,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[6]),32);
-    bufp->fullIData(oldp+8,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[7]),32);
-    bufp->fullIData(oldp+9,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[8]),32);
-    bufp->fullIData(oldp+10,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[9]),32);
-    bufp->fullIData(oldp+11,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[10]),32);
-    bufp->fullIData(oldp+12,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[11]),32);
-    bufp->fullIData(oldp+13,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[12]),32);
-    bufp->fullIData(oldp+14,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[13]),32);
-    bufp->fullIData(oldp+15,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[14]),32);
-    bufp->fullIData(oldp+16,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[15]),32);
-    bufp->fullIData(oldp+17,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[16]),32);
-    bufp->fullIData(oldp+18,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[17]),32);
-    bufp->fullIData(oldp+19,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[18]),32);
-    bufp->fullIData(oldp+20,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[19]),32);
-    bufp->fullIData(oldp+21,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[20]),32);
-    bufp->fullIData(oldp+22,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[21]),32);
-    bufp->fullIData(oldp+23,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[22]),32);
-    bufp->fullIData(oldp+24,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[23]),32);
-    bufp->fullIData(oldp+25,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[24]),32);
-    bufp->fullIData(oldp+26,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[25]),32);
-    bufp->fullIData(oldp+27,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[26]),32);
-    bufp->fullIData(oldp+28,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[27]),32);
-    bufp->fullIData(oldp+29,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[28]),32);
-    bufp->fullIData(oldp+30,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[29]),32);
-    bufp->fullIData(oldp+31,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[30]),32);
-    bufp->fullIData(oldp+32,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[31]),32);
+    bufp->fullIData(oldp+1,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[0]),32);
+    bufp->fullIData(oldp+2,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[1]),32);
+    bufp->fullIData(oldp+3,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[2]),32);
+    bufp->fullIData(oldp+4,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[3]),32);
+    bufp->fullIData(oldp+5,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[4]),32);
+    bufp->fullIData(oldp+6,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[5]),32);
+    bufp->fullIData(oldp+7,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[6]),32);
+    bufp->fullIData(oldp+8,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[7]),32);
+    bufp->fullIData(oldp+9,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[8]),32);
+    bufp->fullIData(oldp+10,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[9]),32);
+    bufp->fullIData(oldp+11,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[10]),32);
+    bufp->fullIData(oldp+12,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[11]),32);
+    bufp->fullIData(oldp+13,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[12]),32);
+    bufp->fullIData(oldp+14,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[13]),32);
+    bufp->fullIData(oldp+15,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[14]),32);
+    bufp->fullIData(oldp+16,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[15]),32);
+    bufp->fullIData(oldp+17,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[16]),32);
+    bufp->fullIData(oldp+18,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[17]),32);
+    bufp->fullIData(oldp+19,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[18]),32);
+    bufp->fullIData(oldp+20,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[19]),32);
+    bufp->fullIData(oldp+21,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[20]),32);
+    bufp->fullIData(oldp+22,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[21]),32);
+    bufp->fullIData(oldp+23,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[22]),32);
+    bufp->fullIData(oldp+24,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[23]),32);
+    bufp->fullIData(oldp+25,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[24]),32);
+    bufp->fullIData(oldp+26,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[25]),32);
+    bufp->fullIData(oldp+27,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[26]),32);
+    bufp->fullIData(oldp+28,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[27]),32);
+    bufp->fullIData(oldp+29,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[28]),32);
+    bufp->fullIData(oldp+30,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[29]),32);
+    bufp->fullIData(oldp+31,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[30]),32);
+    bufp->fullIData(oldp+32,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[31]),32);
     bufp->fullIData(oldp+33,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[0]),32);
     bufp->fullIData(oldp+34,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[1]),32);
     bufp->fullIData(oldp+35,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[2]),32);
@@ -276,39 +276,39 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
     bufp->fullIData(oldp+64,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[31]),32);
     bufp->fullIData(oldp+65,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out),32);
     bufp->fullIData(oldp+66,(((IData)(4U) + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out)),32);
-    bufp->fullIData(oldp+67,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[0]),32);
-    bufp->fullIData(oldp+68,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[1]),32);
-    bufp->fullIData(oldp+69,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[2]),32);
-    bufp->fullIData(oldp+70,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[3]),32);
-    bufp->fullIData(oldp+71,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[4]),32);
-    bufp->fullIData(oldp+72,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[5]),32);
-    bufp->fullIData(oldp+73,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[6]),32);
-    bufp->fullIData(oldp+74,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[7]),32);
-    bufp->fullIData(oldp+75,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[8]),32);
-    bufp->fullIData(oldp+76,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[9]),32);
-    bufp->fullIData(oldp+77,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[10]),32);
-    bufp->fullIData(oldp+78,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[11]),32);
-    bufp->fullIData(oldp+79,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[12]),32);
-    bufp->fullIData(oldp+80,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[13]),32);
-    bufp->fullIData(oldp+81,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[14]),32);
-    bufp->fullIData(oldp+82,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[15]),32);
-    bufp->fullIData(oldp+83,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[16]),32);
-    bufp->fullIData(oldp+84,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[17]),32);
-    bufp->fullIData(oldp+85,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[18]),32);
-    bufp->fullIData(oldp+86,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[19]),32);
-    bufp->fullIData(oldp+87,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[20]),32);
-    bufp->fullIData(oldp+88,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[21]),32);
-    bufp->fullIData(oldp+89,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[22]),32);
-    bufp->fullIData(oldp+90,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[23]),32);
-    bufp->fullIData(oldp+91,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[24]),32);
-    bufp->fullIData(oldp+92,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[25]),32);
-    bufp->fullIData(oldp+93,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[26]),32);
-    bufp->fullIData(oldp+94,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[27]),32);
-    bufp->fullIData(oldp+95,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[28]),32);
-    bufp->fullIData(oldp+96,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[29]),32);
-    bufp->fullIData(oldp+97,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[30]),32);
-    bufp->fullIData(oldp+98,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[31]),32);
-    bufp->fullIData(oldp+99,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__i),32);
+    bufp->fullIData(oldp+67,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[0]),32);
+    bufp->fullIData(oldp+68,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[1]),32);
+    bufp->fullIData(oldp+69,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[2]),32);
+    bufp->fullIData(oldp+70,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[3]),32);
+    bufp->fullIData(oldp+71,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[4]),32);
+    bufp->fullIData(oldp+72,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[5]),32);
+    bufp->fullIData(oldp+73,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[6]),32);
+    bufp->fullIData(oldp+74,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[7]),32);
+    bufp->fullIData(oldp+75,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[8]),32);
+    bufp->fullIData(oldp+76,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[9]),32);
+    bufp->fullIData(oldp+77,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[10]),32);
+    bufp->fullIData(oldp+78,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[11]),32);
+    bufp->fullIData(oldp+79,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[12]),32);
+    bufp->fullIData(oldp+80,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[13]),32);
+    bufp->fullIData(oldp+81,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[14]),32);
+    bufp->fullIData(oldp+82,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[15]),32);
+    bufp->fullIData(oldp+83,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[16]),32);
+    bufp->fullIData(oldp+84,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[17]),32);
+    bufp->fullIData(oldp+85,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[18]),32);
+    bufp->fullIData(oldp+86,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[19]),32);
+    bufp->fullIData(oldp+87,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[20]),32);
+    bufp->fullIData(oldp+88,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[21]),32);
+    bufp->fullIData(oldp+89,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[22]),32);
+    bufp->fullIData(oldp+90,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[23]),32);
+    bufp->fullIData(oldp+91,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[24]),32);
+    bufp->fullIData(oldp+92,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[25]),32);
+    bufp->fullIData(oldp+93,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[26]),32);
+    bufp->fullIData(oldp+94,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[27]),32);
+    bufp->fullIData(oldp+95,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[28]),32);
+    bufp->fullIData(oldp+96,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[29]),32);
+    bufp->fullIData(oldp+97,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[30]),32);
+    bufp->fullIData(oldp+98,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[31]),32);
+    bufp->fullIData(oldp+99,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__i),32);
     bufp->fullIData(oldp+100,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i),32);
     bufp->fullCData(oldp+101,((0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)),7);
     bufp->fullCData(oldp+102,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type),6);
@@ -353,8 +353,13 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
                                     : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data))),32);
     bufp->fullIData(oldp+116,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out),32);
     bufp->fullIData(oldp+117,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__csr_rd_data),32);
-    bufp->fullIData(oldp+118,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data),32);
-    bufp->fullIData(oldp+119,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
+    bufp->fullBit(oldp+118,(((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
+                             & ((0x23U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
+                                & ((0xfU != (0x7fU 
+                                             & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
+                                   & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT____VdfgTmp_h1d7be2bd__0))))));
+    bufp->fullIData(oldp+119,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data),32);
+    bufp->fullIData(oldp+120,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                 ? ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                     ? ((vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in 
                                         << 0x18U) | 
@@ -377,13 +382,13 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
                                     : ((0xffffff00U 
                                         & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data) 
                                        | (0xffU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in))))),32);
-    bufp->fullIData(oldp+120,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
+    bufp->fullIData(oldp+121,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                 ? ((vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in 
                                     << 0x10U) | (0xffffU 
                                                  & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data))
                                 : ((0xffff0000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data) 
                                    | (0xffffU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in)))),32);
-    bufp->fullIData(oldp+121,(((0U == (3U & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+    bufp->fullIData(oldp+122,(((0U == (3U & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
                                              >> 0xcU)))
                                 ? ((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                     ? ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
@@ -422,26 +427,21 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
                                            | (0xffffU 
                                               & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in)))
                                     : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in))),32);
-    bufp->fullCData(oldp+122,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte),8);
-    bufp->fullSData(oldp+123,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word),16);
-    bufp->fullIData(oldp+124,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
+    bufp->fullCData(oldp+123,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte),8);
+    bufp->fullSData(oldp+124,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word),16);
+    bufp->fullIData(oldp+125,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
                                 ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)
                                 : (((- (IData)((1U 
                                                 & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte) 
                                                    >> 7U)))) 
                                     << 8U) | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)))),32);
-    bufp->fullIData(oldp+125,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
+    bufp->fullIData(oldp+126,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
                                 ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)
                                 : (((- (IData)((1U 
                                                 & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word) 
                                                    >> 0xfU)))) 
                                     << 0x10U) | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)))),32);
-    bufp->fullIData(oldp+126,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new),32);
-    bufp->fullBit(oldp+127,(((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                             & ((0x23U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                                & ((0xfU != (0x7fU 
-                                             & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                                   & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT____VdfgTmp_h1d7be2bd__0))))));
+    bufp->fullIData(oldp+127,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new),32);
     bufp->fullBit(oldp+128,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_wr_en));
     bufp->fullIData(oldp+129,(((0x29U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
                                 ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1

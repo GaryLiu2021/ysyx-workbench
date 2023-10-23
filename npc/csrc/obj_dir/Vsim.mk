@@ -35,7 +35,7 @@ VM_PREFIX = Vsim
 VM_MODPREFIX = Vsim
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
-	-I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/fesvr -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/riscv -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/disasm -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/customext -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/fdt -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/softfloat -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/spike_main -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/spike_dasm -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/build -I/home/sgap/ysyx-workbench/nemu/include -L/home/sgap/ysyx-workbench/nemu/tools/spike-diff/build -lriscv32-spike-so \
+	-I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/fesvr -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/riscv -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/disasm -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/customext -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/fdt -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/softfloat -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/spike_main -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/spike_dasm -I/home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo/build -I/home/sgap/ysyx-workbench/nemu/include -L/home/sgap/ysyx-workbench/nemu/tools/spike-diff/build -lriscv32-spike-so -g \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \

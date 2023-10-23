@@ -23,7 +23,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     CData/*5:0*/ sim__DOT__u_single_cycle_cpu__DOT__op_type;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_I_type;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_U_type;
-    CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT____VdfgTmp_h1d7be2bd__0;
+    CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT____VdfgTmp_h1d7be2bd__0;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_wr_en;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_rd_en;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_carry_in;
@@ -42,7 +42,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__csr_rd_data;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new;
-    IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__i;
+    IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__i;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in2;
@@ -53,8 +53,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data;
     IData/*31:0*/ __VstlIterCount;
     IData/*31:0*/ __VactIterCount;
-    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs;
-    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name;
+    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr;
+    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name;
     VlUnpacked<IData/*31:0*/, 4096> sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs;
     VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name;
     VlUnpacked<IData/*31:0*/, 8192> sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__ram;

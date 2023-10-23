@@ -2,23 +2,30 @@
 #include <verilated_vcd_c.h>
 #include "Vsim.h"
 #include "verilated_dpi.h"
+#include <svdpi.h>
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include <dlfcn.h>
+#include "vpi_user.h"
 
 uint64_t cycles = 0;
-uint32_t* cpu_gpr = NULL;
-uint32_t* inst_ptr = NULL;
+uint32_t* ptr_gpr[32] = { NULL };
+uint32_t* ptr_pc = NULL;
 
 bool c_break = false;
 
 extern "C" {
-    void set_gpr_ptr(const svOpenArrayHandle r) {
-        cpu_gpr = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
+    void set_ptr_gpr(svLogicVecVal gpr[32]) {
+        printf("Fuck!\n");
+        for (int i = 0;i <= 32;i++) {
+            ptr_gpr[i] = &gpr[i]->aval;
+        }
     }
 
-    void set_inst_ptr(const svOpenArrayHandle r) {
-        inst_ptr = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
+    void set_ptr_pc(const svOpenArrayHandle r) {
+        printf("Fuck!!!\n");
+        ptr_pc = (uint32_t*)(((VerilatedDpiOpenVar*)r)->datap());
     }
 
     void call_ebreak() {
@@ -30,17 +37,18 @@ extern "C" {
     }
 }
 
+
 void dump_gpr() {
     int i;
     for (i = 0; i < 32; i++) {
-        printf("gpr[%d] = 0x%x\n", i, cpu_gpr[i]);
+        printf("gpr[%d] = 0x%x\n", i, *ptr_gpr[i]);
     }
 }
 
 void dump_inst() {
     // char s[40];
-    // itoa(*inst_ptr, s, 2);
-    printf("inst = %x\n", inst_ptr);
+    // itoa(*ptr_pc, s, 2);
+    printf("inst = %x\n", *ptr_pc);
 }
 
 int main(int argc, char** argv, char** env) {
@@ -60,6 +68,7 @@ int main(int argc, char** argv, char** env) {
         return 1;
     }
 
+    Verilated::traceEverOn(true);
     // VerilatedVcdC* m_tracep = new VerilatedVcdC;         // 波形
     Vsim* m_dut = new Vsim;
     int optype;
@@ -72,10 +81,11 @@ int main(int argc, char** argv, char** env) {
     while (c_break == false) {
         m_dut->clk = !m_dut->clk;
         cycles++;
+        m_dut->eval();
         // printf("\t\tCurrent Cycle: %d\n", cycles);
         dump_inst();
-        // printf("Optype: %d", optype);
         dump_gpr();
+        // printf("Optype: %d", optype);
 
         // m_tracep->dump(m_contextp->time());
         // int a = rand();

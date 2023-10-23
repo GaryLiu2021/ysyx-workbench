@@ -9,6 +9,16 @@
 #include "Vsim__Syms.h"
 #include "Vsim___024root.h"
 
+extern "C" void set_ptr_gpr(const svLogicVecVal* gpr);
+
+VL_INLINE_OPT void Vsim___024root____Vdpiimwrap_sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__set_ptr_gpr_TOP(VlUnpacked<IData/*31:0*/, 32> gpr) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root____Vdpiimwrap_sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__set_ptr_gpr_TOP\n"); );
+    // Body
+    svLogicVecVal gpr__Vcvt[32];
+    for (size_t gpr__Vidx = 0; gpr__Vidx < 32; ++gpr__Vidx) VL_SET_SVLV_I(32, gpr__Vcvt + 1 * gpr__Vidx, (&gpr[0])[gpr__Vidx]);
+    set_ptr_gpr(gpr__Vcvt);
+}
+
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vsim___024root___dump_triggers__act(Vsim___024root* vlSelf);
 #endif  // VL_DEBUG
@@ -82,7 +92,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__0(Vsim___024root* vlSelf) 
     if (VL_UNLIKELY(((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
                      & ((0x23U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
                         & ((0xfU != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                           & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT____VdfgTmp_h1d7be2bd__0)))))) {
+                           & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT____VdfgTmp_h1d7be2bd__0)))))) {
         VL_WRITEF("writing data %0d into %0s\n",32,
                   ((0U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
                     ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme
@@ -121,7 +131,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__0(Vsim___024root* vlSelf) 
                                                    | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)))
                                             : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data))
                                     : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out))))),
-                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name
+                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name
                   [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
                              >> 7U))]);
     }

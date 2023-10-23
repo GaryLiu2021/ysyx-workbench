@@ -1,10 +1,6 @@
 `include "inst_define.v"
 
-import "DPI-C" function void set_gpr_ptr(input logic [31:0] a []);
-
-// import "DPI-C" function void dump_optype;
-
-module regs (
+module gpr (
     input               clk,
     input               rstn,
 
@@ -28,7 +24,8 @@ module regs (
     input           [6:0]   opcode
 );
 
-    reg [31:0] regs [31:0];
+    reg [31:0] gpr [31:0];
+    import "DPI-C" function void set_ptr_gpr(input logic [31:0] gpr [31:0]);
 
     wire reg_wr_en;
     wire [31:0] reg_data_rd;
@@ -44,13 +41,13 @@ module regs (
     always @(posedge clk or negedge rstn) begin
         if(!rstn)
             for(i = 0 ; i < 32 ; i = i + 1)
-                regs[i] <= 32'd0;
+                gpr[i] <= 32'd0;
         else if(reg_wr_en)
-            regs[reg_addr_rd] <= (reg_addr_rd == 5'd0) ? 32'd0 : reg_data_rd;
+            gpr[reg_addr_rd] <= (reg_addr_rd == 5'd0) ? 32'd0 : reg_data_rd;
     end
 
-    assign reg_data_rs1 = regs[reg_addr_rs1];
-    assign reg_data_rs2 = regs[reg_addr_rs2];
+    assign reg_data_rs1 = gpr[reg_addr_rs1];
+    assign reg_data_rs2 = gpr[reg_addr_rs2];
 
 `define __DEBUG
 `include "./util"
@@ -60,8 +57,8 @@ module regs (
     end
 
     always @(posedge clk) begin
-        if(op_type == `op_type_ecall && regs[17] == 32'd93) begin
-            if(regs[10] == 'd0)
+        if(op_type == `op_type_ecall && gpr[17] == 32'd93) begin
+            if(gpr[10] == 'd0)
                 $display("Pass!!!");
             else
                 $display("Fail!!!");
@@ -69,6 +66,6 @@ module regs (
         end
     end
 
-    initial set_gpr_ptr(regs);
+    initial set_ptr_gpr(gpr);
 
-endmodule //regs
+endmodule //gpr

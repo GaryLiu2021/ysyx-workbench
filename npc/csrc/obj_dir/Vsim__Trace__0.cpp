@@ -24,38 +24,38 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode + 1);
     // Body
     if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[1U])) {
-        bufp->chgIData(oldp+0,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[0]),32);
-        bufp->chgIData(oldp+1,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[1]),32);
-        bufp->chgIData(oldp+2,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[2]),32);
-        bufp->chgIData(oldp+3,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[3]),32);
-        bufp->chgIData(oldp+4,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[4]),32);
-        bufp->chgIData(oldp+5,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[5]),32);
-        bufp->chgIData(oldp+6,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[6]),32);
-        bufp->chgIData(oldp+7,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[7]),32);
-        bufp->chgIData(oldp+8,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[8]),32);
-        bufp->chgIData(oldp+9,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[9]),32);
-        bufp->chgIData(oldp+10,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[10]),32);
-        bufp->chgIData(oldp+11,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[11]),32);
-        bufp->chgIData(oldp+12,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[12]),32);
-        bufp->chgIData(oldp+13,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[13]),32);
-        bufp->chgIData(oldp+14,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[14]),32);
-        bufp->chgIData(oldp+15,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[15]),32);
-        bufp->chgIData(oldp+16,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[16]),32);
-        bufp->chgIData(oldp+17,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[17]),32);
-        bufp->chgIData(oldp+18,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[18]),32);
-        bufp->chgIData(oldp+19,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[19]),32);
-        bufp->chgIData(oldp+20,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[20]),32);
-        bufp->chgIData(oldp+21,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[21]),32);
-        bufp->chgIData(oldp+22,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[22]),32);
-        bufp->chgIData(oldp+23,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[23]),32);
-        bufp->chgIData(oldp+24,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[24]),32);
-        bufp->chgIData(oldp+25,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[25]),32);
-        bufp->chgIData(oldp+26,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[26]),32);
-        bufp->chgIData(oldp+27,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[27]),32);
-        bufp->chgIData(oldp+28,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[28]),32);
-        bufp->chgIData(oldp+29,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[29]),32);
-        bufp->chgIData(oldp+30,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[30]),32);
-        bufp->chgIData(oldp+31,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__reg_name[31]),32);
+        bufp->chgIData(oldp+0,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[0]),32);
+        bufp->chgIData(oldp+1,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[1]),32);
+        bufp->chgIData(oldp+2,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[2]),32);
+        bufp->chgIData(oldp+3,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[3]),32);
+        bufp->chgIData(oldp+4,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[4]),32);
+        bufp->chgIData(oldp+5,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[5]),32);
+        bufp->chgIData(oldp+6,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[6]),32);
+        bufp->chgIData(oldp+7,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[7]),32);
+        bufp->chgIData(oldp+8,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[8]),32);
+        bufp->chgIData(oldp+9,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[9]),32);
+        bufp->chgIData(oldp+10,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[10]),32);
+        bufp->chgIData(oldp+11,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[11]),32);
+        bufp->chgIData(oldp+12,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[12]),32);
+        bufp->chgIData(oldp+13,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[13]),32);
+        bufp->chgIData(oldp+14,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[14]),32);
+        bufp->chgIData(oldp+15,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[15]),32);
+        bufp->chgIData(oldp+16,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[16]),32);
+        bufp->chgIData(oldp+17,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[17]),32);
+        bufp->chgIData(oldp+18,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[18]),32);
+        bufp->chgIData(oldp+19,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[19]),32);
+        bufp->chgIData(oldp+20,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[20]),32);
+        bufp->chgIData(oldp+21,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[21]),32);
+        bufp->chgIData(oldp+22,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[22]),32);
+        bufp->chgIData(oldp+23,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[23]),32);
+        bufp->chgIData(oldp+24,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[24]),32);
+        bufp->chgIData(oldp+25,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[25]),32);
+        bufp->chgIData(oldp+26,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[26]),32);
+        bufp->chgIData(oldp+27,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[27]),32);
+        bufp->chgIData(oldp+28,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[28]),32);
+        bufp->chgIData(oldp+29,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[29]),32);
+        bufp->chgIData(oldp+30,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[30]),32);
+        bufp->chgIData(oldp+31,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name[31]),32);
         bufp->chgIData(oldp+32,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[0]),32);
         bufp->chgIData(oldp+33,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[1]),32);
         bufp->chgIData(oldp+34,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name[2]),32);
@@ -92,39 +92,39 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
     if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[2U])) {
         bufp->chgIData(oldp+64,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out),32);
         bufp->chgIData(oldp+65,(((IData)(4U) + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out)),32);
-        bufp->chgIData(oldp+66,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[0]),32);
-        bufp->chgIData(oldp+67,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[1]),32);
-        bufp->chgIData(oldp+68,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[2]),32);
-        bufp->chgIData(oldp+69,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[3]),32);
-        bufp->chgIData(oldp+70,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[4]),32);
-        bufp->chgIData(oldp+71,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[5]),32);
-        bufp->chgIData(oldp+72,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[6]),32);
-        bufp->chgIData(oldp+73,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[7]),32);
-        bufp->chgIData(oldp+74,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[8]),32);
-        bufp->chgIData(oldp+75,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[9]),32);
-        bufp->chgIData(oldp+76,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[10]),32);
-        bufp->chgIData(oldp+77,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[11]),32);
-        bufp->chgIData(oldp+78,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[12]),32);
-        bufp->chgIData(oldp+79,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[13]),32);
-        bufp->chgIData(oldp+80,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[14]),32);
-        bufp->chgIData(oldp+81,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[15]),32);
-        bufp->chgIData(oldp+82,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[16]),32);
-        bufp->chgIData(oldp+83,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[17]),32);
-        bufp->chgIData(oldp+84,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[18]),32);
-        bufp->chgIData(oldp+85,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[19]),32);
-        bufp->chgIData(oldp+86,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[20]),32);
-        bufp->chgIData(oldp+87,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[21]),32);
-        bufp->chgIData(oldp+88,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[22]),32);
-        bufp->chgIData(oldp+89,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[23]),32);
-        bufp->chgIData(oldp+90,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[24]),32);
-        bufp->chgIData(oldp+91,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[25]),32);
-        bufp->chgIData(oldp+92,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[26]),32);
-        bufp->chgIData(oldp+93,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[27]),32);
-        bufp->chgIData(oldp+94,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[28]),32);
-        bufp->chgIData(oldp+95,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[29]),32);
-        bufp->chgIData(oldp+96,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[30]),32);
-        bufp->chgIData(oldp+97,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__regs[31]),32);
-        bufp->chgIData(oldp+98,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT__i),32);
+        bufp->chgIData(oldp+66,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[0]),32);
+        bufp->chgIData(oldp+67,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[1]),32);
+        bufp->chgIData(oldp+68,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[2]),32);
+        bufp->chgIData(oldp+69,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[3]),32);
+        bufp->chgIData(oldp+70,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[4]),32);
+        bufp->chgIData(oldp+71,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[5]),32);
+        bufp->chgIData(oldp+72,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[6]),32);
+        bufp->chgIData(oldp+73,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[7]),32);
+        bufp->chgIData(oldp+74,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[8]),32);
+        bufp->chgIData(oldp+75,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[9]),32);
+        bufp->chgIData(oldp+76,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[10]),32);
+        bufp->chgIData(oldp+77,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[11]),32);
+        bufp->chgIData(oldp+78,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[12]),32);
+        bufp->chgIData(oldp+79,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[13]),32);
+        bufp->chgIData(oldp+80,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[14]),32);
+        bufp->chgIData(oldp+81,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[15]),32);
+        bufp->chgIData(oldp+82,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[16]),32);
+        bufp->chgIData(oldp+83,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[17]),32);
+        bufp->chgIData(oldp+84,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[18]),32);
+        bufp->chgIData(oldp+85,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[19]),32);
+        bufp->chgIData(oldp+86,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[20]),32);
+        bufp->chgIData(oldp+87,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[21]),32);
+        bufp->chgIData(oldp+88,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[22]),32);
+        bufp->chgIData(oldp+89,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[23]),32);
+        bufp->chgIData(oldp+90,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[24]),32);
+        bufp->chgIData(oldp+91,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[25]),32);
+        bufp->chgIData(oldp+92,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[26]),32);
+        bufp->chgIData(oldp+93,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[27]),32);
+        bufp->chgIData(oldp+94,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[28]),32);
+        bufp->chgIData(oldp+95,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[29]),32);
+        bufp->chgIData(oldp+96,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[30]),32);
+        bufp->chgIData(oldp+97,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[31]),32);
+        bufp->chgIData(oldp+98,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__i),32);
         bufp->chgIData(oldp+99,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i),32);
     }
     if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[3U])) {
@@ -173,8 +173,14 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
                                        : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data))),32);
         bufp->chgIData(oldp+115,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out),32);
         bufp->chgIData(oldp+116,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__csr_rd_data),32);
-        bufp->chgIData(oldp+117,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data),32);
-        bufp->chgIData(oldp+118,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
+        bufp->chgBit(oldp+117,(((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
+                                & ((0x23U != (0x7fU 
+                                              & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
+                                   & ((0xfU != (0x7fU 
+                                                & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
+                                      & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT____VdfgTmp_h1d7be2bd__0))))));
+        bufp->chgIData(oldp+118,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data),32);
+        bufp->chgIData(oldp+119,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                    ? ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                        ? ((vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in 
                                            << 0x18U) 
@@ -199,14 +205,14 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
                                            & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data) 
                                           | (0xffU 
                                              & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in))))),32);
-        bufp->chgIData(oldp+119,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
+        bufp->chgIData(oldp+120,(((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                    ? ((vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in 
                                        << 0x10U) | 
                                       (0xffffU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data))
                                    : ((0xffff0000U 
                                        & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data) 
                                       | (0xffffU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in)))),32);
-        bufp->chgIData(oldp+120,(((0U == (3U & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+        bufp->chgIData(oldp+121,(((0U == (3U & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
                                                 >> 0xcU)))
                                    ? ((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
                                        ? ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
@@ -246,27 +252,21 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
                                               | (0xffffU 
                                                  & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in)))
                                        : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in))),32);
-        bufp->chgCData(oldp+121,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte),8);
-        bufp->chgSData(oldp+122,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word),16);
-        bufp->chgIData(oldp+123,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
+        bufp->chgCData(oldp+122,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte),8);
+        bufp->chgSData(oldp+123,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word),16);
+        bufp->chgIData(oldp+124,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
                                    ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)
                                    : (((- (IData)((1U 
                                                    & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte) 
                                                       >> 7U)))) 
                                        << 8U) | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)))),32);
-        bufp->chgIData(oldp+124,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
+        bufp->chgIData(oldp+125,(((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
                                    ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)
                                    : (((- (IData)((1U 
                                                    & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word) 
                                                       >> 0xfU)))) 
                                        << 0x10U) | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)))),32);
-        bufp->chgIData(oldp+125,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new),32);
-        bufp->chgBit(oldp+126,(((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                                & ((0x23U != (0x7fU 
-                                              & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                                   & ((0xfU != (0x7fU 
-                                                & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
-                                      & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs__DOT____VdfgTmp_h1d7be2bd__0))))));
+        bufp->chgIData(oldp+126,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new),32);
         bufp->chgBit(oldp+127,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_wr_en));
         bufp->chgIData(oldp+128,(((0x29U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
                                    ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1

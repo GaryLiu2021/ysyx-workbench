@@ -1,5 +1,5 @@
 // `define __DEBUG
-import "DPI-C" function void set_inst_ptr(input logic [31:0] inst []);
+import "DPI-C" function void set_ptr_pc(input logic [31:0] inst []);
 import "DPI-C" function void call_ebreak();
 import "DPI-C" function void call_ecall();
 
@@ -66,7 +66,7 @@ stage_decode  u_stage_decode (
 );
 
 
-regs  u_regs (
+gpr  u_gpr (
     .clk                     ( clk            ),
     .rstn                    ( rstn           ),
     .reg_addr_rs1            ( reg_addr_rs1   ),
@@ -192,6 +192,6 @@ mem_ddr  u_mem_ddr (
 
 `endif
 
-    initial set_inst_ptr(mem_inst_out);
+    initial set_ptr_pc(mem_inst_out);
 
 endmodule //single_cycle_cpu

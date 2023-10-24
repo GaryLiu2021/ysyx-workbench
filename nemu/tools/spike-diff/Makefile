@@ -23,7 +23,7 @@ REPO_MAKEFILE = $(REPO_BUILD_PATH)/Makefile
 $(REPO_MAKEFILE):
 	@mkdir -p $(@D)
 	cd $(@D) && $(abspath $(REPO_PATH))/configure
-	sed -i -e 's/-g -O2/-O2/' $@
+	sed -i -e 's/-g -O2/-g/' $@
 
 SPIKE = $(REPO_BUILD_PATH)/spike
 $(SPIKE): $(REPO_MAKEFILE)

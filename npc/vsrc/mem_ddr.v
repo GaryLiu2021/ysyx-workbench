@@ -14,7 +14,7 @@ module mem_ddr (
     output      [31:0]  mem_inst_out
 );
 
-    reg [31:0] mem [(1<<32)-1:0];
+    reg [31:0] mem [(1<<13)-1:0];
 
     initial begin
         set_ptr_mem(mem);

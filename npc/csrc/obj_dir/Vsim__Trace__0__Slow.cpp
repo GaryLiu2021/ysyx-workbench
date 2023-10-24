@@ -92,9 +92,6 @@ VL_ATTR_COLD void Vsim___024root__trace_init_sub__TOP__0(Vsim___024root* vlSelf,
     tracep->declBus(c+83,"mem_data_out", false,-1, 31,0);
     tracep->declBus(c+33,"mem_inst_addr", false,-1, 31,0);
     tracep->declBus(c+84,"mem_inst_out", false,-1, 31,0);
-    for (int i = 0; i < 2; ++i) {
-        tracep->declBus(c+132+i*1,"mem", true,(i+-1), 31,0);
-    }
     tracep->declBus(c+90,"rd_data", false,-1, 31,0);
     tracep->declBus(c+91,"wr_data_byte", false,-1, 31,0);
     tracep->declBus(c+92,"wr_data_half_word", false,-1, 31,0);
@@ -123,7 +120,7 @@ VL_ATTR_COLD void Vsim___024root__trace_init_sub__TOP__0(Vsim___024root* vlSelf,
     tracep->declBus(c+70,"op_type", false,-1, 5,0);
     tracep->declBus(c+69,"opcode", false,-1, 6,0);
     tracep->declBit(c+99,"csr_wr_en", false,-1);
-    tracep->declBit(c+134,"csr_rd_en", false,-1);
+    tracep->declBit(c+132,"csr_rd_en", false,-1);
     tracep->declBus(c+100,"csr_wr_data", false,-1, 31,0);
     tracep->declBus(c+101,"zimm", false,-1, 31,0);
     tracep->declBus(c+102,"csr_addr", false,-1, 11,0);
@@ -569,7 +566,5 @@ VL_ATTR_COLD void Vsim___024root__trace_full_sub_0(Vsim___024root* vlSelf, Veril
                                                  & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))
                                                 ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out
                                                 : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)))))),32);
-    bufp->fullIData(oldp+132,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem[0]),32);
-    bufp->fullIData(oldp+133,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem[1]),32);
-    bufp->fullBit(oldp+134,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_rd_en));
+    bufp->fullBit(oldp+132,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_rd_en));
 }

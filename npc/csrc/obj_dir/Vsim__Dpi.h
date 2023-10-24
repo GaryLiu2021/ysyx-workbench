@@ -16,14 +16,16 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at ../vsrc/../vsrc/dpi_verilator.v:4:30
+    // DPI import at ../vsrc/../vsrc/dpi_verilator.v:5:30
     extern void call_return();
     // DPI import at ../vsrc/../vsrc/regs_i.v:28:34
     extern void set_ptr_gpr(const svOpenArrayHandle gpr);
+    // DPI import at ../vsrc/../vsrc/dpi_verilator.v:4:30
+    extern void set_ptr_inst(const svOpenArrayHandle mem_inst_out);
     // DPI import at ../vsrc/../vsrc/mem_ddr.v:1:30
     extern void set_ptr_mem(const svOpenArrayHandle mem);
     // DPI import at ../vsrc/../vsrc/dpi_verilator.v:3:30
-    extern void set_ptr_pc(const svOpenArrayHandle inst);
+    extern void set_ptr_pc(const svOpenArrayHandle pc_out);
 
 #ifdef __cplusplus
 }

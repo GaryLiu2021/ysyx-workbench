@@ -385,8 +385,6 @@ void Vsim___024root__trace_chg_sub_0(Vsim___024root* vlSelf, VerilatedVcd::Buffe
                                                 & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))
                                                ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out
                                                : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)))))),32);
-    bufp->chgIData(oldp+131,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem[0]),32);
-    bufp->chgIData(oldp+132,(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem[1]),32);
 }
 
 void Vsim___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

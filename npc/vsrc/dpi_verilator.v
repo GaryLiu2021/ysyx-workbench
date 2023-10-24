@@ -1,6 +1,7 @@
 `include "inst_define.v"
 
-import "DPI-C" function void set_ptr_pc(input logic [31:0] inst []);
+import "DPI-C" function void set_ptr_pc(input logic [31:0] pc_out []);
+import "DPI-C" function void set_ptr_inst(input logic [31:0] mem_inst_out []);
 import "DPI-C" function void call_return();
 
 module dpi_verilator(
@@ -107,14 +108,17 @@ module dpi_verilator(
         reg_name[31] <= "t6";
     end
     
-    initial set_ptr_pc(mem_inst_out);
+    initial begin
+        set_ptr_pc(pc_out);
+        set_ptr_inst(mem_inst_out);
+    end
 
     always @(posedge clk) begin
-        if(mem_inst_out == 32'b00000000000100000000000001110011)
+        if(mem_inst_out == 32'b00000000000100000000000001110011) // ebreak
             call_return();
-        if(mem_inst_out == 32'b00000000000000000000000001110011)
+        if(mem_inst_out == 32'b00000000000000000000000001110011) // ecall
             call_return();
-        if(mem_inst_out == 32'b00000000000000001000000001100111)
+        if(mem_inst_out == 32'b00000000000000001000000001100111) // return
             call_return();
     end
 

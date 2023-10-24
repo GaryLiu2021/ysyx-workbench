@@ -49,10 +49,10 @@ module gpr (
     assign reg_data_rs1 = gpr[reg_addr_rs1];
     assign reg_data_rs2 = gpr[reg_addr_rs2];
 
-    always @(posedge clk) begin
-        if(reg_wr_en)
-            $display("writing data %0d into %0d", $signed(reg_data_rd), reg_addr_rd);
-    end
+    // always @(posedge clk) begin
+    //     if(reg_wr_en)
+    //         $display("writing data %0d into %0d", $signed(reg_data_rd), reg_addr_rd);
+    // end
 
     always @(posedge clk) begin
         if(op_type == `op_type_ecall && gpr[17] == 32'd93) begin

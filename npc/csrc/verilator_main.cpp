@@ -11,8 +11,8 @@
 
 //! MEMORY
 
-#define RESET_VECTOR 0x08000000
-#define CONFIG_MBASE 0x08000000
+#define RESET_VECTOR 0x80000000
+#define CONFIG_MBASE 0x80000000
 #define CONFIG_MSIZE 0x08000000
 #define PG_ALIGN __attribute((aligned(4096)))
 
@@ -32,6 +32,7 @@ typedef struct {
 
 word_t* dut_gpr;
 word_t* dut_pc;
+word_t* dut_inst;
 word_t* dut_mem;
 
 CPU_state dut_context;
@@ -39,10 +40,11 @@ CPU_state ref_context;
 
 //! VERILATOR ENVIRONMENT
 
-const char* img_file = "/home/sgap/ysyx-workbench/npc/test/add";
+const char* img_file = "/home/sgap/ysyx-workbench/npc/test/add.bin";
 const char* lib_file = "/home/sgap/ysyx-workbench/nemu/tools/spike-diff/build/riscv32-spike-so";
 uint64_t cycles = 0;
-bool c_return = false;
+uint64_t times = 0;
+bool finish = false;
 
 char* uint32_to_binary_string(uint32_t n) {
     if (n > 0xFFFFFFFF) {
@@ -70,12 +72,16 @@ extern "C" {
         dut_pc = (word_t*)(((VerilatedDpiOpenVar*)r)->datap());
     }
 
+    void set_ptr_inst(const svOpenArrayHandle r) {
+        dut_inst = (word_t*)(((VerilatedDpiOpenVar*)r)->datap());
+    }
+
     void set_ptr_mem(const svOpenArrayHandle r) {
         dut_mem = (word_t*)(((VerilatedDpiOpenVar*)r)->datap());
     }
 
     void call_return() {
-        c_return = true;
+        finish = true;
     }
 }
 
@@ -87,18 +93,22 @@ void print_dut_gpr() {
 }
 
 void print_dut_pc() {
-    printf("inst = %32s\n", uint32_to_binary_string(*dut_pc));
+    printf("pc = %08x\n", *dut_pc);
+}
+
+void print_dut_inst() {
+    printf("inst = %32s\n", uint32_to_binary_string(*dut_inst));
 }
 
 void print_ref_gpr() {
     int i;
     for (i = 0; i < 32; i++) {
-        printf("gpr[%d] = %08x\n", i, ref_context.gpr[i]);
+        printf("r_gpr[%d] = %08x\n", i, ref_context.gpr[i]);
     }
 }
 
 void print_ref_pc() {
-    printf("inst = %32s\n", uint32_to_binary_string(ref_context.pc));
+    printf("r_inst = %32s\n", uint32_to_binary_string(ref_context.pc));
 }
 
 //! DIFF FUNCTIONS
@@ -107,6 +117,7 @@ extern "C" {
     void (*ref_difftest_regcpy)(void* dut, bool direction) = NULL;
     void (*ref_difftest_exec)(uint64_t n) = NULL;
     void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
+    void (*ref_difftest_init)(int) = NULL;
 }
 
 //! INIT
@@ -127,8 +138,6 @@ long load_img() {
     assert(ret == 1);
 
     fclose(fp);
-
-    
 
     return size;
 }
@@ -152,20 +161,20 @@ void init_difftest(const char* ref_so_file, long img_size, int port) {
     ref_difftest_raise_intr = (void (*)(uint64_t))dlsym(handle, "difftest_raise_intr");
     assert(ref_difftest_raise_intr);
 
-    void (*ref_difftest_init)(int) = (void (*)(int))dlsym(handle, "difftest_init");
+    ref_difftest_init = (void (*)(int))dlsym(handle, "difftest_init");
     assert(ref_difftest_init);
 
     // Log("Differential testing: %s", ANSI_FMT("ON", ANSI_FG_GREEN));
     printf("The result of every instruction will be compared with %s.\n\
             This will help you a lot for debugging, but also significantly reduce the performance.\n\
-            If it is not necessary, you can turn it off in menuconfig.", ref_so_file);
+            If it is not necessary, you can turn it off in menuconfig.\n", ref_so_file);
 
     ref_difftest_init(port);
     ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
     ref_difftest_regcpy(&dut_context, DIFFTEST_TO_REF);
 }
 
-void dut_context_eval() {
+void dut_context_dump() {
     for (int i = 0;i < 32;i++) {
         dut_context.gpr[i] = *(dut_gpr + i);
     }
@@ -187,11 +196,14 @@ const char* reg_name[32] = {
 
 bool difftest_check_reg(const char* name, vaddr_t pc, word_t ref, word_t dut) {
     if (ref != dut) {
-        printf("%s is different after executing instruction at pc = %08x, right = %08x, wrong = %08x, diff = %08x",
+        printf("%s is different after executing instruction at pc = %08x, right = %08x, wrong = %08x, diff = %08x\n",
             name, pc, ref, dut, ref ^ dut);
         return false;
     }
-    return true;
+    else {
+        return true;
+    }
+
 }
 
 bool isa_difftest_checkregs(CPU_state* ref, vaddr_t pc) {
@@ -210,7 +222,7 @@ void checkregs(CPU_state * ref, vaddr_t pc) {
     if (!isa_difftest_checkregs(ref, pc)) {
         print_dut_gpr();
         print_dut_pc();
-        c_return = true;
+        finish = true;
     }
 }
 
@@ -238,53 +250,73 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 
     ref_difftest_exec(1);
     ref_difftest_regcpy(&ref_context, DIFFTEST_TO_DUT);
+    print_ref_gpr();
+    print_ref_pc();
 
-    checkregs(&ref_context, pc);
+    // checkregs(&ref_context, pc);
 }
 
 int main(int argc, char** argv, char** env) {
 
     long img_size = load_img();
 
-    init_difftest(lib_file, img_size, 1234);
-
     Verilated::traceEverOn(true);
-    // VerilatedVcdC* m_tracep = new VerilatedVcdC;         // 波形
+    VerilatedVcdC* m_tracep = new VerilatedVcdC;         // 波形
     Vsim* m_dut = new Vsim;
-    int optype;
 
-    // m_dut->trace(m_tracep, 5);
-    // m_tracep->open("wave.vcd");
+    m_dut->trace(m_tracep, 5);
+    m_tracep->open("wave.vcd");
 
     //! Initial Assignment
     m_dut->clk = 0;
     m_dut->rstn = 0;
     printf("SYSTEM RESET\n");
-    m_dut->eval();
-    for (long i = 0;i < img_size;i++) {
-        dut_mem[i] = pmem[i];
-    }
-    m_dut->eval();
-    dut_context_eval();
-    m_dut->rstn = 1;
+    m_dut->eval(); // set pointers
 
-    while (c_return == false) {
+    for (long i = 0;i < img_size;i += 4) {
+        word_t value = 0;
+        for (int j = 0; j < 4; j++) {
+            value |= static_cast<word_t>(pmem[i + j]) << (j * 8);
+        }
+        assert(dut_mem);
+        *(dut_mem + i / 4) = value;
+        printf("0x%08x <= %08x\n", i, *(dut_mem + i / 4));
+    }
+
+    m_dut->clk = 1;
+    m_dut->eval();
+    m_tracep->dump(times++);
+
+    m_dut->rstn = 1;
+    m_dut->clk = 0;
+    m_dut->eval();
+    m_tracep->dump(times++);
+
+    dut_context_dump();
+    init_difftest(lib_file, img_size, 1234);
+
+    while (!finish) {
         printf("CYCLE %ld\n", cycles);
         // print_dut_pc();
+        // print_dut_inst();
         // print_dut_gpr();
+
         m_dut->clk = 1; // 0 -> 1
         m_dut->eval();
+        m_tracep->dump(times++);
         m_dut->clk = 0; // 1 -> 0
+        m_dut->eval();
+        m_tracep->dump(times++);
+
+        dut_context_dump();
         difftest_step(dut_context.pc, 0);
+
         cycles++;
-        if (c_return) {
-            print_dut_pc();
-            print_dut_gpr();
-            dut_context_eval();
-        }
     }
-    // m_tracep->close();
+    printf("Run %d CYCLES.\n", cycles);
+
+    m_tracep->close();
     delete m_dut;
-    // delete m_tracep;
+    delete m_tracep;
     return 0;
 }

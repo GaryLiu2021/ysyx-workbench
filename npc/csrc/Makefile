@@ -7,7 +7,7 @@ VERILOG_VSRCS = ${src_dir}/*.v
 VERILOG_TOP = sim
 
 # Verilator flags
-VERILATOR_FLAGS = --timing -Wno-fatal -Wall --trace -cc -exe -build
+VERILATOR_FLAGS = --timing -Wno-fatal -Wall -cc -exe -build --trace
 
 # Verilator include
 VERILATOR_INC = -I${src_dir}
@@ -26,9 +26,15 @@ lib_name = riscv32-spike-so
 
 CFLAGS = -CFLAGS "${INC_PATH} -L${lib_dir} -l${lib_name} -g"
 
+TEST_CASE = ../test/add
+
 .PHONY: sim gdb
 
 sim:
+	riscv32-unknown-elf-gcc -c ${TEST_CASE}.c -march=rv32i -mabi=ilp32 -o ${TEST_CASE}.o
+	riscv32-unknown-elf-ld -T ../test/link.ld -o ${TEST_CASE} ${TEST_CASE}.o
+	riscv32-unknown-elf-objdump -S ../test/add > ../test/add.dump
+
 	verilator ${VERILATOR_FLAGS} ${VERILATOR_INC} ${VERILOG_VSRCS} --top-module ${VERILOG_TOP} ${VERILATOR_CSRCS} ${CFLAGS}
 	@echo "\n\n\tSimulation Begin!\n\n"
 	./obj_dir/V${VERILOG_TOP} > log.txt
@@ -36,9 +42,5 @@ sim:
 	mkdir -p ${wave_dir}
 	mv -i -v *.vcd ${wave_dir}
 
-gdb:
-	verilator ${VERILATOR_FLAGS} ${VERILATOR_INC} ${VERILOG_VSRCS} --top-module ${VERILOG_TOP} ${VERILATOR_CSRCS} ${CFLAGS}
-	@echo "\n\n\tSimulation Begin!\n\n"
+gdb: sim
 	gdb ./obj_dir/V${VERILOG_TOP}
-	@echo "\n\n\tSimulation Finished!\n\n"
-	mv -i -v *.vcd ${wave_dir}

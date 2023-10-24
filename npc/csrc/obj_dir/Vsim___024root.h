@@ -57,7 +57,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     QData/*63:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
     VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr;
     VlUnpacked<IData/*31:0*/, 4096> sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs;
-    VlUnpacked<IData/*31:0*/, 2> sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem;
+    VlUnpacked<IData/*31:0*/, 8192> sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem;
     VlUnpacked<QData/*63:0*/, 64> sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str;
     VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name;
     VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;

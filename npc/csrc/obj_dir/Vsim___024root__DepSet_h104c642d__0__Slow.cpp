@@ -10,16 +10,15 @@
 #include "Vsim___024root.h"
 
 void Vsim___024root____Vdpiimwrap_sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__set_ptr_gpr__Vdpioc2_TOP(const VlUnpacked<IData/*31:0*/, 32> &gpr);
-void Vsim___024unit____Vdpiimwrap_set_ptr_mem__Vdpioc2_TOP____024unit(const VlUnpacked<IData/*31:0*/, 2> &mem);
-void Vsim___024unit____Vdpiimwrap_set_ptr_pc__Vdpioc2_TOP____024unit(const IData/*31:0*/ &inst);
+void Vsim___024unit____Vdpiimwrap_set_ptr_mem__Vdpioc2_TOP____024unit(const VlUnpacked<IData/*31:0*/, 8192> &mem);
+void Vsim___024unit____Vdpiimwrap_set_ptr_pc__Vdpioc2_TOP____024unit(const IData/*31:0*/ &pc_out);
+void Vsim___024unit____Vdpiimwrap_set_ptr_inst__Vdpioc2_TOP____024unit(const IData/*31:0*/ &mem_inst_out);
 
 VL_ATTR_COLD void Vsim___024root___eval_initial__TOP(Vsim___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_initial__TOP\n"); );
     // Body
-    vlSymsp->_vm_contextp__->dumpfile(std::string{"wave.vcd"});
-    vlSymsp->_traceDumpOpen();
     Vsim___024root____Vdpiimwrap_sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__set_ptr_gpr__Vdpioc2_TOP(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr);
     Vsim___024unit____Vdpiimwrap_set_ptr_mem__Vdpioc2_TOP____024unit(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str[0U] = 0x6c7569ULL;
@@ -102,7 +101,8 @@ VL_ATTR_COLD void Vsim___024root___eval_initial__TOP(Vsim___024root* vlSelf) {
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name[0x1dU] = 0x7434U;
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name[0x1eU] = 0x7435U;
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name[0x1fU] = 0x7436U;
-    Vsim___024unit____Vdpiimwrap_set_ptr_pc__Vdpioc2_TOP____024unit(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+    Vsim___024unit____Vdpiimwrap_set_ptr_pc__Vdpioc2_TOP____024unit(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out);
+    Vsim___024unit____Vdpiimwrap_set_ptr_inst__Vdpioc2_TOP____024unit(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter = 0ULL;
 }
 

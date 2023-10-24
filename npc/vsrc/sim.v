@@ -10,15 +10,15 @@ single_cycle_cpu  u_single_cycle_cpu (
     .rstn                    ( rstn   ) 
 );
 
-initial begin
-    #(10000);
-    $display("Time Out!!!");
-    $finish;
-end
+// initial begin
+//     #(10000);
+//     $display("Time Out!!!");
+//     $finish;
+// end
 
-initial begin
-    $dumpfile("wave.vcd");
-    $dumpvars;
-end
+// initial begin
+//     $dumpfile("wave.vcd");
+//     $dumpvars;
+// end
 
 endmodule //sim

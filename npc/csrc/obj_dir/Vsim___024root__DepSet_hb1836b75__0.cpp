@@ -10,7 +10,6 @@
 
 VL_ATTR_COLD void Vsim___024root___eval_initial__TOP(Vsim___024root* vlSelf);
 VlCoroutine Vsim___024root___eval_initial__TOP__0(Vsim___024root* vlSelf);
-VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* vlSelf);
 
 void Vsim___024root___eval_initial(Vsim___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
@@ -20,7 +19,6 @@ void Vsim___024root___eval_initial(Vsim___024root* vlSelf) {
     Vsim___024root___eval_initial__TOP(vlSelf);
     vlSelf->__Vm_traceActivity[1U] = 1U;
     Vsim___024root___eval_initial__TOP__0(vlSelf);
-    Vsim___024root___eval_initial__TOP__1(vlSelf);
     vlSelf->__Vtrigprevexpr___TOP__clk__0 = vlSelf->clk;
     vlSelf->__Vtrigprevexpr___TOP__rstn__0 = vlSelf->rstn;
 }
@@ -29,18 +27,6 @@ VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__0(Vsim___024root* 
     if (false && vlSelf) {}  // Prevent unused
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_initial__TOP__0\n"); );
-    // Body
-    co_await vlSelf->__VdlySched.delay(0x2710ULL, nullptr, 
-                                       "../vsrc/../vsrc/sim.v", 
-                                       14);
-    VL_WRITEF("Time Out!!!\n");
-    VL_FINISH_MT("../vsrc/../vsrc/sim.v", 16, "");
-}
-
-VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_initial__TOP__1\n"); );
     // Body
     while (1U) {
         co_await vlSelf->__VtrigSched_h3d404911__0.trigger(0U, 
@@ -702,8 +688,8 @@ VL_INLINE_OPT void Vsim___024root___nba_comb__TOP__0(Vsim___024root* vlSelf) {
     // Body
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
         = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem
-        [(1U & ((IData)(1U) + (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out 
-                               >> 2U)))];
+        [(0x1fffU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out 
+                     >> 2U))];
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1 
         = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr
         [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
@@ -1364,8 +1350,8 @@ VL_INLINE_OPT void Vsim___024root___nba_comb__TOP__0(Vsim___024root* vlSelf) {
                             : ((IData)(4U) + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out))))));
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data 
         = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem
-        [(1U & ((IData)(1U) + (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out 
-                               >> 2U)))];
+        [(0x1fffU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out 
+                     >> 2U))];
     if ((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte 
             = (0xffU & ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
@@ -1501,11 +1487,11 @@ void Vsim___024root___timing_resume(Vsim___024root* vlSelf) {
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___timing_resume\n"); );
     // Body
-    if ((4ULL & vlSelf->__VactTriggered.word(0U))) {
-        vlSelf->__VdlySched.resume();
-    }
     if ((2ULL & vlSelf->__VactTriggered.word(0U))) {
         vlSelf->__VtrigSched_h3d404911__0.resume("@(posedge clk)");
+    }
+    if ((4ULL & vlSelf->__VactTriggered.word(0U))) {
+        vlSelf->__VdlySched.resume();
     }
 }
 

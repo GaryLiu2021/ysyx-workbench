@@ -26,11 +26,14 @@ lib_name = riscv32-spike-so
 
 CFLAGS = -CFLAGS "${INC_PATH} -L${lib_dir} -l${lib_name} -g"
 
+.PHONY: sim gdb
+
 sim:
 	verilator ${VERILATOR_FLAGS} ${VERILATOR_INC} ${VERILOG_VSRCS} --top-module ${VERILOG_TOP} ${VERILATOR_CSRCS} ${CFLAGS}
 	@echo "\n\n\tSimulation Begin!\n\n"
 	./obj_dir/V${VERILOG_TOP} > log.txt
 	@echo "\n\n\tSimulation Finished!\n\n"
+	mkdir -p ${wave_dir}
 	mv -i -v *.vcd ${wave_dir}
 
 gdb:
@@ -39,5 +42,3 @@ gdb:
 	gdb ./obj_dir/V${VERILOG_TOP}
 	@echo "\n\n\tSimulation Finished!\n\n"
 	mv -i -v *.vcd ${wave_dir}
-
-.PHONY: sim gdb

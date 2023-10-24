@@ -19,18 +19,21 @@ VL_INLINE_OPT void Vsim___024unit____Vdpiimwrap_set_ptr_pc__Vdpioc2_TOP____024un
     set_ptr_pc(&inst__Vopenarray);
 }
 
-extern "C" void call_ebreak();
+extern "C" void call_return();
 
-VL_INLINE_OPT void Vsim___024unit____Vdpiimwrap_call_ebreak_TOP____024unit() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        Vsim___024unit____Vdpiimwrap_call_ebreak_TOP____024unit\n"); );
+VL_INLINE_OPT void Vsim___024unit____Vdpiimwrap_call_return_TOP____024unit() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        Vsim___024unit____Vdpiimwrap_call_return_TOP____024unit\n"); );
     // Body
-    call_ebreak();
+    call_return();
 }
 
-extern "C" void call_ecall();
+extern "C" void set_ptr_mem(const svOpenArrayHandle mem);
 
-VL_INLINE_OPT void Vsim___024unit____Vdpiimwrap_call_ecall_TOP____024unit() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        Vsim___024unit____Vdpiimwrap_call_ecall_TOP____024unit\n"); );
+VL_INLINE_OPT void Vsim___024unit____Vdpiimwrap_set_ptr_mem__Vdpioc2_TOP____024unit(const VlUnpacked<IData/*31:0*/, 2> &mem) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        Vsim___024unit____Vdpiimwrap_set_ptr_mem__Vdpioc2_TOP____024unit\n"); );
     // Body
-    call_ecall();
+    static const int mem__Vopenprops__ulims[2] = {-1, 0};
+    static const VerilatedVarProps mem__Vopenprops(VLVT_UINT32, VLVD_IN, VerilatedVarProps::Packed(), 31, 0, VerilatedVarProps::Unpacked(), 1, mem__Vopenprops__ulims);
+    VerilatedDpiOpenVar mem__Vopenarray (&mem__Vopenprops, &mem);
+    set_ptr_mem(&mem__Vopenarray);
 }

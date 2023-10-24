@@ -22,8 +22,7 @@ void Vsim___024root___eval_initial(Vsim___024root* vlSelf) {
     Vsim___024root___eval_initial__TOP__0(vlSelf);
     Vsim___024root___eval_initial__TOP__1(vlSelf);
     vlSelf->__Vtrigprevexpr___TOP__clk__0 = vlSelf->clk;
-    vlSelf->__Vtrigprevexpr___TOP__sim__DOT__rstn__0 
-        = vlSelf->sim__DOT__rstn;
+    vlSelf->__Vtrigprevexpr___TOP__rstn__0 = vlSelf->rstn;
 }
 
 VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__0(Vsim___024root* vlSelf) {
@@ -31,17 +30,11 @@ VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__0(Vsim___024root* 
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_initial__TOP__0\n"); );
     // Body
-    co_await vlSelf->__VtrigSched_h3d404911__0.trigger(0U, 
-                                                       nullptr, 
-                                                       "@(posedge clk)", 
-                                                       "../vsrc/../vsrc/sim.v", 
-                                                       15);
-    vlSelf->sim__DOT__rstn = 1U;
     co_await vlSelf->__VdlySched.delay(0x2710ULL, nullptr, 
                                        "../vsrc/../vsrc/sim.v", 
-                                       17);
+                                       14);
     VL_WRITEF("Time Out!!!\n");
-    VL_FINISH_MT("../vsrc/../vsrc/sim.v", 19, "");
+    VL_FINISH_MT("../vsrc/../vsrc/sim.v", 16, "");
 }
 
 VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* vlSelf) {
@@ -54,7 +47,7 @@ VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* 
                                                            nullptr, 
                                                            "@(posedge clk)", 
                                                            "../vsrc/../vsrc/regs_i.v", 
-                                                           59);
+                                                           57);
         if (VL_UNLIKELY(((0x27U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)) 
                          & (0x5dU == vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr
                             [0x11U])))) {
@@ -67,8 +60,8 @@ VL_INLINE_OPT VlCoroutine Vsim___024root___eval_initial__TOP__1(Vsim___024root* 
             co_await vlSelf->__VdlySched.delay(1ULL, 
                                                nullptr, 
                                                "../vsrc/../vsrc/regs_i.v", 
-                                               65);
-            VL_FINISH_MT("../vsrc/../vsrc/regs_i.v", 65, "");
+                                               63);
+            VL_FINISH_MT("../vsrc/../vsrc/regs_i.v", 63, "");
         }
     }
 }
@@ -98,11 +91,15 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
     __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0;
     CData/*0:0*/ __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0;
+    QData/*63:0*/ __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
+    __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter = 0;
     // Body
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0U;
+    __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
+        = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0 = 0U;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v1 = 0U;
-    if ((1U & (~ (IData)(vlSelf->sim__DOT__rstn)))) {
+    if ((1U & (~ (IData)(vlSelf->rstn)))) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__i = 0x20U;
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i = 0U;
         while (VL_GTS_III(32, 0x1000U, vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i)) {
@@ -112,7 +109,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
                 = ((IData)(1U) + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__i);
         }
     }
-    if (vlSelf->sim__DOT__rstn) {
+    if (vlSelf->rstn) {
         if (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_wr_en) {
             __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 
                 = ((0x29U == (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))
@@ -138,6 +135,490 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
                 = (0xfffU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme 
                              >> 5U));
         }
+    }
+    if (VL_UNLIKELY(vlSelf->rstn)) {
+        __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
+            = (1ULL + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter);
+        VL_WRITEF("\n\t\t\tCycle %0#\n\n",64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter);
+        if ((0x40U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+            if (VL_LIKELY((0x20U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                if ((0x10U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                    if (VL_UNLIKELY((8U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    } else if (VL_UNLIKELY((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    } else if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                        if (VL_LIKELY((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                            if (VL_LIKELY((0x20U & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)))) {
+                                if (VL_UNLIKELY((0x10U 
+                                                 & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)))) {
+                                    VL_WRITEF("Addr: %x Inst: %b, %0s\n",
+                                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                              64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                              [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type]);
+                                } else if (VL_LIKELY(
+                                                     (8U 
+                                                      & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)))) {
+                                    if ((4U & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))) {
+                                        if (VL_LIKELY(
+                                                      (2U 
+                                                       & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)))) {
+                                            if ((1U 
+                                                 & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))) {
+                                                VL_WRITEF("Addr: %x Inst: %b, %0s\n",
+                                                          32,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                                          32,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                                          64,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                                          [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type]);
+                                            } else {
+                                                VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d,%0d\n",
+                                                          32,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                                          32,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                                          64,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                                          [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                                          32,
+                                                          vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                          [
+                                                          (0x1fU 
+                                                           & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                              >> 7U))],
+                                                          12,
+                                                          (0xfffU 
+                                                           & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme 
+                                                              >> 5U)),
+                                                          5,
+                                                          (0x1fU 
+                                                           & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme));
+                                            }
+                                        } else {
+                                            VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d,%0d\n",
+                                                      32,
+                                                      vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                                      32,
+                                                      vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                                      64,
+                                                      vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                                      [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                                      32,
+                                                      vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                      [
+                                                      (0x1fU 
+                                                       & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                          >> 7U))],
+                                                      12,
+                                                      (0xfffU 
+                                                       & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme 
+                                                          >> 5U)),
+                                                      5,
+                                                      (0x1fU 
+                                                       & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme));
+                                        }
+                                    } else if (VL_UNLIKELY(
+                                                           (2U 
+                                                            & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type)))) {
+                                        VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d,%0s\n%0s:%0#\n",
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                                  64,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                  [
+                                                  (0x1fU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                      >> 7U))],
+                                                  12,
+                                                  (0xfffU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme 
+                                                      >> 5U)),
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                  [
+                                                  (0x1fU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                      >> 0xfU))],
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                  [
+                                                  (0x1fU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                      >> 0xfU))],
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1);
+                                    } else if ((1U 
+                                                & (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type))) {
+                                        VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d,%0s\n%0s:%0#\n",
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                                  64,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                  [
+                                                  (0x1fU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                      >> 7U))],
+                                                  12,
+                                                  (0xfffU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme 
+                                                      >> 5U)),
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                  [
+                                                  (0x1fU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                      >> 0xfU))],
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                                  [
+                                                  (0x1fU 
+                                                   & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                      >> 0xfU))],
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1);
+                                    } else {
+                                        VL_WRITEF("Addr: %x Inst: %b, %0s\n",
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                                  32,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                                  64,
+                                                  vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type]);
+                                    }
+                                } else {
+                                    VL_WRITEF("Addr: %x Inst: %b, %0s\n",
+                                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                              64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                              [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type]);
+                                }
+                            } else {
+                                VL_WRITEF("Addr: %x Inst: %b, %0s\n",
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                          64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                          [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type]);
+                            }
+                        } else {
+                            VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                        }
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else if ((8U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                    if (VL_LIKELY((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                        if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                            if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                                VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d\n",
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                          64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                          [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                          [(0x1fU & 
+                                            (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 7U))],
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme);
+                            } else {
+                                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                            }
+                        } else {
+                            VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                        }
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else if ((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                    if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                        if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                            VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d(%0s)\n",
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                      64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                      [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                      [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                 >> 7U))],
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                      [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                 >> 0xfU))]);
+                        } else {
+                            VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                        }
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                    if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                        VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0s,%0d\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                  64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 0xfU))],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 0x14U))],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme);
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                }
+            } else {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            }
+        } else if ((0x20U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+            if ((0x10U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                if (VL_UNLIKELY((8U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                } else if ((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                    if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                        if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                            VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d\n",
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                      64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                      [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                      [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                                 >> 7U))],
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme);
+                        } else {
+                            VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                        }
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                    if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                        VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0s,%0s\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                  64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 7U))],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 0xfU))],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 0x14U))]);
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                }
+            } else if (VL_UNLIKELY((8U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            } else if (VL_UNLIKELY((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            } else if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                    VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d(%0s)\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                              64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                              [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                              [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                         >> 0x14U))],
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                              [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                         >> 0xfU))]);
+                } else {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                }
+            } else {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            }
+        } else if ((0x10U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+            if (VL_UNLIKELY((8U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            } else if ((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                    if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                        VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                  64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 7U))],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme);
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                }
+            } else if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                    VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0s,%0d\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                              64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                              [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                              [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                         >> 7U))],32,
+                              vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                              [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                         >> 0xfU))],
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme);
+                } else {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                }
+            } else {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            }
+        } else if ((8U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+            if (VL_LIKELY((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+                    if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                        VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d(%0s)\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                                  64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                                  [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 7U))],
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                                  [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                             >> 0xfU))]);
+                    } else {
+                        VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                                  32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                    }
+                } else {
+                    VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                              32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+                }
+            } else {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            }
+        } else if (VL_UNLIKELY((4U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+            VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+        } else if (VL_LIKELY((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
+            if ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
+                VL_WRITEF("Addr: %x Inst: %b, %0s %0s,%0d(%0s)\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out,
+                          64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str
+                          [vlSelf->sim__DOT__u_single_cycle_cpu__DOT__op_type],
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                          [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                     >> 7U))],32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__imme,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name
+                          [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                                     >> 0xfU))]);
+            } else {
+                VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                          32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+            }
+        } else {
+            VL_WRITEF("Addr: %x Inst: %b\nUnkwown Type!\n\n",
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
+        }
+        if (VL_UNLIKELY((0x23U == (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)))) {
+            VL_WRITEF("mem_addr: %10#, mem_data_in: %10#, mem_data_out: %10#\n",
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out,
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in,
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out);
+        } else if (VL_UNLIKELY((3U == (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)))) {
+            VL_WRITEF("mem_addr: %10#, mem_data_out: %10#\n",
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out,
+                      32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out);
+        }
+    } else {
+        __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter = 1ULL;
+    }
+    if (vlSelf->rstn) {
         if (((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
              & ((0x23U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
                 & ((0xfU != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
@@ -155,33 +636,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
                              : ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csr_wr_en)
                                  ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__csr_rd_data
                                  : ((3U == (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))
-                                     ? ((0U == (3U 
-                                                & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
-                                                   >> 0xcU)))
-                                         ? ((0x4000U 
-                                             & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
-                                             ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)
-                                             : (((- (IData)(
-                                                            (1U 
-                                                             & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte) 
-                                                                >> 7U)))) 
-                                                 << 8U) 
-                                                | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)))
-                                         : ((1U == 
-                                             (3U & 
-                                              (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
-                                               >> 0xcU)))
-                                             ? ((0x4000U 
-                                                 & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
-                                                 ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)
-                                                 : 
-                                                (((- (IData)(
-                                                             (1U 
-                                                              & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word) 
-                                                                 >> 0xfU)))) 
-                                                  << 0x10U) 
-                                                 | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)))
-                                             : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data))
+                                     ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out
                                      : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out))))));
             __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0 = 1U;
             __Vdlyvdim0__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0 
@@ -198,6 +653,8 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs[__Vdlyvdim0__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0] 
             = __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0;
     }
+    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
+        = __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
     if (__Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[__Vdlyvdim0__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0] 
             = __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0;
@@ -244,9 +701,9 @@ VL_INLINE_OPT void Vsim___024root___nba_comb__TOP__0(Vsim___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___nba_comb__TOP__0\n"); );
     // Body
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
-        = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__ram
-        [(0x1fffU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out 
-                     >> 2U))];
+        = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem
+        [(1U & ((IData)(1U) + (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out 
+                               >> 2U)))];
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_data_in1 
         = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr
         [(0x1fU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
@@ -906,9 +1363,9 @@ VL_INLINE_OPT void Vsim___024root___nba_comb__TOP__0(Vsim___024root* vlSelf) {
                             ? vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_pc_out
                             : ((IData)(4U) + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out))))));
     vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data 
-        = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__ram
-        [(0x1fffU & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out 
-                     >> 2U))];
+        = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem
+        [(1U & ((IData)(1U) + (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out 
+                               >> 2U)))];
     if ((2U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte 
             = (0xffU & ((1U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out)
@@ -926,6 +1383,27 @@ VL_INLINE_OPT void Vsim___024root___nba_comb__TOP__0(Vsim___024root* vlSelf) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word 
             = (0xffffU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data);
     }
+    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out 
+        = ((0U == (3U & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                         >> 0xcU))) ? ((0x4000U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
+                                        ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)
+                                        : (((- (IData)(
+                                                       (1U 
+                                                        & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte) 
+                                                           >> 7U)))) 
+                                            << 8U) 
+                                           | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte)))
+            : ((1U == (3U & (vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out 
+                             >> 0xcU))) ? ((0x4000U 
+                                            & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)
+                                            ? (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)
+                                            : (((- (IData)(
+                                                           (1U 
+                                                            & ((IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word) 
+                                                               >> 0xfU)))) 
+                                                << 0x10U) 
+                                               | (IData)(vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word)))
+                : vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data));
 }
 
 void Vsim___024root___nba_sequent__TOP__0(Vsim___024root* vlSelf);
@@ -935,10 +1413,10 @@ void Vsim___024root___eval_nba(Vsim___024root* vlSelf) {
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___eval_nba\n"); );
     // Body
-    if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
+    if ((2ULL & vlSelf->__VnbaTriggered.word(0U))) {
         Vsim___024root___nba_sequent__TOP__0(vlSelf);
     }
-    if ((2ULL & vlSelf->__VnbaTriggered.word(0U))) {
+    if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
         Vsim___024root___nba_sequent__TOP__1(vlSelf);
         vlSelf->__Vm_traceActivity[2U] = 1U;
     }
@@ -1013,7 +1491,7 @@ void Vsim___024root___timing_commit(Vsim___024root* vlSelf) {
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___timing_commit\n"); );
     // Body
-    if ((! (1ULL & vlSelf->__VactTriggered.word(0U)))) {
+    if ((! (2ULL & vlSelf->__VactTriggered.word(0U)))) {
         vlSelf->__VtrigSched_h3d404911__0.commit("@(posedge clk)");
     }
 }
@@ -1023,11 +1501,11 @@ void Vsim___024root___timing_resume(Vsim___024root* vlSelf) {
     Vsim__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vsim___024root___timing_resume\n"); );
     // Body
-    if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
-        vlSelf->__VtrigSched_h3d404911__0.resume("@(posedge clk)");
-    }
     if ((4ULL & vlSelf->__VactTriggered.word(0U))) {
         vlSelf->__VdlySched.resume();
+    }
+    if ((2ULL & vlSelf->__VactTriggered.word(0U))) {
+        vlSelf->__VtrigSched_h3d404911__0.resume("@(posedge clk)");
     }
 }
 
@@ -1039,5 +1517,7 @@ void Vsim___024root___eval_debug_assertions(Vsim___024root* vlSelf) {
     // Body
     if (VL_UNLIKELY((vlSelf->clk & 0xfeU))) {
         Verilated::overWidthError("clk");}
+    if (VL_UNLIKELY((vlSelf->rstn & 0xfeU))) {
+        Verilated::overWidthError("rstn");}
 }
 #endif  // VL_DEBUG

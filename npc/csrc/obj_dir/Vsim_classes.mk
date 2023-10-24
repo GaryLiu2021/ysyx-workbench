@@ -30,7 +30,6 @@ VM_CLASSES_FAST += \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
-	Vsim__ConstPool_0 \
 	Vsim___024root__Slow \
 	Vsim___024root__DepSet_h104c642d__0__Slow \
 	Vsim___024root__DepSet_hb1836b75__0__Slow \

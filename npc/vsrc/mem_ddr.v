@@ -1,3 +1,5 @@
+import "DPI-C" function void set_ptr_mem(input logic [31:0] mem []);
+
 module mem_ddr (
     input               clk,
     input               rstn,
@@ -12,12 +14,11 @@ module mem_ddr (
     output      [31:0]  mem_inst_out
 );
 
-    localparam MEM_WIDTH = 1 << 13;
-
-    reg [31:0] ram [MEM_WIDTH-1:0];
+    reg [31:0] mem [(1<<32)-1:0];
 
     initial begin
-        $readmemb("/home/sgap/ysyx-workbench/npc/vsrc/mem.init", ram);
+        set_ptr_mem(mem);
+        // $readmemb("/home/sgap/ysyx-workbench/npc/vsrc/mem.init", mem);
     end
     
     wire    [31:0] rd_data;
@@ -25,7 +26,7 @@ module mem_ddr (
     wire    [31:0] wr_data_half_word;
     wire    [31:0] wr_data;
 
-    assign rd_data = ram[mem_data_addr[31:2]];
+    assign rd_data = mem[mem_data_addr[31:2]];
 
     always @(*) begin
         case(mem_data_addr[1:0])
@@ -44,7 +45,7 @@ module mem_ddr (
 
     always @(posedge clk) begin
         if(mem_wr_en)
-            ram[mem_data_addr[31:2]] <= wr_data;
+            mem[mem_data_addr[31:2]] <= wr_data;
     end
 
     reg     [7:0] rd_data_byte;
@@ -72,6 +73,6 @@ module mem_ddr (
                           (mem_rw_type[1:0] == 2'b01) ? rd_data_half_word_ext :
                           rd_data;
 
-    assign mem_inst_out = ram[mem_inst_addr[31:2]];
+    assign mem_inst_out = mem[mem_inst_addr[31:2]];
 
 endmodule //mem_ddr

@@ -16,13 +16,13 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at ../vsrc/../vsrc/top.v:3:30
-    extern void call_ebreak();
-    // DPI import at ../vsrc/../vsrc/top.v:4:30
-    extern void call_ecall();
+    // DPI import at ../vsrc/../vsrc/dpi_verilator.v:4:30
+    extern void call_return();
     // DPI import at ../vsrc/../vsrc/regs_i.v:28:34
-    extern void set_ptr_gpr(const svLogicVecVal* gpr);
-    // DPI import at ../vsrc/../vsrc/top.v:2:30
+    extern void set_ptr_gpr(const svOpenArrayHandle gpr);
+    // DPI import at ../vsrc/../vsrc/mem_ddr.v:1:30
+    extern void set_ptr_mem(const svOpenArrayHandle mem);
+    // DPI import at ../vsrc/../vsrc/dpi_verilator.v:3:30
     extern void set_ptr_pc(const svOpenArrayHandle inst);
 
 #ifdef __cplusplus

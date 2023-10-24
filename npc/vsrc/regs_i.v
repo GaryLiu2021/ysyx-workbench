@@ -25,7 +25,7 @@ module gpr (
 );
 
     reg [31:0] gpr [31:0];
-    import "DPI-C" function void set_ptr_gpr(input logic [31:0] gpr [32]);
+    import "DPI-C" function void set_ptr_gpr(input logic [31:0] gpr []);
 
     wire reg_wr_en;
     wire [31:0] reg_data_rd;
@@ -49,11 +49,9 @@ module gpr (
     assign reg_data_rs1 = gpr[reg_addr_rs1];
     assign reg_data_rs2 = gpr[reg_addr_rs2];
 
-`define __DEBUG
-`include "./util"
     always @(posedge clk) begin
         if(reg_wr_en)
-            $display("writing data %0d into %0s", $signed(reg_data_rd), reg_name[reg_addr_rd]);
+            $display("writing data %0d into %0d", $signed(reg_data_rd), reg_addr_rd);
     end
 
     always @(posedge clk) begin
@@ -66,12 +64,8 @@ module gpr (
         end
     end
 
-    // initial  begin
-    //     integer i;
-    //     for(i=0;i<32;i=i+1)
-    //         set_ptr_gpr(gpr[i],i);
-    // end
-
-    initial set_ptr_gpr(gpr);
+    initial  begin
+        set_ptr_gpr(gpr);
+    end
 
 endmodule //gpr

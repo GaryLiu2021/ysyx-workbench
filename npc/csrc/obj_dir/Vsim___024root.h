@@ -19,7 +19,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
 
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);
-    CData/*0:0*/ sim__DOT__rstn;
+    VL_IN8(rstn,0,0);
     CData/*5:0*/ sim__DOT__u_single_cycle_cpu__DOT__op_type;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_I_type;
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_decode__DOT__inst_is_U_type;
@@ -30,7 +30,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     CData/*0:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_stage_execute__DOT__adder_carry_out;
     CData/*7:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_byte;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
-    CData/*0:0*/ __Vtrigprevexpr___TOP__sim__DOT__rstn__0;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__rstn__0;
     CData/*0:0*/ __VactContinue;
     SData/*15:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data_half_word;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__pc_out;
@@ -39,6 +39,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__alu_data_out;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__alu_pc_out;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__mem_data_in;
+    IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__mem_data_out;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__csr_rd_data;
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new;
@@ -53,14 +54,15 @@ class alignas(VL_CACHE_LINE_BYTES) Vsim___024root final : public VerilatedModule
     IData/*31:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__rd_data;
     IData/*31:0*/ __VstlIterCount;
     IData/*31:0*/ __VactIterCount;
+    QData/*63:0*/ sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
     VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr;
-    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__reg_name;
     VlUnpacked<IData/*31:0*/, 4096> sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs;
-    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__reg_name;
-    VlUnpacked<IData/*31:0*/, 8192> sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__ram;
+    VlUnpacked<IData/*31:0*/, 2> sim__DOT__u_single_cycle_cpu__DOT__u_mem_ddr__DOT__mem;
+    VlUnpacked<QData/*63:0*/, 64> sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__inst_str;
+    VlUnpacked<IData/*31:0*/, 32> sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__reg_name;
     VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;
-    VlTriggerScheduler __VtrigSched_h3d404911__0;
     VlDelayScheduler __VdlySched;
+    VlTriggerScheduler __VtrigSched_h3d404911__0;
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<3> __VactTriggered;
     VlTriggerVec<3> __VnbaTriggered;

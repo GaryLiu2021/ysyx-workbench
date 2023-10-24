@@ -1,8 +1,4 @@
 // `define __DEBUG
-import "DPI-C" function void set_ptr_pc(input logic [31:0] inst []);
-import "DPI-C" function void call_ebreak();
-import "DPI-C" function void call_ecall();
-
 module single_cycle_cpu (
     input           clk,
     input           rstn
@@ -136,62 +132,24 @@ mem_ddr  u_mem_ddr (
 );
 
 
-    always @(posedge clk) begin
-        if(mem_inst_out == 32'b00000000000100000000000001110011)
-            call_ebreak();
-        if(mem_inst_out == 32'b00000000000000000000000001110011)
-            call_ecall();
-    end
+// dpi_verilator Outputs
 
-`ifdef ___DEBUG
 
-    reg [63:0] counter;
-    initial begin
-        counter = 'd0;
-    end
-
-`include "./util"
-
-    always @(posedge clk or negedge rstn) begin
-        if(!rstn)
-            counter <= 'd1;
-        else begin
-            counter <= counter + 1'b1;
-            $display("\n\t\t\tCycle %0d\n", counter);
-            case(opcode)
-                `system:
-                    case(op_type)
-                        `op_type_csrrc,`op_type_csrrs,`op_type_csrrw:
-                            $display("Addr: %h Inst: %b, %0s %0s,%0d,%0s\n%0s:%0d", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rd], $signed(imme[16:5]), reg_name[reg_addr_rs1], reg_name[reg_addr_rs1], reg_data_rs1);
-                        `op_type_csrrci,`op_type_csrrsi,`op_type_csrrwi:
-                            $display("Addr: %h Inst: %b, %0s %0s,%0d,%0d", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rd], $signed(imme[16:5]), $signed(imme[4:0]));
-                        default:
-                            $display("Addr: %h Inst: %b, %0s", pc_out, mem_inst_out, inst_str[op_type]);
-                    endcase
-                `alur:
-                    $display("Addr: %h Inst: %b, %0s %0s,%0s,%0s", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rd], reg_name[reg_addr_rs1], reg_name[reg_addr_rs2]);
-                `jalr, `load, `fence:
-                    $display("Addr: %h Inst: %b, %0s %0s,%0d(%0s)", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rd], $signed(imme), reg_name[reg_addr_rs1]);
-                `branch:
-                    $display("Addr: %h Inst: %b, %0s %0s,%0s,%0d", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rs1], reg_name[reg_addr_rs2], $signed(imme));
-                `store:
-                    $display("Addr: %h Inst: %b, %0s %0s,%0d(%0s)", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rs2], $signed(imme), reg_name[reg_addr_rs1]);
-                `jal, `auipc, `lui:
-                    $display("Addr: %h Inst: %b, %0s %0s,%0d", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rd], $signed(imme));
-                `alui:
-                    $display("Addr: %h Inst: %b, %0s %0s,%0s,%0d", pc_out, mem_inst_out, inst_str[op_type], reg_name[reg_addr_rd], reg_name[reg_addr_rs1], $signed(imme));
-                default:
-                    $display("Addr: %h Inst: %b\nUnkwown Type!\n", pc_out, mem_inst_out);
-            endcase
-            if(opcode == `store)
-                $display("mem_addr: %d, mem_data_in: %d, mem_data_out: %d", mem_data_addr, mem_data_in, mem_data_out);
-            else if(opcode == `load)
-                $display("mem_addr: %d, mem_data_out: %d", mem_data_addr, mem_data_out);
-        end
-    end
-
-`endif
-
-    initial set_ptr_pc(mem_inst_out);
+dpi_verilator  u_dpi_verilator (
+    .clk                     ( clk             ),
+    .rstn                    ( rstn            ),
+    .mem_inst_out            ( mem_inst_out    ),
+    .mem_data_addr           ( mem_data_addr   ),
+    .mem_data_in             ( mem_data_in     ),
+    .mem_data_out            ( mem_data_out    ),
+    .pc_out                  ( pc_out          ),
+    .imme                    ( imme            ),
+    .reg_addr_rd             ( reg_addr_rd     ),
+    .reg_addr_rs1            ( reg_addr_rs1    ),
+    .reg_data_rs1            ( reg_data_rs1    ),
+    .reg_addr_rs2            ( reg_addr_rs2    ),
+    .opcode                  ( opcode          ),
+    .op_type                 ( op_type         )
+);
 
 endmodule //single_cycle_cpu

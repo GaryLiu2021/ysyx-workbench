@@ -1,8 +1,7 @@
 module sim(
-    input clk
+    input clk,
+    input rstn
 );
-
-reg rstn = 0;
 
 // always #(1) clk = ~clk;
 
@@ -12,8 +11,6 @@ single_cycle_cpu  u_single_cycle_cpu (
 );
 
 initial begin
-    repeat(1) @(posedge clk);
-    rstn = 1;
     #(10000);
     $display("Time Out!!!");
     $finish;

@@ -42,9 +42,6 @@ module csrs_csr (
 
     assign csr_rd_data = csrs[csr_addr];
 
-
-`define __DEBUG
-`include "./util"
     always @(posedge clk) begin
         if(csr_wr_en)
             $display("writing data %0d into CSR[%0d]", csr_wr_data, csr_addr);

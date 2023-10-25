@@ -29,7 +29,7 @@ module reg_pc (
 
     always @(posedge clk or negedge rstn) begin
         if(!rstn)
-            pc_out <= `zero_word;
+            pc_out <= `zero_word + `RESET_VECTOR;
         else begin
             pc_out <= pc_new;
         end

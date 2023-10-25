@@ -633,7 +633,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
             = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_reg_pc__DOT__pc_new;
     } else {
         __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v1 = 1U;
-        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out = 0U;
+        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out = 0x80000000U;
     }
     if (__Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs[__Vdlyvdim0__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0] 

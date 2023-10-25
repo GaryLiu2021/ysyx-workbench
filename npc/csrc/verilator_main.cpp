@@ -35,8 +35,8 @@ word_t* dut_pc;
 word_t* dut_inst;
 word_t* dut_mem;
 
-CPU_state dut_context;
-CPU_state ref_context;
+CPU_state dut_state;
+CPU_state ref_state;
 
 //! VERILATOR ENVIRONMENT
 
@@ -103,12 +103,12 @@ void print_dut_inst() {
 void print_ref_gpr() {
     int i;
     for (i = 0; i < 32; i++) {
-        printf("r_gpr[%d] = %08x\n", i, ref_context.gpr[i]);
+        printf("r_gpr[%d] = %08x\n", i, ref_state.gpr[i]);
     }
 }
 
 void print_ref_pc() {
-    printf("r_inst = %32s\n", uint32_to_binary_string(ref_context.pc));
+    printf("r_inst = %32s\n", uint32_to_binary_string(ref_state.pc));
 }
 
 //! DIFF FUNCTIONS
@@ -171,14 +171,19 @@ void init_difftest(const char* ref_so_file, long img_size, int port) {
 
     ref_difftest_init(port);
     ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
-    ref_difftest_regcpy(&dut_context, DIFFTEST_TO_REF);
+    CPU_state ref_init_state;
+    for (int i = 0; i < 32; i++) {
+        ref_init_state.gpr[i] = word_t(0);
+    }
+    ref_init_state.pc = RESET_VECTOR;
+    ref_difftest_regcpy(&ref_init_state, DIFFTEST_TO_REF);
 }
 
-void dut_context_dump() {
+void dut_state_dump() {
     for (int i = 0;i < 32;i++) {
-        dut_context.gpr[i] = *(dut_gpr + i);
+        dut_state.gpr[i] = *(dut_gpr + i);
     }
-    dut_context.pc = *dut_pc;
+    dut_state.pc = *dut_pc;
 }
 
 //! EXEC REF
@@ -208,11 +213,11 @@ bool difftest_check_reg(const char* name, vaddr_t pc, word_t ref, word_t dut) {
 
 bool isa_difftest_checkregs(CPU_state* ref, vaddr_t pc) {
     for (int i = 0;i < 32;i++) {
-        if (difftest_check_reg(reg_name[i], pc, ref->gpr[i], dut_context.gpr[i]) == false) {
+        if (difftest_check_reg(reg_name[i], pc, ref->gpr[i], dut_state.gpr[i]) == false) {
             return false;
         }
     }
-    if (difftest_check_reg("pc", pc, ref->pc, dut_context.pc) == false) {
+    if (difftest_check_reg("pc", pc, ref->pc, dut_state.pc) == false) {
         return false;
     }
     return true;
@@ -249,11 +254,11 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
     // }
 
     ref_difftest_exec(1);
-    ref_difftest_regcpy(&ref_context, DIFFTEST_TO_DUT);
+    ref_difftest_regcpy(&ref_state, DIFFTEST_TO_DUT);
     print_ref_gpr();
     print_ref_pc();
 
-    // checkregs(&ref_context, pc);
+    checkregs(&ref_state, pc);
 }
 
 int main(int argc, char** argv, char** env) {
@@ -292,7 +297,6 @@ int main(int argc, char** argv, char** env) {
     m_dut->eval();
     m_tracep->dump(times++);
 
-    dut_context_dump();
     init_difftest(lib_file, img_size, 1234);
 
     while (!finish) {
@@ -308,8 +312,8 @@ int main(int argc, char** argv, char** env) {
         m_dut->eval();
         m_tracep->dump(times++);
 
-        dut_context_dump();
-        difftest_step(dut_context.pc, 0);
+        dut_state_dump();
+        difftest_step(dut_state.pc + RESET_VECTOR, 0);
 
         cycles++;
     }

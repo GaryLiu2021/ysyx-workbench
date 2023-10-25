@@ -97,7 +97,7 @@ void print_dut_pc() {
 }
 
 void print_dut_inst() {
-    printf("inst = %32s\n", uint32_to_binary_string(*dut_inst));
+    printf("inst = %08x\n", dut_inst);
 }
 
 void print_ref_gpr() {
@@ -108,7 +108,7 @@ void print_ref_gpr() {
 }
 
 void print_ref_pc() {
-    printf("r_inst = %32s\n", uint32_to_binary_string(ref_state.pc));
+    printf("ref_pc_next = %08x\n", ref_state.pc);
 }
 
 //! DIFF FUNCTIONS

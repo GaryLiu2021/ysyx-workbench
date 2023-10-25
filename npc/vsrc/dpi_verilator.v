@@ -132,7 +132,7 @@ module dpi_verilator(
             counter <= 'd1;
         else begin
             counter <= counter + 1'b1;
-            $display("\n\t\t\tCycle %0d\n", counter);
+            // $display("\n\t\t\tCycle %0d\n", counter);
             case(opcode)
                 `system:
                     case(op_type)
@@ -159,9 +159,9 @@ module dpi_verilator(
                     $display("Addr: %h Inst: %b\nUnkwown Type!\n", pc_out, mem_inst_out);
             endcase
             if(opcode == `store)
-                $display("mem_addr: %d, mem_data_in: %d, mem_data_out: %d", mem_data_addr, mem_data_in, mem_data_out);
+                $display("mem_addr: %h, mem_data_in: %d, mem_data_out: %d", mem_data_addr, mem_data_in, mem_data_out);
             else if(opcode == `load)
-                $display("mem_addr: %d, mem_data_out: %d", mem_data_addr, mem_data_out);
+                $display("mem_addr: %h, mem_data_out: %d", mem_data_addr, mem_data_out);
         end
     end
 

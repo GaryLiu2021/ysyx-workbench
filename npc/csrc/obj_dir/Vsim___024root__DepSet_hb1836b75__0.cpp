@@ -77,12 +77,8 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
     __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0;
     CData/*0:0*/ __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0;
-    QData/*63:0*/ __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
-    __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter = 0;
     // Body
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0 = 0U;
-    __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
-        = vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0 = 0U;
     __Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v1 = 0U;
     if ((1U & (~ (IData)(vlSelf->rstn)))) {
@@ -122,10 +118,7 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
                              >> 5U));
         }
     }
-    if (VL_UNLIKELY(vlSelf->rstn)) {
-        __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
-            = (1ULL + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter);
-        VL_WRITEF("\n\t\t\tCycle %0#\n\n",64,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter);
+    if (vlSelf->rstn) {
         if ((0x40U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
             if (VL_LIKELY((0x20U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out))) {
                 if ((0x10U & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) {
@@ -591,18 +584,20 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__pc_out,
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out);
         }
+        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
+            = (1ULL + vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter);
         if (VL_UNLIKELY((0x23U == (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)))) {
-            VL_WRITEF("mem_addr: %10#, mem_data_in: %10#, mem_data_out: %10#\n",
+            VL_WRITEF("mem_addr: %x, mem_data_in: %10#, mem_data_out: %10#\n",
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out,
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_in,
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out);
         } else if (VL_UNLIKELY((3U == (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)))) {
-            VL_WRITEF("mem_addr: %10#, mem_data_out: %10#\n",
+            VL_WRITEF("mem_addr: %x, mem_data_out: %10#\n",
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__alu_data_out,
                       32,vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_data_out);
         }
     } else {
-        __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter = 1ULL;
+        vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter = 1ULL;
     }
     if (vlSelf->rstn) {
         if (((0x63U != (0x7fU & vlSelf->sim__DOT__u_single_cycle_cpu__DOT__mem_inst_out)) 
@@ -639,8 +634,6 @@ VL_INLINE_OPT void Vsim___024root___nba_sequent__TOP__1(Vsim___024root* vlSelf) 
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs[__Vdlyvdim0__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0] 
             = __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_regs_csr__DOT__csrs__v0;
     }
-    vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter 
-        = __Vdly__sim__DOT__u_single_cycle_cpu__DOT__u_dpi_verilator__DOT__counter;
     if (__Vdlyvset__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0) {
         vlSelf->sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr[__Vdlyvdim0__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0] 
             = __Vdlyvval__sim__DOT__u_single_cycle_cpu__DOT__u_gpr__DOT__gpr__v0;

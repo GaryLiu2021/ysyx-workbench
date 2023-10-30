@@ -13,7 +13,7 @@ VERILATOR_FLAGS = --timing -Wno-fatal -Wall -cc -exe -build --trace
 VERILATOR_INC = -I${src_dir}
 
 # Verilator wrapper file
-VERILATOR_CSRCS = verilator_main.cpp
+VERILATOR_CSRCS = main.cc
 
 # C compiler flags
 REPO_PATH = /home/sgap/ysyx-workbench/nemu/tools/spike-diff/repo
@@ -33,7 +33,7 @@ TEST_CASE = ../test/add
 sim:
 	riscv32-unknown-elf-gcc -c ${TEST_CASE}.c -march=rv32i -mabi=ilp32 -o ${TEST_CASE}.o
 	riscv32-unknown-elf-ld -T ../test/link.ld -o ${TEST_CASE} ${TEST_CASE}.o
-	riscv32-unknown-elf-objdump -S ../test/add > ../test/add.dump
+	riscv32-unknown-elf-objdump -S ${TEST_CASE} > ${TEST_CASE}.dump
 
 	verilator ${VERILATOR_FLAGS} ${VERILATOR_INC} ${VERILOG_VSRCS} --top-module ${VERILOG_TOP} ${VERILATOR_CSRCS} ${CFLAGS}
 	@echo "\n\n\tSimulation Begin!\n\n"

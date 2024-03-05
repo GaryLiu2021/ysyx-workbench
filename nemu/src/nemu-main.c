@@ -31,5 +31,5 @@ int main(int argc, char* argv[]) {
 	/* Start engine. */
 	engine_start();
 
-	return is_exit_status_bad();//ljl@2024/03/05: Add !, otherwise make: *** [/home/sgap/ysyx-workbench/nemu/scripts/native.mk:38: run] Error 1
+	return is_exit_status_bad();
 }

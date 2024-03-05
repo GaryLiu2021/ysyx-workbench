@@ -108,7 +108,7 @@ void assert_fail_msg() {
 
 /* Simulate how the CPU works. */
 void cpu_exec(uint64_t n) {
-	g_print_step = (n < MAX_INST_TO_PRINT);
+	g_print_step = (n < MAX_INST_TO_PRINT) || (n == -1);
 	switch (nemu_state.state) {
 	case NEMU_END: case NEMU_ABORT:
 		printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
@@ -128,8 +128,8 @@ void cpu_exec(uint64_t n) {
 
 	case NEMU_END: case NEMU_ABORT:
 		// Flush itrace buffer
-		// nmu_ringbuf_print(&itrace_buf);
-		// nmu_ringbuf_free(&itrace_buf);
+		nmu_ringbuf_print(&itrace_buf);
+		nmu_ringbuf_free(&itrace_buf);
 		Log("nemu: %s at pc = " FMT_WORD,
 			(nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
 				(nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :

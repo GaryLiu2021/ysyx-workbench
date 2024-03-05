@@ -101,7 +101,7 @@ static int cmd_x(char* args) {
 			printf("Steps: %d\n", steps);
 			printf("Address: 0x%x\n", address);
 			for (int i = 0; i < steps; i++) {
-				printf("%x: %0x\n", address + i, vaddr_ifetch(address + i, 4));
+				printf("%x: %08x\n", address + i, vaddr_ifetch(address + i, 4));
 			}
 			return 0;
 		}

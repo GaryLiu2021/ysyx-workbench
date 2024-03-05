@@ -35,6 +35,7 @@ void device_update();
 
 #ifdef CONFIG_ITRACE
 extern NMU_RINGBUF itrace_buf;
+int nmu_ringbuf_enqueue_cache(NMU_RINGBUF* rb, unsigned char* data);
 int nmu_ringbuf_enqueue_cache_n(NMU_RINGBUF* rb, unsigned char* data, int len);
 void nmu_ringbuf_print(NMU_RINGBUF* rb);
 void nmu_ringbuf_free(NMU_RINGBUF* rb);
@@ -45,7 +46,7 @@ static void trace_and_difftest(Decode* _this, vaddr_t dnpc) {
 	if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
 	// if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
-	if (g_print_step) { IFDEF(CONFIG_ITRACE, nmu_ringbuf_enqueue_cache_n(&itrace_buf,(unsigned char*)_this->logbuf,strlen(_this->logbuf))); }
+	if (g_print_step) { IFDEF(CONFIG_ITRACE, nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)_this->logbuf, strlen(_this->logbuf)), nmu_ringbuf_enqueue_cache(&itrace_buf,(unsigned char*)'\n')); }
 	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 	IFDEF(CONFIG_WATCHPOINT, check_watchpoint(&nemu_state.state));
 }

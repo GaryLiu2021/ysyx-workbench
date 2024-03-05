@@ -44,10 +44,13 @@ int nmu_ringbuf_enqueue_cache(NMU_RINGBUF* rb, unsigned char data) {
 	return 0;
 }
 
-// int nmu_ringbuf_enqueue_cache_n(NMU_RINGBUF* rb, unsigned char* data, int len) {
-// 	for (int i = 0;i < len;i++)
-// 		nmu_ringbuf_enqueue_cache(rb, *(data + i));
-// }
+// Enqueue n elements into the buffer, if full, evict the oldest items
+int nmu_ringbuf_enqueue_cache_n(NMU_RINGBUF* rb, unsigned char* data, int len) {
+	for (int i = 0;i < len;i++)
+		nmu_ringbuf_enqueue_cache(rb, *(data + i));
+	
+	return 0;
+}
 
 // Dequeue an element from the buffer
 unsigned char nmu_ringbuf_dequeue(NMU_RINGBUF* rb) {

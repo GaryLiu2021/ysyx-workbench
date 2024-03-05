@@ -35,7 +35,7 @@ void device_update();
 
 #ifdef CONFIG_ITRACE
 extern NMU_RINGBUF itrace_buf;
-extern int nmu_ringbuf_enqueue_cache_n(NMU_RINGBUF* rb, unsigned char* data, int len);
+int nmu_ringbuf_enqueue_cache_n(NMU_RINGBUF* rb, unsigned char* data, int len);
 #endif
 
 static void trace_and_difftest(Decode* _this, vaddr_t dnpc) {

@@ -1,4 +1,5 @@
 #include <common.h>
+#include <stdio.h>
 
 unsigned char nmu_ringbuf_dequeue(NMU_RINGBUF* rb);
 
@@ -60,6 +61,14 @@ unsigned char nmu_ringbuf_dequeue(NMU_RINGBUF* rb) {
 	rb->front = (rb->front + 1) % rb->size;
 	rb->count--;
 	return data;
+}
+
+// Print elements in the buffer
+void nmu_ringbuf_print(NMU_RINGBUF* rb) {
+	if (!nmu_ringbuf_is_empty(rb)) {
+		for (int i = rb->front;i < rb->rear;i++)
+			putchar(*(int*)(rb->buffer + i));
+	}
 }
 
 // Free the memory used by the buffer

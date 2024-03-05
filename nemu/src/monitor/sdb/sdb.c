@@ -22,6 +22,7 @@
 #ifdef CONFIG_ITRACE
 NMU_RINGBUF itrace_buf;
 void nmu_ringbuf_init(NMU_RINGBUF* rb, int size);
+void nmu_ringbuf_print(NMU_RINGBUF* rb);
 void nmu_ringbuf_free(NMU_RINGBUF* rb);
 #endif
 
@@ -238,7 +239,7 @@ void sdb_mainloop() {
 		if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
 	}
 	//todo print itrace here
-
+	nmu_ringbuf_print(&itrace_buf);
 	nmu_ringbuf_free(&itrace_buf);
 }
 

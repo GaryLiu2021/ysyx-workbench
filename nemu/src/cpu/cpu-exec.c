@@ -128,8 +128,8 @@ void cpu_exec(uint64_t n) {
 
 	case NEMU_END: case NEMU_ABORT:
 		// Flush itrace buffer
-		nmu_ringbuf_print(&itrace_buf);
-		nmu_ringbuf_free(&itrace_buf);
+		// nmu_ringbuf_print(&itrace_buf);
+		// nmu_ringbuf_free(&itrace_buf);
 
 		Log("nemu: %s at pc = " FMT_WORD,
 			(nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :

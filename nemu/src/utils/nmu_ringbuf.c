@@ -73,6 +73,6 @@ void nmu_ringbuf_print(NMU_RINGBUF* rb) {
 
 // Free the memory used by the buffer
 void nmu_ringbuf_free(NMU_RINGBUF* rb) {
-	free(rb->buffer);
+	if(rb->buffer) free(rb->buffer);
 	rb->buffer = NULL;
 }

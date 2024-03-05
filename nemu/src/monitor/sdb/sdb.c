@@ -238,9 +238,6 @@ void sdb_mainloop() {
 
 		if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
 	}
-	//todo print itrace here
-	nmu_ringbuf_print(&itrace_buf);
-	nmu_ringbuf_free(&itrace_buf);
 }
 
 void init_sdb() {

@@ -19,6 +19,12 @@
 #include <readline/history.h>
 #include "sdb.h"
 
+#ifdef CONFIG_ITRACE
+NMU_RINGBUF itrace_buf;
+void nmu_ringbuf_init(NMU_RINGBUF* rb, int size);
+void nmu_ringbuf_free(NMU_RINGBUF* rb);
+#endif
+
 static int is_batch_mode = false;
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -231,6 +237,9 @@ void sdb_mainloop() {
 
 		if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
 	}
+	//todo print itrace here
+
+	nmu_ringbuf_free(&itrace_buf);
 }
 
 void init_sdb() {
@@ -239,4 +248,7 @@ void init_sdb() {
 
 	/* Initialize the watchpoint pool. */
 	init_wp_pool();
+
+	/* Initialize Itrace buffer*/
+	nmu_ringbuf_init(&itrace_buf, 1000);
 }

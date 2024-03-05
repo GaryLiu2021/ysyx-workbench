@@ -46,4 +46,13 @@ typedef uint16_t ioaddr_t;
 
 #include <debug.h>
 
+// Struct ring buffer
+typedef struct {
+	unsigned char* buffer;  // Data storage array
+	int size;               // Buffer size
+	int front;              // Head pointer, pointing to the first element in the buffer
+	int rear;               // Tail pointer, pointing to the next position after the last element in the buffer
+	int count;              // Number of elements currently in the buffer
+} NMU_RINGBUF;
+
 #endif

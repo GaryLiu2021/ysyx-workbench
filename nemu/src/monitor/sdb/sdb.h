@@ -19,6 +19,32 @@
 #include <common.h>
 #include <memory/vaddr.h>
 
-word_t expr(char *e, bool *success);
+typedef struct watchpoint {
+	int NO;
+	struct watchpoint* next;
+	char expr[32];
+
+} WP;
+
+// Calculate the result of expression e
+word_t expr(char* e, bool* success);
+
+
+void init_regex();
+
+
+void init_wp_pool();
+
+// Create a new watchpoint
+WP* new_wp(char* args, bool* success);
+
+// Delete a watchpoint
+void free_wp(int num, bool* success);
+
+// Print watchpoints
+void print_wp();
+
+// Check if watchpoints value changed
+void check_watchpoint(int* state);
 
 #endif

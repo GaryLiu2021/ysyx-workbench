@@ -49,9 +49,9 @@ static void trace_and_difftest(Decode* _this, vaddr_t dnpc) {
 	if (g_print_step) {
 	#ifdef CONFIG_ITRACE
 		if (nemu_state.state == NEMU_ABORT)
-			nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)"-->", 3);
+			nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)" -->", 4);
 		else
-			nmu_ringbuf_enqueue_cache(&itrace_buf, (unsigned char*)'\t');
+			nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)"    ", 4);
 		nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)_this->logbuf, strlen(_this->logbuf));
 		nmu_ringbuf_enqueue_cache(&itrace_buf, (unsigned char*)'\n');
 	#endif

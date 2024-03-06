@@ -46,17 +46,17 @@ static void trace_and_difftest(Decode* _this, vaddr_t dnpc) {
 	if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
 	// if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 	if (g_print_step) {
-	#ifdef CONFIG_ITRACE
+#ifdef CONFIG_ITRACE
 		if (nemu_state.state == NEMU_ABORT)
 			nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)"  --> ", 6);
 		else
 			nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)"      ", 6);
 		nmu_ringbuf_enqueue_cache_n(&itrace_buf, (unsigned char*)_this->logbuf, strlen(_this->logbuf));
 		nmu_ringbuf_enqueue_cache(&itrace_buf, (unsigned char*)'\n');
-	#endif
+#endif
 	}
-	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 	IFDEF(CONFIG_WATCHPOINT, check_watchpoint(&nemu_state.state));
 }
 

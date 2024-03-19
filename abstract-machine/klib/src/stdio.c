@@ -6,7 +6,47 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+	va_list args;
+	va_start(args, fmt);
+
+	int written = 0;
+	while (*fmt) {
+		if (*fmt != '%') {
+			// 普通字符，直接复制到缓冲区
+			putch(*fmt++);
+			written++;
+		}
+		else {
+			// Proccess '%'
+			fmt++;
+			if (*fmt == '\0') {
+				break;
+			}
+
+			if (*fmt == 'd') {
+				// 处理整数格式化符号 %d
+				int num = va_arg(args, int);
+				char str[32] = {};
+				itoa(num, str, 10);
+				int i = 0;
+				while (str[i] != '\0') {
+					putch(str[i++]);
+					written++;
+				}
+			}
+			else if (*fmt == 's') {
+				// 处理字符串格式化符号 %s
+				const char* str = va_arg(args, const char*);
+				while (*str) {
+					putch(*str++);
+					written++;
+				}
+			}
+			fmt++;  // 移动到下一个字符
+		}
+	}
+	va_end(args);
+	return written;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {

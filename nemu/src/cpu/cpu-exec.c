@@ -65,8 +65,9 @@ static void exec_once(Decode* s, vaddr_t pc) {
 	s->pc = pc;
 	s->snpc = pc;
 	printf("Current PC is: 0x%08x\n", pc);
+	if (pc == 0x80000464)
+		printf("i=%lu\n", ++i);
 	isa_exec_once(s);
-	printf("i=%lu\n", ++i);
 	cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
 	char* p = s->logbuf;

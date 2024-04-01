@@ -249,6 +249,6 @@ void init_sdb() {
 
 #ifdef CONFIG_ITRACE
 	/* Initialize Itrace buffer*/
-	nmu_ringbuf_init(&itrace_buf, 10000);
+	nmu_ringbuf_init(&itrace_buf, 1000);
 #endif
 }

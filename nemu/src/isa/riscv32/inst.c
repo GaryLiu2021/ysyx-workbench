@@ -125,7 +125,8 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
-
+  //08512623 0000 1000 0101 0001 0010 0110 0010 0011
+  
   R(0) = 0; // reset $zero to 0
 
   return 0;

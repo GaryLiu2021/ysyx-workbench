@@ -247,6 +247,8 @@ void init_sdb() {
 	/* Initialize the watchpoint pool. */
 	init_wp_pool();
 
+#ifdef CONFIG_ITRACE
 	/* Initialize Itrace buffer*/
 	nmu_ringbuf_init(&itrace_buf, 1000);
+#endif
 }

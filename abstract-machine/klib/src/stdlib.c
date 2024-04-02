@@ -78,7 +78,7 @@ void itoa(int num, char *str, int base)
   }
 }
 
-static char* start_addr; // initial address
+static char* start_addr = NULL; // initial address
 static bool init_flag = false; //flag of initial done
 
 void* malloc(size_t size) {
@@ -87,7 +87,6 @@ void* malloc(size_t size) {
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 
 	if (!init_flag) {
-		printf("addr is %x\n", &start_addr);
 		start_addr = (char*)ROUNDUP(heap.start, 8);
 		init_flag = true;
 	}

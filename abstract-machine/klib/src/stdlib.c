@@ -92,7 +92,7 @@ void* malloc(size_t size) {
 		start_addr = (char*)ROUNDUP(heap.start, 8);
 		init_flag = true;
 	}
-	printf("addr is %08x\n", &size);
+	printf("addr is %x\n", &size);
 	size = (size_t)ROUNDUP(size, 8);
 	char* old = start_addr;
 	start_addr += size;

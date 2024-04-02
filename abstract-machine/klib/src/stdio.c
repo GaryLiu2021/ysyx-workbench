@@ -42,6 +42,26 @@ int printf(const char *fmt, ...) {
 					written++;
 				}
 			}
+			else if (*fmt == 'c') {
+				// 处理字符格式化符号 %c
+				char ch = va_arg(args, int);
+				putch(ch);
+				written++;
+			}
+			else if (*fmt == 'x') {
+				// 处理十六进制格式化符号 %x
+				int num = va_arg(args, int);
+				char str[32] = {};
+				itoa(num, str, 16);
+				int i = 0;
+				while (str[i] != '\0') {
+					putch(str[i++]);
+					written++;
+				}
+			}
+			else {
+				panic("@printf: Unsupported symbol!\n");
+			}
 			fmt++;  // 移动到下一个字符
 		}
 	}

@@ -89,6 +89,7 @@ void* malloc(size_t size) {
 //   panic("Not implemented");
 // #endif
 	if (!init_flag) {
+		printf("addr is %x\n", &start_addr);
 		start_addr = (char*)ROUNDUP(heap.start, 8);
 		init_flag = true;
 	}

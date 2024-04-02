@@ -77,7 +77,7 @@ void itoa(int num, char *str, int base)
     }
   }
 }
-
+#if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
 static char* start_addr; // initial address
 static bool init_flag = false; //flag of initial done
 
@@ -85,9 +85,7 @@ void* malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
-// #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-//   panic("Not implemented");
-// #endif
+
 	if (!init_flag) {
 		printf("addr is %x\n", &start_addr);
 		start_addr = (char*)ROUNDUP(heap.start, 8);
@@ -98,6 +96,7 @@ void* malloc(size_t size) {
 	start_addr += size;
 	return old;
 }
+#endif
 
 void free(void* ptr) {
 }

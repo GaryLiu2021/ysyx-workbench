@@ -61,12 +61,8 @@ static void trace_and_difftest(Decode* _this, vaddr_t dnpc) {
 }
 
 static void exec_once(Decode* s, vaddr_t pc) {
-	static uint64_t i = 0;
 	s->pc = pc;
 	s->snpc = pc;
-	printf("Current PC is: 0x%08x\n", pc);
-	if (pc == 0x80000464)
-		printf("i=%lu\n", ++i);
 	isa_exec_once(s);
 	cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE

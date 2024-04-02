@@ -77,7 +77,7 @@ void itoa(int num, char *str, int base)
     }
   }
 }
-#if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
+
 static char* start_addr; // initial address
 static bool init_flag = false; //flag of initial done
 
@@ -96,7 +96,6 @@ void* malloc(size_t size) {
 	start_addr += size;
 	return old;
 }
-#endif
 
 void free(void* ptr) {
 }

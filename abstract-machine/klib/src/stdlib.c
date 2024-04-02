@@ -97,7 +97,7 @@ void* malloc(size_t size) {
 	return old;
 }
 
-void free(void *ptr) {
+void free(void* ptr) {
 }
 
 #endif

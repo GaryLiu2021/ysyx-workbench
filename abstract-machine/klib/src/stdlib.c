@@ -89,7 +89,7 @@ void* malloc(size_t size) {
 //   panic("Not implemented");
 // #endif
 	if (!init_flag) {
-		start_addr = (void*)ROUNDUP(heap.start, 8);
+		start_addr = (char*)ROUNDUP(heap.start, 8);
 		init_flag = true;
 	}
 	size = (size_t)ROUNDUP(size, 8);

@@ -93,9 +93,13 @@ static void exec_once(Decode* s, vaddr_t pc) {
 
 static void execute(uint64_t n) {
 	Decode s;
+	static int i = 0;
 	for (;n > 0; n--) {
 		// isa_reg_display();
 		exec_once(&s, cpu.pc);
+		if (cpu.pc == 0x80003474) {
+			printf("i=%d\n", ++i);
+		}
 		g_nr_guest_inst++;
 		trace_and_difftest(&s, cpu.pc);
 		if (nemu_state.state != NEMU_RUNNING) break;

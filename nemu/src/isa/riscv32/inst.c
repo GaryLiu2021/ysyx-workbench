@@ -132,6 +132,7 @@ static int decode_exec(Decode *s) {
 
   if (branch_cnt > 10000) {
 	  Log(ANSI_FMT("Warning: NEMU may meet a deadlock...\n", ANSI_FG_RED));
+	  branch_cnt = 0;
   }
   R(0) = 0; // reset $zero to 0
 

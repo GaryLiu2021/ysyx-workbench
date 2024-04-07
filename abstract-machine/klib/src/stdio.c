@@ -59,6 +59,17 @@ int printf(const char *fmt, ...) {
 					written++;
 				}
 			}
+			else if (*fmt == 'p') {
+				// 处理指针格式化符号 %p
+				void* ptr = va_arg(args, void*);
+				char str[32];
+				sprintf(str, "%p", ptr);
+				int i = 0;
+				while (str[i] != '\0') {
+					putch(str[i++]);
+					written++;
+				}
+			}
 			else {
 				panic("@printf: Unsupported symbol!\n");
 			}
@@ -106,8 +117,24 @@ int sprintf(char *out, const char *fmt, ...) {
                 while (*str) {
                     buf[written++] = *str++;
                 }
-            }
-            fmt++;  // 移动到下一个字符
+			}
+			else if (*fmt == 'p') {
+				// 处理指针格式化符号 %p
+				void* ptr = va_arg(args, void*);
+				uintptr_t value = (uintptr_t)ptr;
+				char str[32] = {};
+				itoa(value, str, 16);
+				buf[written++] = '0';
+				buf[written++] = 'x';
+				int i = 0;
+				while (str[i] != '\0') {
+					buf[written++] = str[i++];
+				}
+			}
+			else {
+				panic("@sprintf: Unsupported symbol!\n");
+			}
+			fmt++;  // 移动到下一个字符
         }
     }
     va_end(args);

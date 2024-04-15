@@ -31,6 +31,9 @@ void do_syscall(Context* c) {
 		Log("Nanos-lite: Return syscall _write with %d.", c->GPRx);
 		break;
 	}
+	case SYS_brk: {
+		SYS_RETURN(0);
+	}
 	default: panic("Unhandled syscall ID = %d", a[0]);break;
 	}
 }

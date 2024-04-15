@@ -27,7 +27,7 @@ void do_syscall(Context* c) {
 			for (int iChar = 0;iChar < count;iChar++)
 				putch(((char*)buf)[iChar]);
 		}
-		SYS_RETURN(0);
+		SYS_RETURN(count);
 		break;
 	}
 	default: panic("Unhandled syscall ID = %d", a[0]);break;

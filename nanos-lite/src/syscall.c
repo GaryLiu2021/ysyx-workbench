@@ -1,5 +1,7 @@
 #include <common.h>
 #include "syscall.h"
+#define SYS_RETURN(ret) c->GPRx=ret
+
 void do_syscall(Context* c) {
 	uintptr_t a[4];
 	a[0] = c->GPR1;
@@ -12,7 +14,7 @@ void do_syscall(Context* c) {
 	case SYS_yield: {
 		Log("Nanos-lite: Doing syscall yield...");
 		yield();
-		c->GPRx = 0;
+		SYS_RETURN(0);
 		Log("Nanos-lite: Return syscall yield with %d.", c->GPRx);
 		break;// return 0
 	}
@@ -25,6 +27,7 @@ void do_syscall(Context* c) {
 			for (int iChar = 0;iChar < count;iChar++)
 				putch(((char*)buf)[iChar]);
 		}
+		SYS_RETURN(0);
 		break;
 	}
 	default: panic("Unhandled syscall ID = %d", a[0]);break;

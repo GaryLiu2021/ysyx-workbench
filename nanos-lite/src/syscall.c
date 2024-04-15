@@ -20,6 +20,7 @@ void do_syscall(Context* c) {
 	}
 	case SYS_write: {
 		int fd = c->GPR2;
+		Log("fd=%d", fd);
 		void* buf = (void*)c->GPR3;
 		unsigned int count = c->GPR4;
 		Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);

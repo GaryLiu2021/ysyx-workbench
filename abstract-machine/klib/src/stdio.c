@@ -51,8 +51,8 @@ int printf(const char *fmt, ...) {
 			else if (*fmt == 'x') {
 				// 处理十六进制格式化符号 %x
 				int num = va_arg(args, int);
-				char str[32] = {};
-				itoa(num, str, 16);
+				char str[32];
+				sprintf(str, "%x", num);
 				int i = 0;
 				while (str[i] != '\0') {
 					putch(str[i++]);
@@ -117,6 +117,16 @@ int sprintf(char *out, const char *fmt, ...) {
                 while (*str) {
                     buf[written++] = *str++;
                 }
+			}
+			else if (*fmt == 'x') {
+				// 处理指针格式化符号 %x
+				int value = va_arg(args, int);
+				char str[32] = {};
+				itoa(value, str, 16);
+				int i = 0;
+				while (str[i] != '\0') {
+					buf[written++] = str[i++];
+				}
 			}
 			else if (*fmt == 'p') {
 				// 处理指针格式化符号 %p

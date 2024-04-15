@@ -82,7 +82,7 @@ static int decode_exec(Decode* s) {
 		{branch_cnt=0;} 
 
 	// #define ECALL(dnpc) { bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc)); }
-#define ECALL(dnpc) {dnpc = (isa_raise_intr(0xb, s->pc)); Log(ANSI_FMT("ETRACE: expection called @ 0x%08x, going to 0x%08x...\n",ANSI_FG_BLUE),s->pc,dnpc);}
+#define ECALL(dnpc) {bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc)); Log(ANSI_FMT("ETRACE: expection called @ 0x%08x, going to 0x%08x...\n",ANSI_FG_BLUE),s->pc,dnpc);} // Note that mcause in qemu may be 0xb forever.
 #define CSR(i) *get_csr_register(i)
 
 	/* INTPAT Begin */

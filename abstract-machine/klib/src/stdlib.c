@@ -33,6 +33,7 @@ void itoa(int num, char *str, int base)
 {
   int i = 0;
   int isNegative = 0;
+  assert(base >= 2 && base <= 16);
 
   // 处理负数
   if (num < 0 && base == 10)
@@ -40,6 +41,7 @@ void itoa(int num, char *str, int base)
     isNegative = 1;
     num = -num;
   }
+  unsigned int unsignedNum = (unsigned int)(num);
 
   // 处理特殊情况：0
   if (num == 0)
@@ -49,11 +51,11 @@ void itoa(int num, char *str, int base)
   else
   {
     // 处理整数部分
-    while (num != 0)
+    while (unsignedNum != 0)
     {
-      int rem = num % base;
+      int rem = unsignedNum % base;
       str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-      num = num / base;
+      unsignedNum = unsignedNum / base;
     }
 
     // 如果是负数，添加负号

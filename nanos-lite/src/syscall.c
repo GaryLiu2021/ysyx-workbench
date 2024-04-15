@@ -28,6 +28,7 @@ void do_syscall(Context* c) {
 				putch(((char*)buf)[iChar]);
 		// }
 		SYS_RETURN(count);
+		Log("Nanos-lite: Return syscall _write with %d.", c->GPRx);
 		break;
 	}
 	default: panic("Unhandled syscall ID = %d", a[0]);break;

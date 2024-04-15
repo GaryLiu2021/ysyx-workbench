@@ -11,7 +11,7 @@ int main() {
   extern const char logo[];
   printf("%s", logo);
   printf("%x", 0xfffac);
-  Log("%x", 0xfffac);
+  Log("%x", 0xffffffffaccc);
   Log("'Hello World!' from Nanos-lite");
   Log("Build time: %s, %s", __TIME__, __DATE__);
 

@@ -22,7 +22,7 @@ void do_syscall(Context* c) {
 		int fd = c->GPR2;
 		void* buf = (void*)c->GPR3;
 		unsigned int count = c->GPR4;
-		Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
+		// Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
 		if (fd == 1 || fd == 2) {
 			for (int iChar = 0;iChar < count;iChar++)
 				putch(((char*)buf)[iChar]);

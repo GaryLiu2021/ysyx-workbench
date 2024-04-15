@@ -52,7 +52,7 @@ int printf(const char *fmt, ...) {
 				// 处理十六进制格式化符号 %x
 				int num = va_arg(args, int);
 				char str[32] = {};
-				itoa(num, str, 10);
+				itoa(num, str, 16);
 				int i = 0;
 				while (str[i] != '\0') {
 					putch(str[i++]);

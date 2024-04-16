@@ -1,10 +1,16 @@
 #include <common.h>
 #include "syscall.h"
+#include <fs.h>
 #define SYS_RETURN(ret) c->GPRx=ret
+#define SYSCALL_LOG(syscall) \
+Log("Nanos-lite: SYS_" " ## syscall ## ")
 
 void do_syscall(Context* c) {
 	uintptr_t a[4];
 	a[0] = c->GPR1;
+	a[1] = c->GPR2;
+	a[2] = c->GPR3;
+	a[3] = c->GPR4;
 	switch (a[0]) {
 	case SYS_exit: {
 		Log("Nanos-lite: Doing syscall _exit(%d)...", c->GPR2);
@@ -18,17 +24,33 @@ void do_syscall(Context* c) {
 		Log("Nanos-lite: Return syscall yield with %d.", c->GPRx);
 		break;// return 0
 	}
+	case SYS_open: {
+		SYSCALL_LOG(open);
+		SYS_RETURN(fs_open((const char*)a[1], (int)a[2], (int)a[3]));
+		break;
+	}
+	case SYS_read: {
+		SYSCALL_LOG(read);
+		SYS_RETURN(fs_read((int)a[1], (void*)a[2], (size_t)a[3]));
+		break;
+	}
 	case SYS_write: {
 		int fd = c->GPR2;
-		void* buf = (void*)c->GPR3;
-		unsigned int count = c->GPR4;
+		const void* buf = (const void*)c->GPR3;
+		size_t count = c->GPR4;
 		Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
-		if (fd == 1 || fd == 2) {
-			for (int iChar = 0;iChar < count;iChar++)
-				putch(((char*)buf)[iChar]);
-		}
-		SYS_RETURN(count);
+		SYS_RETURN(fs_write(fd, buf, count));
 		Log("Nanos-lite: Return syscall _write with %d.", c->GPRx);
+		break;
+		}
+	case SYS_close: {
+		SYSCALL_LOG(close);
+		SYS_RETURN(fs_close((int)a[1]));
+		break;
+	}
+	case SYS_lseek: {
+		SYSCALL_LOG(lseek);
+		SYS_RETURN(fs_lseek((int)a[1],(size_t)a[2],(int)a[3]));
 		break;
 	}
 	case SYS_brk: {

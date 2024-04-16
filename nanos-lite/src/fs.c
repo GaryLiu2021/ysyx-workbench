@@ -9,6 +9,7 @@ typedef struct {
   size_t disk_offset;
   ReadFn read;
   WriteFn write;
+  size_t open_offset;
 } Finfo;
 
 enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
@@ -31,6 +32,92 @@ static Finfo file_table[] __attribute__((used)) = {
 #include "files.h"
 };
 
+// How many files in ramdisk
+#define FILENUM sizeof(file_table)/sizeof(Finfo)
+#define FILEINFO(x) (file_table[fd].x)
+// Current processing offset of file
+#define FILE_CUR_OFF (FILEINFO(disk_offset) + FILEINFO(open_offset))
+// Start offset of this file
+#define FILE_START (FILEINFO(disk_offset))
+// End offset of this file
+#define FILE_END (FILEINFO(disk_offset) + FILEINFO(size) - 1)
+
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+}
+
+extern size_t ramdisk_read(void* buf, size_t offset, size_t len);
+extern size_t ramdisk_write(const void* buf, size_t offset, size_t len);
+
+// Return the index of @pathname
+int fs_open(const char* pathname, int flags, int mode) {
+	int fileTableIdx;
+	for (fileTableIdx = 0;fileTableIdx < FILENUM;fileTableIdx++) {
+		if (strcmp(file_table[fileTableIdx].name, pathname) == 0)
+			return fileTableIdx;
+	}
+	assert(fileTableIdx != FILENUM); // Should not not-found
+	// todo: flags and mode
+	return -1;
+}
+
+// Read @len bytes from file @fd and store into @buf
+size_t fs_read(int fd, void* buf, size_t len) {
+	// Should not over bound
+	assert((FILE_CUR_OFF + len) <= FILE_END);
+	if (fd < 3) {
+		return 0;
+	}
+	else {
+		return ramdisk_read(buf, FILE_CUR_OFF, len);
+	}
+}
+
+// Write @len bytes from @buf into file @fd
+size_t fs_write(int fd, const void* buf, size_t len) {
+	// Should not over bound
+	assert((FILE_CUR_OFF + len) <= FILE_END);
+	
+	if (fd == 0) {
+		return 0;
+	}
+	// If write stdout or stderr, putch
+	else if (fd == 1 || fd == 2) {
+		for (int i = 0;i < len;i++) {
+			putch(((char*)buf)[i]);
+		}
+		return len;
+	}
+	else {
+		return ramdisk_write(buf, FILE_CUR_OFF, len);
+	}
+}
+
+// Move 
+size_t fs_lseek(int fd, off_t offset, int whence) {
+	switch (whence)
+	{
+	case SEEK_SET:
+		assert(offset >= 0 && offset <= FILEINFO(size));
+		FILEINFO(open_offset) = offset;
+		break;
+	case SEEK_CUR:
+		assert(FILE_CUR_OFF + offset <= FILE_END);
+		FILEINFO(open_offset) += offset;
+		break;
+	case(SEEK_END):
+		assert(offset >= -FILEINFO(size) && offset <= 0);
+		FILEINFO(open_offset) = FILEINFO(size) + offset;
+		break;
+	default:
+		panic("Not implemented");
+		break;
+	}
+	return FILEINFO(open_offset);
+}
+
+// Close file @fd
+int fs_close(int fd) {
+	// Always success
+	return 0;
 }

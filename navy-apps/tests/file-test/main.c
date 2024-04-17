@@ -2,8 +2,9 @@
 #include <assert.h>
 
 int main() {
-  FILE *fp = fopen("/share/files/num", "r+");
-  assert(fp);
+    FILE* fp = fopen("/share/files/num", "r+");
+    printf("FUCK\n");
+    assert(fp);
 
   fseek(fp, 0, SEEK_END);
   printf("FUCK\n");

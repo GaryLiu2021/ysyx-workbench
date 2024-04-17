@@ -6,7 +6,9 @@ int main() {
   assert(fp);
 
   fseek(fp, 0, SEEK_END);
+  printf("FUCK\n");
   long size = ftell(fp);
+  printf("FUCK\n");
   assert(size == 5000);
   printf("FUCK\n");
 

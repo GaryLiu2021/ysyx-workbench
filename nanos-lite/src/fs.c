@@ -80,7 +80,7 @@ size_t fs_read(int fd, void* buf, size_t len) {
 		return 0;
 	}
 	else {
-		printf("read %d bytes from %p into %p\n", len, FILE_CUR_OFF, buf);
+		printf("reading %d bytes from %p into %p\n", len, FILE_CUR_OFF, buf);
 		int ramdisk_read_length = ramdisk_read(buf, FILE_CUR_OFF, len);
 		fs_lseek(fd, ramdisk_read_length, SEEK_CUR);
 		return ramdisk_read_length;

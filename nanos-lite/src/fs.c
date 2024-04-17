@@ -64,20 +64,26 @@ int fs_open(const char* pathname, int flags, int mode) {
 // Read @len bytes from file @fd and store into @buf
 size_t fs_read(int fd, void* buf, size_t len) {
 	// Should not over bound
-	assert((FILE_CUR_OFF + len) <= FILE_END);
+	int overflow = (FILE_CUR_OFF + len - 1) - FILE_END;
+	if (overflow > 0)
+		len -= overflow;
+	
 	if (fd < 3) {
 		return 0;
 	}
 	else {
 		printf("read %d bytes from %p into %p\n", len, FILE_CUR_OFF, buf);
-		return ramdisk_read(buf, FILE_CUR_OFF, len);
+		int ramdisk_read_length = ramdisk_read(buf, FILE_CUR_OFF, len);
+		fs_lseek(fd, ramdisk_read_length, SEEK_CUR);
+		return ramdisk_read_length;
 	}
+
 }
 
 // Write @len bytes from @buf into file @fd
 size_t fs_write(int fd, const void* buf, size_t len) {
 	// Should not over bound
-	assert((FILE_CUR_OFF + len) <= FILE_END);
+	assert((FILE_CUR_OFF + len - 1) <= FILE_END);
 	
 	if (fd == 0) {
 		return 0;
@@ -90,7 +96,9 @@ size_t fs_write(int fd, const void* buf, size_t len) {
 		return len;
 	}
 	else {
-		return ramdisk_write(buf, FILE_CUR_OFF, len);
+		int ramdisk_write_length = ramdisk_write(buf, FILE_CUR_OFF, len);
+		fs_lseek(fd, ramdisk_write_length, SEEK_CUR);
+		return ramdisk_write_length;
 	}
 }
 

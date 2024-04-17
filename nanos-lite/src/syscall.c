@@ -3,7 +3,7 @@
 #include <fs.h>
 #define SYS_RETURN(ret) c->GPRx=ret
 #define SYSCALL_LOG(syscall) \
-Log("Nanos-lite: SYS_" " ## syscall ## ")
+Log("Nanos-lite: SYS_" "syscall")
 
 void do_syscall(Context* c) {
 	uintptr_t a[4];

@@ -66,7 +66,7 @@ int fs_open(const char* pathname, int flags, int mode) {
 		if (strcmp(file_table[fileTableIdx].name, pathname) == 0)
 			return fileTableIdx;
 	}
-	assert(fileTableIdx != FILENUM); // Should not not-found
+	// assert(fileTableIdx != FILENUM); // Should not not-found
 	// todo: flags and mode
 	return -1;
 }

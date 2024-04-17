@@ -26,7 +26,7 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
-  [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
+  [FD_STDIN] = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
 #include "files.h"
@@ -41,6 +41,16 @@ static Finfo file_table[] __attribute__((used)) = {
 #define FILE_START (FILEINFO(disk_offset))
 // End offset of this file
 #define FILE_END (FILEINFO(disk_offset) + FILEINFO(size) - 1)
+// Bound val into [min,max]
+#define BOUND(min,val,max) \
+if (val < min) \
+	val = min; \
+else if (val > max) \
+val = max;
+
+#define BOUND_MAX(val,max) \
+if(val > max) \
+	val = max;
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
@@ -107,15 +117,15 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
 	switch (whence)
 	{
 	case SEEK_SET:
-		assert(offset >= 0 && offset <= FILEINFO(size));
+		BOUND(0, offset, FILEINFO(size));
 		FILEINFO(open_offset) = offset;
 		break;
 	case SEEK_CUR:
-		assert(FILE_CUR_OFF + offset <= FILE_END);
+		BOUND_MAX(offset, FILE_END - FILE_CUR_OFF);
 		FILEINFO(open_offset) += offset;
 		break;
 	case(SEEK_END):
-		assert(offset >= -FILEINFO(size) && offset <= 0);
+		BOUND(-FILEINFO(size), offset, 0);
 		FILEINFO(open_offset) = FILEINFO(size) + offset;
 		break;
 	default:

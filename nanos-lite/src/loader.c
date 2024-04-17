@@ -15,6 +15,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	assert(fd >= 0);
 
 	Elf_Ehdr ehdr;
+	fs_lseek(fd, 0, SEEK_SET);
 	size_t bytes_read = fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
 	assert(bytes_read == sizeof(Elf_Ehdr));
 	// ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
@@ -29,6 +30,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 	for (int i = 0; i < ehdr.e_phnum; i++) {
 		if (phdr[i].p_type == PT_LOAD) {
+			fs_lseek(fd, phdr[i].p_offset, SEEK_SET);
 			fs_read(fd, (void*)phdr[i].p_vaddr, phdr[i].p_memsz);
 			// ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_memsz);
 			// set .bss with zeros

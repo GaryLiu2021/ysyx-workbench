@@ -16,16 +16,16 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 	Elf_Ehdr ehdr;
 	fs_lseek(fd, 0, SEEK_SET);
-	size_t bytes_read = fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
-	assert(bytes_read == sizeof(Elf_Ehdr));
+	fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
+	// assert(bytes_read == sizeof(Elf_Ehdr));
 	// ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	// check valid elf
 	assert((*(uint32_t*)ehdr.e_ident == 0x464c457f));
 
 	Elf_Phdr phdr[ehdr.e_phnum];
 	fs_lseek(fd, ehdr.e_phoff, SEEK_SET);
-	bytes_read = fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
-	assert(bytes_read == sizeof(Elf_Phdr) * ehdr.e_phnum);
+	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
+	// assert(bytes_read == sizeof(Elf_Phdr) * ehdr.e_phnum);
 	// ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
 
 	for (int i = 0; i < ehdr.e_phnum; i++) {

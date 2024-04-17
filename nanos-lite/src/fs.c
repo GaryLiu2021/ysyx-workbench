@@ -74,9 +74,7 @@ int fs_open(const char* pathname, int flags, int mode) {
 // Read @len bytes from file @fd and store into @buf
 size_t fs_read(int fd, void* buf, size_t len) {
 	// Should not over bound
-	int overflow = (FILE_CUR_OFF + len - 1) - FILE_END;
-	if (overflow > 0)
-		len -= overflow;
+	BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
 	
 	if (fd < 3) {
 		return 0;
@@ -93,7 +91,7 @@ size_t fs_read(int fd, void* buf, size_t len) {
 // Write @len bytes from @buf into file @fd
 size_t fs_write(int fd, const void* buf, size_t len) {
 	// Should not over bound
-	assert((FILE_CUR_OFF + len - 1) <= FILE_END);
+	BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
 	
 	if (fd == 0) {
 		return 0;

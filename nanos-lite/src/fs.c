@@ -152,6 +152,7 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
 	// 检查新的指针位置是否在文件范围内
 	if (new_offset < 0 || new_offset > file->size) {
 		Log("Seek position out of bounds");
+		printf("%d,%d\n%d,%d,%d\n", file->size, new_offset, fd, offset, whence);
 		return -1;
 	}
 	// 设置新的文件读写指针

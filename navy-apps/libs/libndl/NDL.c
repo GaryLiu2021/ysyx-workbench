@@ -7,7 +7,7 @@
 #include <assert.h>
 
 static int evtdev = 3;
-static int fbdev = 4;
+static int fbdev = 5;
 static int screen_w = 0, screen_h = 0;
 static int canvas_w = 0, canvas_h = 0;
 static int canvas_x = 0, canvas_y = 0;

@@ -103,7 +103,7 @@ int sprintf(char *out, const char *fmt, ...) {
             }
 
 			if (*fmt++ == 'l') {
-				switch (*fmt)
+				switch (*fmt++)
 				{
 				case 'u': {
 					unsigned long num = va_arg(args, unsigned long);

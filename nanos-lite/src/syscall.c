@@ -73,7 +73,7 @@ void do_syscall(Context* c) {
 		break;
 	}
 	case SYS_gettimeofday: {
-		SYSCALL_LOG(gettimeofday);
+		// SYSCALL_LOG(gettimeofday);
 		SYS_RETURN(sys_gettimeofday(a));
 		break;
 	}

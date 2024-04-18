@@ -1,7 +1,6 @@
 #include <sys/time.h>
 #include <time.h>
 #include <stdio.h>
-#include <assert.h>
 
 int main() {
 	struct timeval tv;

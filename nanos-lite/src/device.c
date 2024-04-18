@@ -49,7 +49,7 @@ size_t fb_write(const void* buf, size_t offset, size_t len) {
 
 	io_write(AM_GPU_FBDRAW, x, y, (void*)buf, len, 1, true);
 
-	return len;
+	return 1;
 }
 
 void init_device() {

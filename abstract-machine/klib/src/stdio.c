@@ -102,7 +102,44 @@ int sprintf(char *out, const char *fmt, ...) {
                 break;  // 避免在字符串末尾的 '%' 导致无限循环
             }
 
-            if (*fmt == 'd') {
+			if (*fmt++ == 'l') {
+				switch (*fmt)
+				{
+				case 'u': {
+					unsigned long num = va_arg(args, unsigned long);
+					char str[64] = {};
+					utoa(num, str, 10);
+					int i = 0;
+					while (str[i] != '\0') {
+						buf[written++] = str[i++];
+					}
+					break;
+				}
+				case 'd': {
+					long num = va_arg(args, long);
+					char str[64] = {};
+					itoa(num, str, 10);
+					int i = 0;
+					while (str[i] != '\0') {
+						buf[written++] = str[i++];
+					}
+					break;
+				}
+				case 'x': {
+					unsigned long num = va_arg(args, unsigned long);
+					char str[64] = {};
+					utoa(num, str, 16);
+					int i = 0;
+					while (str[i] != '\0') {
+						buf[written++] = str[i++];
+					}
+					break;
+				}
+				default:
+					break;
+				}
+			}
+			else if (*fmt == 'd') {
                 // 处理整数格式化符号 %d
                 int num = va_arg(args, int);
                 char str[32] = {};
@@ -111,7 +148,18 @@ int sprintf(char *out, const char *fmt, ...) {
                 while (str[i]!='\0') {
                   buf[written++] = str[i++];
                 }
-            } else if (*fmt == 's') {
+			}
+			else if (*fmt == 'u') {
+				// 处理整数格式化符号 %u
+				unsigned num = va_arg(args, unsigned);
+				char str[32] = {};
+				utoa(num, str, 10);
+				int i = 0;
+				while (str[i] != '\0') {
+					buf[written++] = str[i++];
+				}
+			}
+			else if (*fmt == 's') {
                 // 处理字符串格式化符号 %s
                 const char *str = va_arg(args, const char *);
                 while (*str) {
@@ -122,7 +170,7 @@ int sprintf(char *out, const char *fmt, ...) {
 				// 处理指针格式化符号 %x
 				int value = va_arg(args, int);
 				char str[32] = {};
-				itoa(value, str, 16);
+				utoa(value, str, 16);
 				int i = 0;
 				while (str[i] != '\0') {
 					buf[written++] = str[i++];
@@ -133,7 +181,7 @@ int sprintf(char *out, const char *fmt, ...) {
 				void* ptr = va_arg(args, void*);
 				uintptr_t value = (uintptr_t)ptr;
 				char str[32] = {};
-				itoa(value, str, 16);
+				utoa(value, str, 16);
 				buf[written++] = '0';
 				buf[written++] = 'x';
 				int i = 0;

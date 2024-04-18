@@ -29,6 +29,34 @@ int atoi(const char* nptr) {
   return x;
 }
 
+void utoa(unsigned long num, char* str, int base) {
+	assert(base >= 2 && base <= 16);
+
+	int i = 0;
+	if (num == 0) {
+		str[i++] = '0';
+	}
+	else {
+		while (num != 0) {
+			unsigned rem = num % base;
+			str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+			num = num / base;
+		}
+		str[i] = '\0';
+
+		// 反转字符串
+		int start = 0;
+		int end = i - 1;
+		while (start < end) {
+			char temp = str[start];
+			str[start] = str[end];
+			str[end] = temp;
+			start++;
+			end--;
+		}
+	}
+}
+
 void itoa(int num, char *str, int base)
 {
   int i = 0;
@@ -41,7 +69,6 @@ void itoa(int num, char *str, int base)
     isNegative = 1;
     num = -num;
   }
-  unsigned int unsignedNum = (unsigned int)(num);
 
   // 处理特殊情况：0
   if (num == 0)
@@ -51,11 +78,11 @@ void itoa(int num, char *str, int base)
   else
   {
     // 处理整数部分
-    while (unsignedNum != 0)
+    while (num != 0)
     {
-      int rem = unsignedNum % base;
+      int rem = num % base;
       str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-      unsignedNum = unsignedNum / base;
+      num = num / base;
     }
 
     // 如果是负数，添加负号

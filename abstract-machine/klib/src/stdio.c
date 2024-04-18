@@ -102,8 +102,8 @@ int sprintf(char *out, const char *fmt, ...) {
                 break;  // 避免在字符串末尾的 '%' 导致无限循环
             }
 
-			if (*fmt++ == 'l') {
-				switch (*fmt++)
+			if (*fmt == 'l') {
+				switch (*(fmt + 1))
 				{
 				case 'u': {
 					unsigned long num = va_arg(args, unsigned long);
@@ -138,6 +138,7 @@ int sprintf(char *out, const char *fmt, ...) {
 				default:
 					break;
 				}
+				fmt++;
 			}
 			else if (*fmt == 'd') {
                 // 处理整数格式化符号 %d

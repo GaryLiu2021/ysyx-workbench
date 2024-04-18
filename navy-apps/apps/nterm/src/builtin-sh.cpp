@@ -42,7 +42,8 @@ void builtin_sh_run() {
           sh_prompt();
         }
       }
-    }
-    refresh_terminal();
+	}
+	printf("FUCK\n");
+	refresh_terminal();
   }
 }

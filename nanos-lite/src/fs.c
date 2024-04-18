@@ -60,9 +60,12 @@ if((long)val > (long)max) \
 
 void init_fs() {
 	// TODO: initialize the size of /dev/fb
-	printf("%d\n", io_read(AM_GPU_CONFIG).vmemsz);
+	AM_GPU_CONFIG_T ev = io_read(AM_GPU_CONFIG);
+	int width = ev.width;
+	int height = ev.height;
+	file_table[FD_FB].size = width * height * sizeof(uint32_t);
+	printf("%d", file_table[FD_FB].size);
 	while (1) {}
-	file_table[FD_FB].size = io_read(AM_GPU_CONFIG).vmemsz;
 }
 
 extern size_t ramdisk_read(void* buf, size_t offset, size_t len);

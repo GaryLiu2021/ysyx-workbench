@@ -29,12 +29,12 @@ extern size_t fb_write(const void* buf, size_t offset, size_t len);
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
-	[FD_STDIN] = {"stdin", 0, 0, invalid_read, invalid_write},
-	[FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
-	[FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
-	[FD_EVTDEV] = {"evtdev",0 , 0,events_read, invalid_write},
-	[FD_DISP] = {"/proc/dispinfo",0,0,dispinfo_read},
-	[FD_FB] = {"/dev/fb",0,0,invalid_read,fb_write},
+	[FD_STDIN]	=	{"stdin",           0, 0, invalid_read,  invalid_write},
+	[FD_STDOUT]	=	{"stdout",          0, 0, invalid_read,  serial_write},
+	[FD_STDERR]	=	{"stderr",          0, 0, invalid_read,  serial_write},
+	[FD_EVTDEV]	=	{"evtdev",          0, 0, events_read,   invalid_write},
+	[FD_DISP]	=	{"/proc/dispinfo",  0, 0, dispinfo_read, 0},
+	[FD_FB]		=	{"/dev/fb",         0, 0, invalid_read,  fb_write},
 #include "files.h"
 };
 
@@ -76,9 +76,8 @@ int fs_open(const char* pathname, int flags, int mode) {
 		if (strcmp(file_table[fileTableIdx].name, pathname) == 0)
 			return fileTableIdx;
 	}
-	// assert(fileTableIdx != FILENUM); // Should not not-found
+	panic("File %s not found!", pathname); // Should not not-found
 	// todo: flags and mode
-	return -1;
 }
 
 // Read @len bytes from file @fd and store into @buf
@@ -138,7 +137,6 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
 	}
 	Finfo* file = &file_table[fd];
 	int new_offset;
-	// 根据 whence 参数来计算新的指针位置
 	if (whence == SEEK_SET) {
 		new_offset = offset;
 	}
@@ -152,12 +150,13 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
 		Log("Invalid whence value: %d", whence);
 		return -1;
 	}
-	// 检查新的指针位置是否在文件范围内
+
+	// Check new_offset overbound
 	if (new_offset < 0 || new_offset > file->size) {
 		Log("Seek position out of bounds");
 		return -1;
 	}
-	// 设置新的文件读写指针
+	
 	file->open_offset = new_offset;
 
 	return new_offset;

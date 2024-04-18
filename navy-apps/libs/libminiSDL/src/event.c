@@ -20,6 +20,7 @@ int SDL_PollEvent(SDL_Event* ev) {
 	for (int i = 0; i < 83; i++) {
 		if (strcmp(keyname[i], buf + 3) == 0) {
 			ev->key.keysym.sym = i;
+			printf("FUCK\n");
 			return 1;
 		}
 	}

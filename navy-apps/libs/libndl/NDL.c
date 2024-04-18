@@ -101,6 +101,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 	screen_w = width;
 	screen_h = height;
+	printf("%d,%d\n", width, height);
 	if (*w == 0 && *h == 0) {
 		*w = screen_w;
 		*h = screen_h;

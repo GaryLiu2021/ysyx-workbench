@@ -22,8 +22,47 @@ int printf(const char *fmt, ...) {
 			if (*fmt == '\0') {
 				break;
 			}
-
-			if (*fmt == 'd') {
+			if (*fmt == 'l') {
+				switch (*(fmt + 1)) {
+				case 'u': {
+					unsigned long num = va_arg(args, unsigned long);
+					char str[64] = {};
+					utoa(num, str, 10);
+					int i = 0;
+					while (str[i] != '\0') {
+						putch(str[i++]);
+						written++;
+					}
+					break;
+				}
+				case 'd': {
+					long num = va_arg(args, long);
+					char str[64] = {};
+					itoa(num, str, 10);
+					int i = 0;
+					while (str[i] != '\0') {
+						putch(str[i++]);
+						written++;
+					}
+					break;
+				}
+				case 'x': {
+					unsigned long num = va_arg(args, unsigned long);
+					char str[64] = {};
+					utoa(num, str, 16);
+					int i = 0;
+					while (str[i] != '\0') {
+						putch(str[i++]);
+						written++;
+					}
+					break;
+				}
+				default:
+					break;
+				}
+				fmt++;
+			}
+			else if (*fmt == 'd') {
 				// 处理整数格式化符号 %d
 				int num = va_arg(args, int);
 				char str[32] = {};

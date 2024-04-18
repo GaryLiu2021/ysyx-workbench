@@ -24,13 +24,15 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 
 extern size_t serial_write(const void* buf, size_t offset, size_t len);
 extern size_t events_read(void* buf, size_t offset, size_t len);
+extern size_t dispinfo_read(void* buf, size_t offset, size_t len);
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
-  [FD_STDIN] = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
-  [FD_EVTDEV] = {"evtdev",0 , 0,events_read, invalid_write},
+	[FD_STDIN] = {"stdin", 0, 0, invalid_read, invalid_write},
+	[FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
+	[FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
+	[FD_EVTDEV] = {"evtdev",0 , 0,events_read, invalid_write},
+	[FD_DISP] = {"/proc/dispinfo",0,0,dispinfo_read,invalid_write}, 
 #include "files.h"
 };
 
@@ -55,7 +57,11 @@ if((long)val > (long)max) \
 	val = max;
 
 void init_fs() {
-  // TODO: initialize the size of /dev/fb
+	// TODO: initialize the size of /dev/fb
+	AM_GPU_CONFIG_T ev = io_read(AM_GPU_CONFIG);
+	int width = ev.width;
+	int height = ev.height;
+	file_table[FD_FB].size = width * height * sizeof(uint32_t);
 }
 
 extern size_t ramdisk_read(void* buf, size_t offset, size_t len);

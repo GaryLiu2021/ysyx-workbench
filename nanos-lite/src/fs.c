@@ -128,8 +128,8 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
         FILEINFO(open_offset) = FILEINFO(size) + offset;
         break;
 	default:
-		panic("Not implemented");
-		break;
+		Log("Invalid whence value: %d\n", whence);
+		return -1;
     }
     return FILEINFO(open_offset);
 }

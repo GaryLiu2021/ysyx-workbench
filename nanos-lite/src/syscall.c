@@ -50,7 +50,7 @@ void do_syscall(Context* c) {
 		break;
 	}
 	case SYS_write: {
-		SYSCALL_LOG(write);
+		// SYSCALL_LOG(write);
 		int fd = c->GPR2;
 		const void* buf = (const void*)c->GPR3;
 		size_t count = c->GPR4;

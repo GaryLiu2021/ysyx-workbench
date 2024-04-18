@@ -60,12 +60,12 @@ void do_syscall(Context* c) {
 		break;
 	}
 	case SYS_close: {
-		SYSCALL_LOG(close);
+		// SYSCALL_LOG(close);
 		SYS_RETURN(fs_close((int)a[1]));
 		break;
 	}
 	case SYS_lseek: {
-		SYSCALL_LOG(lseek);
+		// SYSCALL_LOG(lseek);
 		SYS_RETURN(fs_lseek((int)a[1],(size_t)a[2],(int)a[3]));
 		break;
 	}

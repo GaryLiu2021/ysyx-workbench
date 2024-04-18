@@ -9,7 +9,7 @@ enum {SEEK_SET, SEEK_CUR, SEEK_END};
 
 typedef long off_t;
 
-enum { FD_STDIN, FD_STDOUT, FD_STDERR, FD_EVTDEV, FD_FB, FD_DISP };
+enum { FD_STDIN, FD_STDOUT, FD_STDERR, FD_EVTDEV, FD_DISP, FD_FB };
 
 int fs_open(const char* pathname, int flags, int mode);
 size_t fs_read(int fd, void* buf, size_t len);

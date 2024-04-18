@@ -28,6 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	// assert(bytes_read == sizeof(Elf_Phdr) * ehdr.e_phnum);
 	// ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
 
+	Log("[Nanos-lite] Loading Segments...");
 	for (int i = 0; i < ehdr.e_phnum; i++) {
 		if (phdr[i].p_type == PT_LOAD) {
 			fs_lseek(fd, phdr[i].p_offset, SEEK_SET);

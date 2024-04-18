@@ -64,8 +64,6 @@ void init_fs() {
 	int width = ev.width;
 	int height = ev.height;
 	file_table[FD_FB].size = width * height * sizeof(uint32_t);
-	printf("%d", file_table[FD_FB].size);
-	while (1) {}
 }
 
 extern size_t ramdisk_read(void* buf, size_t offset, size_t len);

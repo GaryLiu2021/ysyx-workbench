@@ -45,7 +45,7 @@ void do_syscall(Context* c) {
         break;
 	}
 	case SYS_read: {
-		SYSCALL_LOG(read);
+		// SYSCALL_LOG(read);
 		SYS_RETURN(fs_read((int)a[1], (void*)a[2], (size_t)a[3]));
 		break;
 	}

@@ -20,6 +20,7 @@ int SDL_PollEvent(SDL_Event* ev) {
 	ev->type = buf[1] == 'u' ? SDL_KEYUP : SDL_KEYDOWN;
 	for (int i = 0; i < 83; i++) {
 		if (strcmp(keyname[i], buf + 3) == 0) {
+			printf("FUCK1\n");
 			ev->key.keysym.sym = i;
 			return 1;
 		}

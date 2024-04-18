@@ -20,7 +20,7 @@ int SDL_PollEvent(SDL_Event* ev) {
 	printf("FUCK\n");
 	ev->type = buf[1] == 'u' ? SDL_KEYUP : SDL_KEYDOWN;
 	for (int i = 0; i < 83; i++) {
-		printf("FUCK %s\n", buf[3]);
+		printf("FUCK %s\n", buf+3);
 		printf("FUCKa %s\n", keyname[i]);
 		printf("%d %d\n", strlen(keyname[i]), strlen(buf + 3));
 		printf("%d\n", strcmp(keyname[i], buf + 3));

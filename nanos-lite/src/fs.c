@@ -137,7 +137,7 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
 		return 0;
 	}
 	Finfo* file = &file_table[fd];
-	size_t new_offset;
+	int new_offset;
 	// 根据 whence 参数来计算新的指针位置
 	if (whence == SEEK_SET) {
 		new_offset = offset;

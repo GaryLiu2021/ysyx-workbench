@@ -39,9 +39,9 @@ void do_syscall(Context* c) {
 		break;// return 0
 	}
 	case SYS_open: {
-		SYSCALL_LOG(open);
+		// SYSCALL_LOG(open);
         SYS_RETURN(fs_open((const char*)a[1], (int)a[2], (int)a[3]));
-        Log("Return %d", c->GPRx);
+        // Log("Return %d", c->GPRx);
         break;
 	}
 	case SYS_read: {

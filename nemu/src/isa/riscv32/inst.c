@@ -73,10 +73,13 @@ static int decode_exec(Decode* s) {
 }
 	
 	// Branch counter, used for deadlock detection
-	// static uint64_t branch_cnt = 0;
-#define BRANCH_OPERAND(cond, op) {}
+	static uint64_t branch_cnt = 0;
 
-
+#define BRANCH_OPERAND(cond, op) \
+	if(cond) \
+		{op; branch_cnt++;} \
+	else \
+		{branch_cnt=0;} 
 
 	// #define ECALL(dnpc) { bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc)); }
 #define ECALL(dnpc) {bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc));} //Log(ANSI_FMT("ETRACE: expection called @ 0x%08x, going to 0x%08x...",ANSI_FG_BLUE),s->pc,dnpc);} // Note that mcause in qemu may be 0xb forever.

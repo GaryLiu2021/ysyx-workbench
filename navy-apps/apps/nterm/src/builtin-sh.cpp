@@ -32,7 +32,7 @@ void builtin_sh_run() {
   while (1) {
     SDL_Event ev;
 	if (SDL_PollEvent(&ev)) {
-		printf("FUCK\n");
+		printf("FUCK1\n");
 		if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
 			printf("FUCK\n");
         const char *res = term->keypress(handle_key(&ev));
@@ -43,7 +43,6 @@ void builtin_sh_run() {
         }
       }
 	}
-	printf("FUCK\n");
 	refresh_terminal();
   }
 }

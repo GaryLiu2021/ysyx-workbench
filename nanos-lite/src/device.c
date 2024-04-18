@@ -36,7 +36,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	AM_GPU_CONFIG_T cfg = io_read(AM_GPU_CONFIG);
 	return snprintf((char*)buf, len, "WIDTH:%d\nHEIGHT:%d\n", cfg.width, cfg.height);
 }
-#define DEBUG(x) printf( #x "= %d\n", x )
+
 size_t fb_write(const void* buf, size_t offset, size_t len) {
 	AM_GPU_CONFIG_T ev = io_read(AM_GPU_CONFIG);
 	int width = ev.width;
@@ -48,12 +48,13 @@ size_t fb_write(const void* buf, size_t offset, size_t len) {
 	int x = offset - y * width;
 
 	io_write(AM_GPU_FBDRAW, x, y, (void*)buf, len, 1, true);
-	printf("offset=%d\n", offset);
-	printf("width=%d\n", width);
-	printf("locate %d,%d\n", x, y);
-	printf("len=%d\n", len);
-	printf("write %x\n", (unsigned int *)buf);
-
+	// dprint(offset);
+	// dprint(width);
+	// dprint(x);
+	// dprint(y);
+	// dprint(len);
+	// dprint(buf);
+	
 	return 1;
 }
 

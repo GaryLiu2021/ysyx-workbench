@@ -27,4 +27,12 @@
 
 #define TODO() panic("please implement me")
 
+#define dprint(x) _Generic((x), \
+    int:    	printf(#x " = %d\n", x), \
+    double: 	printf(#x " = %f\n", x), \
+	unsigned: 	printf(#x " = %u\n", x), \
+	char* :  	printf(#x " = %s\n", x), \
+    default: 	printf(#x " = %p\n", (void*)x) \
+)
+
 #endif

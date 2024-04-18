@@ -82,10 +82,13 @@ int fs_open(const char* pathname, int flags, int mode) {
 // Read @len bytes from file @fd and store into @buf
 size_t fs_read(int fd, void* buf, size_t len) {
 	// For those who has own function
-	if (file_table[fd].read) {
-		return file_table[fd].read(buf, 0, len);
+	// if (file_table[fd].read) {
+	// 	return file_table[fd].read(buf, 0, len);
+	// }
+	if (fd < 3) {
+		return 0;
 	}
-    else {
+	else {
         // Should not over bound
         BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
 		printf("reading %d bytes from %p into %p\n", len, FILE_CUR_OFF, buf);

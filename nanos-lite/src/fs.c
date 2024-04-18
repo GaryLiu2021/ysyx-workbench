@@ -113,25 +113,50 @@ size_t fs_write(int fd, const void* buf, size_t len) {
 
 // Move 
 size_t fs_lseek(int fd, off_t offset, int whence) {
-	switch (whence)
-	{
-	case SEEK_SET:
-		BOUND(0, offset, FILEINFO(size));
-		FILEINFO(open_offset) = offset;
-		break;
-	case SEEK_CUR:
-		BOUND_MAX(offset, FILE_END - FILE_CUR_OFF);
-		FILEINFO(open_offset) += offset;
-		break;
-	case(SEEK_END):
-		BOUND(-FILEINFO(size), offset, 0);
-        FILEINFO(open_offset) = FILEINFO(size) + offset;
-        break;
-	default:
-		Log("Invalid whence value: %d\n", whence);
+	// switch (whence)
+	// {
+	// case SEEK_SET:
+	// 	BOUND(0, offset, FILEINFO(size));
+	// 	FILEINFO(open_offset) = offset;
+	// 	break;
+	// case SEEK_CUR:
+	// 	BOUND_MAX(offset, FILE_END - FILE_CUR_OFF);
+	// 	FILEINFO(open_offset) += offset;
+	// 	break;
+	// case(SEEK_END):
+	// 	BOUND(-FILEINFO(size), offset, 0);
+    //     FILEINFO(open_offset) = FILEINFO(size) + offset;
+    //     break;
+	// default:
+	// 	Log("Invalid whence value: %d\n", whence);
+	// 	return -1;
+    // }
+	// return FILEINFO(open_offset);
+	Finfo* file = &file_table[fd];
+	size_t new_offset;
+	// 根据 whence 参数来计算新的指针位置
+	if (whence == SEEK_SET) {
+		new_offset = offset;
+	}
+	else if (whence == SEEK_CUR) {
+		new_offset = file->open_offset + offset;
+	}
+	else if (whence == SEEK_END) {
+		new_offset = file->size + offset;
+	}
+	else {
+		Log("Invalid whence value: %d", whence);
 		return -1;
-    }
-    return FILEINFO(open_offset);
+	}
+	// 检查新的指针位置是否在文件范围内
+	if (new_offset < 0 || new_offset > file->size) {
+		Log("Seek position out of bounds");
+		return -1;
+	}
+	// 设置新的文件读写指针
+	file->open_offset = new_offset;
+
+	return new_offset;
 }
 
 // Close file @fd

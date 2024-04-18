@@ -31,10 +31,13 @@ void builtin_sh_run() {
 
   while (1) {
     SDL_Event ev;
-    if (SDL_PollEvent(&ev)) {
-      if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
+	if (SDL_PollEvent(&ev)) {
+		printf("FUCK\n");
+		if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
+			printf("FUCK\n");
         const char *res = term->keypress(handle_key(&ev));
-        if (res) {
+		if (res) {
+			printf("FUCK\n");
           sh_handle_cmd(res);
           sh_prompt();
         }

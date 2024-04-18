@@ -143,6 +143,11 @@ int NDL_Init(uint32_t flags) {
   NDL_init_time = 0;
   NDL_init_time = NDL_GetTicks();
 
+  char buf[64];
+  int dispinfo = open("/proc/dispinfo", 0, 0);
+  read(dispinfo, buf, sizeof(buf));
+  sscanf(buf, "WIDTH : %d\nHEIGHT : %d\n", &screen_w, &screen_h);
+
   return 0;
 }
 

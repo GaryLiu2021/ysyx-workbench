@@ -1,17 +1,19 @@
 #include <sys/time.h>
 #include <time.h>
 #include <stdio.h>
+#include <NDL.h>
 
 int main() {
-	struct timeval tv;
-	// struct timezone tz;
-	gettimeofday(&tv, NULL);
-	__uint32_t ms = 500;
+	uint32_t curTick = 0;
+	NDL_Init(0);
+	uint32_t ms = 500;
+	curTick = NDL_GetTicks();
 	while (1) {
-		while ((tv.tv_sec * 1000 + tv.tv_usec / 1000) < ms) {
-			gettimeofday(&tv, NULL);
+		while (curTick < ms) {
+			curTick = NDL_GetTicks();
 		}
 		ms += 500;
 		printf("ms = %d\n", ms);
 	}
+	NDL_Quit();
 }

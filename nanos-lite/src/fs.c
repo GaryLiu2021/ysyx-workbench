@@ -102,7 +102,7 @@ size_t fs_read(int fd, void* buf, size_t len) {
 size_t fs_write(int fd, const void* buf, size_t len) {
 	// For those who has own function
 	if (file_table[fd].write) {
-		return file_table[fd].write(buf, 0, len);
+		return file_table[fd].write(buf, FILEINFO(open_offset), len);
 	}
 	// Should not over bound
 	BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);

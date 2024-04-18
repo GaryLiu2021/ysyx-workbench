@@ -5,8 +5,8 @@
 #include <unistd.h>
 #include <time.h>
 
-static int evtdev = 4;
-static int fbdev = 5;
+static int evtdev = 3;
+static int fbdev = 4;
 static int screen_w = 0, screen_h = 0;
 
 static uint64_t NDL_init_time = 0;

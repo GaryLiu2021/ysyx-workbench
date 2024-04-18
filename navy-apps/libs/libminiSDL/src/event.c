@@ -15,8 +15,11 @@ int SDL_PushEvent(SDL_Event *ev) {
 int SDL_PollEvent(SDL_Event* ev) {
 	// CallbackHelper(2);
 	char buf[20];
-	if (NDL_PollEvent(buf, sizeof(buf)) == 0) return 0;
-	ev->type = buf[1] == 'u' ? SDL_KEYUP : SDL_KEYDOWN;
+	if (NDL_PollEvent(buf, sizeof(buf)) == 0) {
+		printf("FUCK\n");
+		return 0;
+	}
+		ev->type = buf[1] == 'u' ? SDL_KEYUP : SDL_KEYDOWN;
 	for (int i = 0; i < 83; i++) {
 		if (strcmp(keyname[i], buf + 3) == 0) {
 			ev->key.keysym.sym = i;

@@ -60,6 +60,8 @@ if((long)val > (long)max) \
 
 void init_fs() {
 	// TODO: initialize the size of /dev/fb
+	printf("%d\n", io_read(AM_GPU_CONFIG).vmemsz);
+	while (1) {}
 	file_table[FD_FB].size = io_read(AM_GPU_CONFIG).vmemsz;
 }
 

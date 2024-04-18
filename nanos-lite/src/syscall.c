@@ -1,9 +1,23 @@
 #include <common.h>
 #include "syscall.h"
 #include <fs.h>
+#include <sys/time.h>
 #define SYS_RETURN(ret) c->GPRx=ret
-#define SYSCALL_LOG(syscall) \
-Log("Nanos-lite: SYS_" #syscall)
+#define SYSCALL_LOG(syscall) Log("Nanos-lite: SYS_" #syscall)
+
+static uintptr_t sys_gettimeofday(uintptr_t* a) {
+	struct timeval* tv = (struct timeval*)a[1];
+	struct timezone* tz = (struct timezone*)a[2];
+	uint64_t us = io_read(AM_TIMER_UPTIME).us;
+	if (tv != NULL) {
+		tv->tv_sec = us / (1000 * 1000);
+		tv->tv_usec = us % (1000 * 1000);
+	}
+	if (tz != NULL) {
+		// to implement
+	}
+	return 0;
+}
 
 void do_syscall(Context* c) {
 	uintptr_t a[4];
@@ -39,11 +53,11 @@ void do_syscall(Context* c) {
 		int fd = c->GPR2;
 		const void* buf = (const void*)c->GPR3;
 		size_t count = c->GPR4;
-		Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
+		// Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
 		SYS_RETURN(fs_write(fd, buf, count));
-		Log("Nanos-lite: Return syscall _write with %d.", c->GPRx);
+		// Log("Nanos-lite: Return syscall _write with %d.", c->GPRx);
 		break;
-		}
+	}
 	case SYS_close: {
 		SYSCALL_LOG(close);
 		SYS_RETURN(fs_close((int)a[1]));
@@ -58,6 +72,12 @@ void do_syscall(Context* c) {
 		SYS_RETURN(0); // Always success
 		break;
 	}
+	case SYS_gettimeofday: {
+		SYSCALL_LOG(gettimeofday);
+		SYS_RETURN(sys_gettimeofday(a));
+		break;
+	}
 	default: panic("Unhandled syscall ID = %d", a[0]);break;
 	}
 }
+

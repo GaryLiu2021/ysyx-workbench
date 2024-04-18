@@ -3,15 +3,12 @@
 
 int main() {
     FILE* fp = fopen("/share/files/num", "r+");
-    printf("FUCK\n");
     assert(fp);
 
   fseek(fp, 0, SEEK_END);
-  printf("FUCK\n");
   long size = ftell(fp);
-  printf("FUCK\n");
+  printf("%d\n", size);
   assert(size == 5000);
-  printf("FUCK\n");
 
   fseek(fp, 500 * 5, SEEK_SET);
   int i, n;

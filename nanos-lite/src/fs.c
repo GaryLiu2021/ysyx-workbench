@@ -24,11 +24,13 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
   return 0;
 }
 
+extern size_t serial_write(const void* buf, size_t offset, size_t len);
+
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN] = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
 #include "files.h"
 };
 
@@ -43,13 +45,13 @@ static Finfo file_table[] __attribute__((used)) = {
 #define FILE_END (FILEINFO(disk_offset) + FILEINFO(size) - 1)
 // Bound val into [min,max]
 #define BOUND(min,val,max) \
-if (val < min) \
+if ((long)val < (long)min) \
 	val = min; \
-else if (val > max) \
+else if ((long)val > (long)max) \
 val = max;
 
 #define BOUND_MAX(val,max) \
-if(val > max) \
+if((long)val > (long)max) \
 	val = max;
 
 void init_fs() {
@@ -73,13 +75,12 @@ int fs_open(const char* pathname, int flags, int mode) {
 
 // Read @len bytes from file @fd and store into @buf
 size_t fs_read(int fd, void* buf, size_t len) {
-	// Should not over bound
-	BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
-	
 	if (fd < 3) {
 		return 0;
 	}
-	else {
+    else {
+        // Should not over bound
+        BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
 		printf("reading %d bytes from %p into %p\n", len, FILE_CUR_OFF, buf);
 		int ramdisk_read_length = ramdisk_read(buf, FILE_CUR_OFF, len);
 		fs_lseek(fd, ramdisk_read_length, SEEK_CUR);
@@ -90,24 +91,15 @@ size_t fs_read(int fd, void* buf, size_t len) {
 
 // Write @len bytes from @buf into file @fd
 size_t fs_write(int fd, const void* buf, size_t len) {
+	// For those who has own function
+	if (file_table[fd].write) {
+		return file_table[fd].write(buf, 0, len);
+	}
 	// Should not over bound
 	BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
-	
-	if (fd == 0) {
-		return 0;
-	}
-	// If write stdout or stderr, putch
-	else if (fd == 1 || fd == 2) {
-		for (int i = 0;i < len;i++) {
-			putch(((char*)buf)[i]);
-		}
-		return len;
-	}
-	else {
-		int ramdisk_write_length = ramdisk_write(buf, FILE_CUR_OFF, len);
-		fs_lseek(fd, ramdisk_write_length, SEEK_CUR);
-		return ramdisk_write_length;
-	}
+	int ramdisk_write_length = ramdisk_write(buf, FILE_CUR_OFF, len);
+	fs_lseek(fd, ramdisk_write_length, SEEK_CUR);
+	return ramdisk_write_length;
 }
 
 // Move 
@@ -124,13 +116,13 @@ size_t fs_lseek(int fd, off_t offset, int whence) {
 		break;
 	case(SEEK_END):
 		BOUND(-FILEINFO(size), offset, 0);
-		FILEINFO(open_offset) = FILEINFO(size) + offset;
-		break;
+        FILEINFO(open_offset) = FILEINFO(size) + offset;
+        break;
 	default:
 		panic("Not implemented");
 		break;
-	}
-	return FILEINFO(open_offset);
+    }
+    return FILEINFO(open_offset);
 }
 
 // Close file @fd

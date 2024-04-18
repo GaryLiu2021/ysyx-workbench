@@ -8,6 +8,7 @@
 //#define TIME_SHARING
 
 #include <am.h>
+#include <amdev.h>
 #include <klib.h>
 #include <klib-macros.h>
 #include <debug.h>

@@ -85,7 +85,7 @@ int fs_open(const char* pathname, int flags, int mode) {
 size_t fs_read(int fd, void* buf, size_t len) {
 	// For those who has own function
 	if (file_table[fd].read) {
-		return file_table[fd].read(buf, 0, len);
+		return file_table[fd].read(buf, FILEINFO(open_offset), len);
 	}
     else {
         // Should not over bound

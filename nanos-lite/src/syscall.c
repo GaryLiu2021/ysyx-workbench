@@ -76,6 +76,8 @@ void do_syscall(Context* c) {
 	}
 	case SYS_execve: {
 		naive_uload(NULL, (const char*)a[1]);
+		printf("FUCK1\n");
+		break;
 	}
 	case SYS_gettimeofday: {
 		// SYSCALL_LOG(gettimeofday);

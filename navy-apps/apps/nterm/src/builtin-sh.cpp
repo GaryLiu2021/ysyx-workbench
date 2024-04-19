@@ -28,6 +28,7 @@ static void sh_handle_cmd(const char* cmd) {
 	strncpy(str, cmd, len - 1);
 	str[len - 1] = 0;
 	// execve(str, NULL, NULL);
+	printf("FUCK\n");
 	execvp(str, NULL);
 }
 

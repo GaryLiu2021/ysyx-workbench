@@ -2,8 +2,9 @@
 #include "syscall.h"
 #include <fs.h>
 #include <sys/time.h>
+#include <proc.h>
 #define SYS_RETURN(ret) c->GPRx=ret
-#define SYSCALL_LOG(syscall) Log("Nanos-lite: SYS_" #syscall)
+#define SYSCALL_LOG(syscall) Log("[Nanos-lite]: SYS_" #syscall)
 
 static uintptr_t sys_gettimeofday(uintptr_t* a) {
 	struct timeval* tv = (struct timeval*)a[1];
@@ -27,15 +28,15 @@ void do_syscall(Context* c) {
 	a[3] = c->GPR4;
 	switch (a[0]) {
 	case SYS_exit: {
-		Log("Nanos-lite: Doing syscall _exit(%d)...", c->GPR2);
+		Log("[Nanos-lite]: Doing syscall _exit(%d)...", c->GPR2);
 		halt(0);
 		break;
 	}
 	case SYS_yield: {
-		Log("Nanos-lite: Doing syscall yield...");
+		Log("[Nanos-lite]: Doing syscall yield...");
 		yield();
 		SYS_RETURN(0);
-		Log("Nanos-lite: Return syscall yield with %d.", c->GPRx);
+		Log("[Nanos-lite]: Return syscall yield with %d.", c->GPRx);
 		break;// return 0
 	}
 	case SYS_open: {
@@ -54,9 +55,9 @@ void do_syscall(Context* c) {
 		int fd = c->GPR2;
 		const void* buf = (const void*)c->GPR3;
 		size_t count = c->GPR4;
-		// Log("Nanos-lite: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
+		// Log("[Nanos-lite]: Doing syscall _write(int fd=%d, void *buf=%p, size_t count=%d)", fd, buf, count);
 		SYS_RETURN(fs_write(fd, buf, count));
-		// Log("Nanos-lite: Return syscall _write with %d.", c->GPRx);
+		// Log("[Nanos-lite]: Return syscall _write with %d.", c->GPRx);
 		break;
 	}
 	case SYS_close: {
@@ -72,6 +73,9 @@ void do_syscall(Context* c) {
 	case SYS_brk: {
 		SYS_RETURN(0); // Always success
 		break;
+	}
+	case SYS_execve: {
+		naive_uload(NULL, (const char*)a[1]);
 	}
 	case SYS_gettimeofday: {
 		// SYSCALL_LOG(gettimeofday);

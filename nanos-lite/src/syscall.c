@@ -75,6 +75,7 @@ void do_syscall(Context* c) {
 		break;
 	}
 	case SYS_execve: {
+		printf("FUCK1\n");
 		naive_uload(NULL, (const char*)a[1]);
 		printf("FUCK1\n");
 		break;

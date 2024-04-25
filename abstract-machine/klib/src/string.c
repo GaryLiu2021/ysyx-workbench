@@ -68,7 +68,7 @@ void *memset(void *s, int c, size_t n) {
   return s;
 }
 
-void *memmove(void *dst, const void *src, size_t n) {
+void *memmove(void *dst, const void *src, size_t n) { //ljl@2024/04/17: if n is not right, may cause deadlock
   unsigned char *d = dst;
   const unsigned char *s = src;
   if (d < s) {

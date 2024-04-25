@@ -29,10 +29,39 @@ int atoi(const char* nptr) {
   return x;
 }
 
+void utoa(unsigned long num, char* str, int base) {
+	assert(base >= 2 && base <= 16);
+
+	int i = 0;
+	if (num == 0) {
+		str[i++] = '0';
+	}
+	else {
+		while (num != 0) {
+			unsigned rem = num % base;
+			str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+			num = num / base;
+		}
+		str[i] = '\0';
+
+		// 反转字符串
+		int start = 0;
+		int end = i - 1;
+		while (start < end) {
+			char temp = str[start];
+			str[start] = str[end];
+			str[end] = temp;
+			start++;
+			end--;
+		}
+	}
+}
+
 void itoa(int num, char *str, int base)
 {
   int i = 0;
   int isNegative = 0;
+  assert(base >= 2 && base <= 16);
 
   // 处理负数
   if (num < 0 && base == 10)

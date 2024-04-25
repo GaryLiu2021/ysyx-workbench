@@ -17,10 +17,18 @@
 #define __ISA_RISCV32_H__
 
 #include <common.h>
+// CSR
+typedef struct {
+	word_t mcause;
+	vaddr_t mepc;
+	word_t mstatus;
+	word_t mtvec;
+}riscv32_CSRs;
 
 typedef struct {
   word_t gpr[32];
   vaddr_t pc;
+  riscv32_CSRs csr;
 } riscv32_CPU_state;
 
 // decode

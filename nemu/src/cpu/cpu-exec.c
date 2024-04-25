@@ -44,9 +44,11 @@ void nmu_ringbuf_free(NMU_RINGBUF* rb);
 static void trace_and_difftest(Decode* _this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
 	if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+	
 #endif
 	// if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
 	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
+	
 	if (g_print_step) {
 #ifdef CONFIG_ITRACE
 		if (nemu_state.state == NEMU_ABORT)
@@ -94,6 +96,7 @@ static void exec_once(Decode* s, vaddr_t pc) {
 static void execute(uint64_t n) {
 	Decode s;
 	for (;n > 0; n--) {
+		// isa_reg_display();
 		exec_once(&s, cpu.pc);
 		g_nr_guest_inst++;
 		trace_and_difftest(&s, cpu.pc);
@@ -136,11 +139,13 @@ void cpu_exec(uint64_t n) {
 	switch (nemu_state.state) {
 	case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
 
-	case NEMU_END: case NEMU_ABORT:
-		// Flush itrace buffer
+    case NEMU_END: case NEMU_ABORT:
+#ifdef CONFIG_ITRACE
+        // Flush itrace buffer
 		nmu_ringbuf_print(&itrace_buf);
-		nmu_ringbuf_free(&itrace_buf);
-		Log("nemu: %s at pc = " FMT_WORD,
+        nmu_ringbuf_free(&itrace_buf);
+#endif
+        Log("nemu: %s at pc = " FMT_WORD,
 			(nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
 				(nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
 					ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),

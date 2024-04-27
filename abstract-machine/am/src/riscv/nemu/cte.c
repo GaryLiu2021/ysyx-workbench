@@ -7,7 +7,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-	if (c->mcause < 0)
+	if (c->mcause == -1)
 		ev.event = EVENT_YIELD;
 	else if (c->mcause < 20)
 		ev.event = EVENT_SYSCALL;
@@ -34,7 +34,11 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  return NULL;
+	Context* cp = (Context*)(kstack.end - sizeof(Context));
+	cp->mepc = (uintptr_t)entry - 4;
+	cp->mstatus = 0x1800; // For difftest
+	cp->gpr[10] = (uintptr_t)(arg);
+	return cp;
 }
 
 // Yield an interupt

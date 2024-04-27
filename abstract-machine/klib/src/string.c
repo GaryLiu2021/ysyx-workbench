@@ -20,15 +20,20 @@ char *strcpy(char *dst, const char *src) {
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
-  char *d = dst;
-  while (n > 0 && (*d++ = *src++) != '\0') {
-    n--;
-  }
-  while (n > 0) {
-    *d++ = '\0';
-    n--;
-  }
-  return dst;
+    char *d = dst;
+    size_t i;
+
+    // Copy at most n characters from src to dst
+    for (i = 0; i < n && *src != '\0'; ++i) {
+        *d++ = *src++;
+    }
+
+    // If src was shorter than n, pad dst with '\0' characters
+    for (; i < n; ++i) {
+        *d++ = '\0';
+    }
+
+    return dst;
 }
 
 // add src to the end of dst

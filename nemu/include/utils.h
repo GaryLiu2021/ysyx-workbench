@@ -74,4 +74,7 @@ uint64_t get_time();
   } while (0)
 
 
+void trace_func_call(paddr_t pc, paddr_t target, bool is_tail);
+void trace_func_ret(paddr_t pc);
+
 #endif

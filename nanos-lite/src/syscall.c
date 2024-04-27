@@ -6,6 +6,9 @@
 #define SYS_RETURN(ret) c->GPRx=ret
 #define SYSCALL_LOG(syscall) Log("[Nanos-lite]: SYS_" #syscall)
 
+// Declare syscall functions
+int sys_execve(const char* pathname, char* const argv[], char* const envp[]);
+
 static uintptr_t sys_gettimeofday(uintptr_t* a) {
 	struct timeval* tv = (struct timeval*)a[1];
 	struct timezone* tz = (struct timezone*)a[2];
@@ -59,8 +62,12 @@ void do_syscall(Context* c) {
 		SYS_RETURN(fs_write(fd, buf, count));
 		// Log("[Nanos-lite]: Return syscall _write with %d.", c->GPRx);
 		break;
-	}
-	case SYS_close: {
+    }
+    case SYS_kill: {
+        while(1)
+        break;
+    }
+    case SYS_close: {
 		// SYSCALL_LOG(close);
 		SYS_RETURN(fs_close((int)a[1]));
 		break;
@@ -75,9 +82,7 @@ void do_syscall(Context* c) {
 		break;
 	}
 	case SYS_execve: {
-		printf("FUCK1\n");
-		naive_uload(NULL, (const char*)a[1]);
-		printf("FUCK1\n");
+		SYS_RETURN(sys_execve((const char*)a[1], (char* const*)a[2], (char* const*)a[3]));
 		break;
 	}
 	case SYS_gettimeofday: {
@@ -87,4 +92,15 @@ void do_syscall(Context* c) {
 	}
 	default: panic("Unhandled syscall ID = %d", a[0]);break;
 	}
+}
+
+int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
+	if (pathname == NULL)
+		return -1;
+	//naive_uload(NULL, pathname);
+	//PCB;
+	context_uload(current, pathname, argv, envp);
+	switch_boot_pcb();
+	yield();
+	return 0;
 }

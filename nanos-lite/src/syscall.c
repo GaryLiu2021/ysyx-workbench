@@ -99,11 +99,15 @@ void do_syscall(Context* c) {
 int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
 	if (pathname == NULL)
 		return -1;
-	//naive_uload(NULL, pathname);
-    //PCB;
-    Log("New process: [%s]:%p,%p", pathname, argv, envp);
-    context_uload(current, pathname, argv, envp);
+
+	if (context_uload(current, pathname, argv, envp)) // Cannot open file `pathname`
+		return -2;
+	
+	Log("New process: [%s]:%p,%p", pathname, argv, envp);
+
+	// Now we can change to PCB root to save context of current
 	switch_boot_pcb();
 	yield();
-    panic("Should not reach here.");
+	// panic("Should not reach here.");
+	return 0;
 }

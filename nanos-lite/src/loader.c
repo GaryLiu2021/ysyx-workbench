@@ -12,7 +12,8 @@
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
 	int fd = fs_open(filename, 0, 0);
-	assert(fd >= 0);
+	if (fd == -1)
+		return (uintptr_t)NULL;
 
 	Elf_Ehdr ehdr;
 	fs_lseek(fd, 0, SEEK_SET);

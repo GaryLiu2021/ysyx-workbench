@@ -76,7 +76,8 @@ int fs_open(const char* pathname, int flags, int mode) {
 		if (strcmp(file_table[fileTableIdx].name, pathname) == 0)
 			return fileTableIdx;
 	}
-	panic("File %s not found!", pathname); // Should not not-found
+	Log("File %s not found!", pathname); // Should not not-found
+	return -1;
 	// todo: flags and mode
 }
 

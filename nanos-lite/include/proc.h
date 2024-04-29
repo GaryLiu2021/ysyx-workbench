@@ -24,7 +24,7 @@ void context_kload(PCB* p, void (*entry)(void*), void* arg);
 
 Context* schedule(Context* prev);
 
-void context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]);
+int context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]);
 
 void switch_boot_pcb();
 #endif

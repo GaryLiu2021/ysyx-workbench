@@ -24,8 +24,8 @@ void init_proc() {
 	Log("Initializing processes...");
 
 	context_kload(&pcb[0], hello_fun, "h0");
-    char* argv[] = { "echo","hello", NULL };
-    char* envp[] = { "/bin:/usr/bin", NULL };
+    char* argv[] = { NULL };
+    char* envp[] = { NULL };
 	context_uload(&pcb[1], "/bin/nterm", argv, envp);
 	switch_boot_pcb();
 
@@ -45,7 +45,10 @@ void context_kload(PCB* p, void (*entry)(void*), void* arg) {
 	p->cp = kcontext((Area) { p->stack, p + 1 }, hello_fun, arg);
 }
 
-void context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]) {
+int context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]) {
+	uintptr_t entry = naive_uload(p, filename);
+	if (entry == (uintptr_t)NULL)
+		return -1;
 
 	int argc = 0, envc = 0;
 	while (argv[argc] != NULL) argc++;
@@ -87,7 +90,7 @@ void context_uload(PCB* p, const char* filename, char* const argv[], char* const
 	|               |
 	*/
 	#define NR_PAGE 8
-	char* us1 = (char*)new_page(NR_PAGE) + NR_PAGE * 4096; // Allocate 32KB for user stack
+	char* us1 = (char*)new_page(NR_PAGE); // Allocate 32KB for user stack
 	printf("kernel stack: [%p - %p], user stack: [%p - %p]\n", p + 1, p, us1, us1 - NR_PAGE * 4096);
 	char* us_tmp = us1;
 	// clone argv
@@ -123,9 +126,10 @@ void context_uload(PCB* p, const char* filename, char* const argv[], char* const
 	// NULL
 	us2[argc + 2 + envc] = 0;
 
-	uintptr_t entry = naive_uload(p, filename);
 	// Allocate context for new user process
 	p->cp = ucontext(&p->as, (Area) { p->stack, p + 1 }, (void*)entry);
 	// Pass the argument to user
 	p->cp->GPRx = (uintptr_t)us2;
+
+	return 0;
 }

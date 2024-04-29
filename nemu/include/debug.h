@@ -37,6 +37,9 @@
   } while (0)
 
 #define panic(format, ...) Assert(0, format, ## __VA_ARGS__)
+#define check(x) printf( #x "=%x\n", x)
+#define checkl(x) printf( #x "=%lx\n", x)
+#define checkp(x) printf( #x "=%p\n", x)
 
 #define TODO() panic("please implement me")
 

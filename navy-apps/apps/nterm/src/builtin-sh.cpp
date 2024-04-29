@@ -27,9 +27,26 @@ static void sh_handle_cmd(const char* cmd) {
 	char* str = (char*)malloc(len);
 	strncpy(str, cmd, len - 1);
 	str[len - 1] = 0;
-	// execve(str, NULL, NULL);
-	printf("FUCK\n");
-	execvp(str, NULL);
+    // execve(str, NULL, NULL);
+    setenv("PATH", "/bin:/usr/bin", 0);
+
+    // Initialize an array to store pointers to arguments
+    char* argv[32]; // Assuming maximum 32 arguments
+    int argc = 0;
+
+    // Tokenize the command string to extract arguments
+    char* token = strtok(str, " ");
+    while (token != NULL) {
+        argv[argc++] = token;
+        token = strtok(NULL, " ");
+    }
+    argv[argc] = NULL; // Null-terminate the argument list
+
+    // Call execvp to execute the command
+    execvp(argv[0], argv);
+
+    // If execvp returns (indicating an error), free dynamically allocated memory
+    free(str);
 }
 
 void builtin_sh_run() {

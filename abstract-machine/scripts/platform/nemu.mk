@@ -20,6 +20,7 @@ CFLAGS += -I$(AM_HOME)/am/src/platform/nemu/include
 
 image: $(IMAGE).elf
 	@$(OBJDUMP) -d -S $(IMAGE).elf > $(IMAGE).txt
+	@$(OBJDUMP) -d -S $(RAMDISK_FILE) > $(RAMDISK_FILE).txt
 	@echo + OBJCOPY "->" $(IMAGE_REL).bin
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 

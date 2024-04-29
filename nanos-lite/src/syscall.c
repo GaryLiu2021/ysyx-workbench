@@ -31,8 +31,10 @@ void do_syscall(Context* c) {
 	a[3] = c->GPR4;
 	switch (a[0]) {
 	case SYS_exit: {
-		Log("[Nanos-lite]: Doing syscall _exit(%d)...", c->GPR2);
-		halt(0);
+        Log("[Nanos-lite]: Doing syscall _exit(%d)...", c->GPR2);
+        char* const argv[] = { NULL };
+        char* const envp[] = { "/bin:/usr/bin", NULL };
+		SYS_RETURN(sys_execve("/bin/nterm", argv, envp));
 		break;
 	}
 	case SYS_yield: {
@@ -98,9 +100,10 @@ int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
 	if (pathname == NULL)
 		return -1;
 	//naive_uload(NULL, pathname);
-	//PCB;
-	context_uload(current, pathname, argv, envp);
+    //PCB;
+    Log("New process: [%s]:%p,%p", pathname, argv, envp);
+    context_uload(current, pathname, argv, envp);
 	switch_boot_pcb();
 	yield();
-	return 0;
+    panic("Should not reach here.");
 }

@@ -24,19 +24,21 @@ void init_proc() {
 	Log("Initializing processes...");
 
 	context_kload(&pcb[0], hello_fun, "h0");
-	char* argv[] = { "/bin/exec-test","1",NULL };
-	char* envp[] = { "11","111", NULL};
-	context_uload(&pcb[1], "/bin/exec-test", argv, envp);
+    char* argv[] = { "echo","hello", NULL };
+    char* envp[] = { "/bin:/usr/bin", NULL };
+	context_uload(&pcb[1], "/bin/nterm", argv, envp);
 	switch_boot_pcb();
 
   // load program here
   // naive_uload(NULL, "/bin/nterm");
 }
 
-Context* schedule(Context *prev) {
+Context* schedule(Context* prev) {
+	PCB* tmp = current;
 	current->cp = prev;
-	current = (current == &pcb[1] ? &pcb[0] : &pcb[1]);
-	return current->cp;
+    current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+    Log("Switching from %p to %p...", tmp, current);
+    return current->cp;
 }
 
 void context_kload(PCB* p, void (*entry)(void*), void* arg) {
@@ -44,7 +46,6 @@ void context_kload(PCB* p, void (*entry)(void*), void* arg) {
 }
 
 void context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]) {
-	uintptr_t entry = naive_uload(p, filename);
 
 	int argc = 0, envc = 0;
 	while (argv[argc] != NULL) argc++;
@@ -85,8 +86,9 @@ void context_uload(PCB* p, const char* filename, char* const argv[], char* const
 	+---------------+ <---- cp->GPRx
 	|               |
 	*/
-
-	char* us1 = (char*)new_page(8) + 8 * 4096; // Allocate 32KB for user stack
+	#define NR_PAGE 8
+	char* us1 = (char*)new_page(NR_PAGE) + NR_PAGE * 4096; // Allocate 32KB for user stack
+	printf("kernel stack: [%p - %p], user stack: [%p - %p]\n", p + 1, p, us1, us1 - NR_PAGE * 4096);
 	char* us_tmp = us1;
 	// clone argv
 	for (int i = 0; i < argc; i++) {
@@ -121,6 +123,7 @@ void context_uload(PCB* p, const char* filename, char* const argv[], char* const
 	// NULL
 	us2[argc + 2 + envc] = 0;
 
+	uintptr_t entry = naive_uload(p, filename);
 	// Allocate context for new user process
 	p->cp = ucontext(&p->as, (Area) { p->stack, p + 1 }, (void*)entry);
 	// Pass the argument to user

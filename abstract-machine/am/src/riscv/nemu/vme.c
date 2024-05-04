@@ -42,7 +42,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
     for (; va < segments[i].end; va += PGSIZE) {
-      map(&kas, va, va, 0);
+      map(&kas, va, va, 0x7);
     }
   }
 
@@ -64,10 +64,12 @@ void protect(AddrSpace *as) {
 void unprotect(AddrSpace *as) {
 }
 
-void __am_get_cur_as(Context *c) {
+// Store reg `satp` into saving context `c`
+void __am_get_cur_as(Context* c) {
   c->pdir = (vme_enable ? (void *)get_satp() : NULL);
 }
 
+// Reload reg `satp` with on-going context `c`
 void __am_switch(Context *c) {
   if (vme_enable && c->pdir != NULL) {
     set_satp(c->pdir);
@@ -113,8 +115,13 @@ void __am_switch(Context *c) {
  * Allocate an page table entry in `prot` privilege, which maps the page where the address `va`(in address space`as`) locates with the physical page where the address `pa` locates.
 */
 void map(AddrSpace* as, void* va, void* pa, int prot) {
+	// printf("va[%p]-->pa[%p]\n", va, pa);
 	uintptr_t va_trans = (uintptr_t)va;
 	uintptr_t pa_trans = (uintptr_t)pa;
+
+	// Prot sanity check and mapping
+	assert(prot < 0x8);
+	prot = prot << 1;
 
 	// Va and pa should be the start of a page.
 	assert(PA_OFFSET(pa_trans) == 0);
@@ -138,7 +145,7 @@ void map(AddrSpace* as, void* va, void* pa, int prot) {
 		// Seek the level-2 PTE
 		PTE* page_table_target = page_table_base + vpn_2;
 		// Fill the level-2 PTE with physical page number and flags
-		*page_table_target = (ppn << 12) | PTE_V | PTE_R | PTE_W | PTE_X;
+        *page_table_target = (ppn << 12) | PTE_V | (uint32_t)prot;
 	}
 	else {
 		// Get the level-2 page table base address
@@ -146,7 +153,7 @@ void map(AddrSpace* as, void* va, void* pa, int prot) {
 		// Seek the level-2 PTE
 		PTE* page_table_target = page_table_base + vpn_2;
 		// Fill the level-2 PTE with physical page number and flags
-		*page_table_target = (ppn << 12) | PTE_V | PTE_R | PTE_W | PTE_X;
+        *page_table_target = (ppn << 12) | PTE_V | (uint32_t)prot;
 	}
 	// if ((((uint32_t)va)&(0xfffff000)) == 0x807f0000)
 	// {printf("Mapped va[%p] with pa[%p]\n", va, pa);}
@@ -160,5 +167,6 @@ void map(AddrSpace* as, void* va, void* pa, int prot) {
 Context* ucontext(AddrSpace* as, Area kstack, void* entry) {
 	Context* cp = (Context*)(kstack.end - sizeof(Context));
 	cp->mepc = (uintptr_t)entry - 4;
+	cp->pdir = as->ptr;
 	return cp;
 }

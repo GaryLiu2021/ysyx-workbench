@@ -90,8 +90,8 @@ size_t fs_read(int fd, void* buf, size_t len) {
     else {
         // Should not over bound
         BOUND_MAX(len, FILE_END - FILE_CUR_OFF + 1);
-		printf("reading file[%d] %d bytes from %p into %p\n", fd, len, FILE_CUR_OFF, buf);
 		int ramdisk_read_length = ramdisk_read(buf, FILE_CUR_OFF, len);
+		printf("reading file[%d] %d bytes from %p into %p\n", fd, ramdisk_read_length, FILE_CUR_OFF, buf);
 		fs_lseek(fd, ramdisk_read_length, SEEK_CUR);
 		return ramdisk_read_length;
 	}

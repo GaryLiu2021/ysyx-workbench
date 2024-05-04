@@ -23,11 +23,12 @@ void init_proc() {
 
 	Log("Initializing processes...");
 
-	context_kload(&pcb[0], hello_fun, "h0");
+	// context_kload(&pcb[0], hello_fun, "h0");
     char* argv[] = { NULL };
     char* envp[] = { NULL };
-	context_uload(&pcb[1], "/bin/nterm", argv, envp);
+	// context_uload(&pcb[1], "/bin/nterm", argv, envp);
 	switch_boot_pcb();
+	context_uload(&pcb[0], "/bin/dummy", argv, envp);
 
   // load program here
   // naive_uload(NULL, "/bin/nterm");
@@ -36,9 +37,12 @@ void init_proc() {
 Context* schedule(Context* prev) {
 	PCB* tmp = current;
 	current->cp = prev;
-    current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-    Log("Switching from %p to %p...", tmp, current);
-    return current->cp;
+	// current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+	current = &pcb[0];
+	Log("Switching from %p to %p...", tmp, current);
+	Log("Reloading context from %p...", current->cp);
+	// Log("Stack pointer going to %p", current->cp->gpr[10]);
+	return current->cp;
 }
 
 void context_kload(PCB* p, void (*entry)(void*), void* arg) {
@@ -46,8 +50,11 @@ void context_kload(PCB* p, void (*entry)(void*), void* arg) {
 }
 
 int context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]) {
-	uintptr_t entry = naive_uload(p, filename);
-	if (entry == (uintptr_t)NULL)
+    // Create an address space and also a page table(a new map) for this UP
+    protect(&p->as);
+
+    uintptr_t entry = naive_uload(p, filename);
+    if (entry == (uintptr_t)NULL)
 		return -1;
 
 	int argc = 0, envc = 0;
@@ -88,10 +95,19 @@ int context_uload(PCB* p, const char* filename, char* const argv[], char* const 
 	|      argc     |
 	+---------------+ <---- cp->GPRx
 	|               |
-	*/
-	#define NR_PAGE 8
-	char* us1 = (char*)new_page(NR_PAGE); // Allocate 32KB for user stack
-	printf("kernel stack: [%p - %p], user stack: [%p - %p]\n", p + 1, p, us1, us1 - NR_PAGE * 4096);
+    */
+
+    /**
+     * Allocate user stack for this UP
+    */
+#define NR_PAGE 8
+	char* us1 = (char*)new_page(NR_PAGE); // 32KB for user stack
+	AddrSpace* uas = &p->as;
+	for (int i = 1;i <= NR_PAGE;i++) {
+		map(uas, (char*)uas->area.end - i * PGSIZE, us1 - i * PGSIZE, PROT_R | PROT_W);
+		Log("Mapping user stack: %p(vaddr)-->%p(paddr)", uas->area.end - i * PGSIZE, us1 - i * PGSIZE);
+	}
+	Log("kernel stack: [%p - %p], user stack: [%p - %p]\n", p + 1, p, us1, us1 - NR_PAGE * PGSIZE);
 	char* us_tmp = us1;
 	// clone argv
 	for (int i = 0; i < argc; i++) {

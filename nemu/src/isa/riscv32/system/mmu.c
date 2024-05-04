@@ -51,7 +51,13 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	// check(page_dir_entry);
 
 	// Should be valid
-	assert(PTE_V(page_dir_entry));
+	Assert(PTE_V(page_dir_entry),
+		"Segmentation Fault: Unreachable page!\n"
+		"VADDR=%x\n"
+		"PAGE DIR BASE = %p\n"
+		"PAGE DIR TARGET = %p\n"
+		"PAGE DIR ENTRY = %x\n",
+		vaddr, page_dir_base, page_dir_target, page_dir_entry);
 
 	PTE_Ptr page_table_base = (PTE_Ptr)(uintptr_t)(PTE_PPN(page_dir_entry) << 12);
 	PTE_Ptr page_table_target = page_table_base + vpn_2;
@@ -61,7 +67,13 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	// check(page_table_entry);
 
 	// Should be valid
-	assert(PTE_V(page_table_entry));
+	Assert(PTE_V(page_table_entry),
+		"Segmentation Fault: Unreachable page!\n"
+		"VADDR=%x\n"
+		"PAGE TABLE BASE = %p\n"
+		"PAGE TABLE TARGET = %p\n"
+		"PAGE TABLE ENTRY = %x\n",
+		vaddr, page_table_base, page_table_target, page_table_entry);
 
 	// Access type sanity check
 	switch (type) {
@@ -74,9 +86,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	// Calculate physical address
 	paddr_t ppn = PTE_PPN(page_table_entry) << 12;
 	paddr_t paddr = ppn | offset;
-
-	// For now, we use identical map
-	assert(paddr == vaddr);
 	
 	return paddr;
 }

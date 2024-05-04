@@ -5,6 +5,9 @@
 
 #ifndef PGSIZE
 #define PGSIZE 4096
+
+#define PG_NUM(x) ((uint32_t)(x) & 0xFFFFF000)
+#define PG_OFF(x) ((uint32_t)(x) & 0x00000FFF)
 #endif
 
 #define PG_ALIGN __attribute((aligned(PGSIZE)))

@@ -23,12 +23,12 @@ void init_proc() {
 
 	Log("Initializing processes...");
 
-	// context_kload(&pcb[0], hello_fun, "h0");
+	context_kload(&pcb[0], hello_fun, "h0");
     char* argv[] = { NULL };
-    char* envp[] = { NULL };
-	// context_uload(&pcb[1], "/bin/nterm", argv, envp);
+	char* envp[] = { "/bin:/usr/bin", NULL };
+	context_uload(&pcb[1], "/bin/nterm", argv, envp);
 	switch_boot_pcb();
-	context_uload(&pcb[0], "/bin/dummy", argv, envp);
+	// context_uload(&pcb[0], "/bin/dummy", argv, envp);
 
   // load program here
   // naive_uload(NULL, "/bin/nterm");
@@ -37,16 +37,14 @@ void init_proc() {
 Context* schedule(Context* prev) {
 	PCB* tmp = current;
 	current->cp = prev;
-	// current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-	current = &pcb[0];
+	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 	Log("Switching from %p to %p...", tmp, current);
 	Log("Reloading context from %p...", current->cp);
-	// Log("Stack pointer going to %p", current->cp->gpr[10]);
 	return current->cp;
 }
 
 void context_kload(PCB* p, void (*entry)(void*), void* arg) {
-	p->cp = kcontext((Area) { p->stack, p + 1 }, hello_fun, arg);
+	p->cp = kcontext((Area) { p->stack, p + 1 }, entry, arg);
 }
 
 int context_uload(PCB* p, const char* filename, char* const argv[], char* const envp[]) {

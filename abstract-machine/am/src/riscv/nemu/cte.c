@@ -56,6 +56,7 @@ Context* kcontext(Area kstack, void (*entry)(void*), void* arg) {
 	cp->mepc = (uintptr_t)entry - 4;
 	cp->mstatus = 0x1800; // For difftest
 	cp->gpr[10] = (uintptr_t)(arg);
+	cp->pdir = NULL; // CTE will check out this NULL ptr, and won't exchange pdir.
 	return cp;
 }
 

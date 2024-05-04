@@ -46,7 +46,7 @@ static uintptr_t loader(PCB* pcb, const char* filename) {
 					map(&pcb->as, (void*)(phdr[i].p_vaddr + pg), (void*)(start + pg), PROT_RWX);
 			}
 			else {
-				int nr_page = (phdr[i].p_memsz + PGSIZE - 1) / PGSIZE + 1;
+				int nr_page = (phdr[i].p_memsz + PGSIZE - 1) / PGSIZE + (PG_OFF(phdr[i].p_vaddr) + PG_OFF(phdr[i].p_memsz) > PGSIZE);
 				char* end = new_page(nr_page);
 				char* start = end - nr_page * PGSIZE;
 				memset(start, 0, nr_page * PGSIZE);

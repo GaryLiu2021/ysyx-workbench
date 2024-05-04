@@ -32,7 +32,7 @@ void do_syscall(Context* c) {
 	switch (a[0]) {
 	case SYS_exit: {
 		Log("[Nanos-lite]: Doing syscall _exit(%d)...", c->GPR2);
-		halt(0);
+		// halt(0);
 		char* const argv[] = { NULL };
         char* const envp[] = { "/bin:/usr/bin", NULL };
 		SYS_RETURN(sys_execve("/bin/nterm", argv, envp));

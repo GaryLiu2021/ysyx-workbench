@@ -36,6 +36,7 @@ static uintptr_t loader(PCB* pcb, const char* filename) {
     for (int i = 0; i < ehdr.e_phnum; i++) {
         if (phdr[i].p_type == PT_LOAD) {
 			fs_lseek(fd, phdr[i].p_offset, SEEK_SET);
+			// printf("Start %p, End %p\n", phdr[i].p_vaddr, phdr[i].p_vaddr + phdr[i].p_memsz);
 			if (!PG_OFF(phdr[i].p_vaddr)) {
 				int nr_page = (phdr[i].p_memsz + PGSIZE - 1) / PGSIZE;
 				char* end = new_page(nr_page);
@@ -54,6 +55,8 @@ static uintptr_t loader(PCB* pcb, const char* filename) {
 				for (int pg = 0;pg < nr_page * PGSIZE;pg += PGSIZE)
 					map(&pcb->as, (void*)(PG_NUM(phdr[i].p_vaddr) + pg), (void*)(start + pg), PROT_RWX);
 			}
+			pcb->max_brk = phdr[i].p_vaddr + phdr[i].p_memsz - 1;
+			printf("BRK now %p\n", pcb->max_brk);
 		}
 	}
 

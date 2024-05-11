@@ -28,8 +28,9 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 		break;
 	case MMU_FAIL:
 		assert(0);
-	}
-	return paddr_read(paddr, len);
+    }
+    // log_write("Mtrace: ifetching 0x%x, len=%d\n", addr, len);
+    return paddr_read(paddr, len);
 }
 
 word_t vaddr_read(vaddr_t addr, int len) {
@@ -44,8 +45,12 @@ word_t vaddr_read(vaddr_t addr, int len) {
 		break;
 	case MMU_FAIL:
 		assert(0);
-	}
-	return paddr_read(paddr, len);
+    }
+    word_t data = paddr_read(paddr, len);
+    // log_write("Mtrace: reading 0x%08x, paddr=0x%x, len=%d, data=%08x\n", addr, paddr, len, data);
+    return data;
+    // log_write("Mtrace: reading 0x%x, len=%d\n", addr, len);
+    // return paddr_read(paddr, len);
 }
 
 void vaddr_write(vaddr_t addr, int len, word_t data) {
@@ -60,6 +65,7 @@ void vaddr_write(vaddr_t addr, int len, word_t data) {
 		break;
 	case MMU_FAIL:
 		assert(0);
-	}
-	paddr_write(paddr, len, data);
+    }
+    // log_write("Mtrace: writing 0x%x, paddr=0x%x, len=%d, data=%x\n", addr, paddr, len, data);
+    paddr_write(paddr, len, data);
 }

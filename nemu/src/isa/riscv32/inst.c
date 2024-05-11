@@ -186,5 +186,9 @@ static int decode_exec(Decode* s) {
 
 int isa_exec_once(Decode* s) {
 	s->isa.inst.val = inst_fetch(&s->snpc, 4);
+    // // Trace user process
+	// if (s->pc < 0x80000000 && s->pc>0x40000000) {
+	// 	log_write("PC=0x%x, Inst=%08x\n", s->pc, s->isa.inst.val);
+	// }
 	return decode_exec(s);
 }

@@ -27,21 +27,24 @@ void free_page(void *p) {
 int mm_brk(intptr_t increment) {
 	// If brk requested is lower than max_brk, it means to free
 	if (increment < 0) {
-		panic("Heap free not implemented!");
-	}
+        // panic("Heap free not implemented!");
+        return 0;
+    }
 
 	// If brk requested is larger than max_brk, it means to allocate
 	if (increment > 0) {
-		int nr_page = (PG_NUM(current->max_brk + increment) - PG_NUM(current->max_brk)) >> 12;
+		uintptr_t new_brk = current->max_brk + increment;
+		int nr_page = (PG_NUM(new_brk) - PG_NUM(current->max_brk)) >> 12;
 		assert(nr_page >= 0);
-		printf("Incre=%d, %p->%p, nr_page=%d\n", increment, current->max_brk, current->max_brk + increment, nr_page);
+		// printf("Incre=%d, %p->%p, nr_page=%d\n", increment, current->max_brk, new_brk, nr_page);
+		
 		if (nr_page) {
-			void* start = pg_alloc(nr_page);
+            void* start = pg_alloc(nr_page * PGSIZE); // Bug: pg_alloc should recv nbytes but not npage.
 			do {
 				map(&current->as, (void*)PG_NUM(current->max_brk) + nr_page * PGSIZE, start + (nr_page - 1) * PGSIZE, PROT_RWX);
 			} while (--nr_page);
 		}
-		current->max_brk += increment;
+		current->max_brk = new_brk;
 		return 0;
 	}
 

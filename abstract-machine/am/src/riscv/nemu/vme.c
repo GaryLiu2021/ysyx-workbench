@@ -40,10 +40,10 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
-    void *va = segments[i].start;
-    for (; va < segments[i].end; va += PGSIZE) {
-      map(&kas, va, va, 0x7);
-    }
+	void *va = segments[i].start;
+	for (; va < segments[i].end; va += PGSIZE) {
+	  map(&kas, va, va, 0x7);
+	}
   }
 
   set_satp(kas.ptr);
@@ -72,7 +72,7 @@ void __am_get_cur_as(Context* c) {
 // Reload reg `satp` with on-going context `c`
 void __am_switch(Context *c) {
   if (vme_enable && c->pdir != NULL) {
-    set_satp(c->pdir);
+	set_satp(c->pdir);
   }
 }
 
@@ -115,7 +115,9 @@ void __am_switch(Context *c) {
  * Allocate an page table entry in `prot` privilege, which maps the page where the address `va`(in address space`as`) locates with the physical page where the address `pa` locates.
 */
 void map(AddrSpace* as, void* va, void* pa, int prot) {
-	// printf("va[%p]-->pa[%p]\n", va, pa);
+	// // Check user space mapping
+	// if ((uintptr_t)va < 0x80000000)
+	// 	printf("va[%p]-->pa[%p]\n", va, pa);
 	uintptr_t va_trans = (uintptr_t)va;
 	uintptr_t pa_trans = (uintptr_t)pa;
 
@@ -145,7 +147,7 @@ void map(AddrSpace* as, void* va, void* pa, int prot) {
 		// Seek the level-2 PTE
 		PTE* page_table_target = page_table_base + vpn_2;
 		// Fill the level-2 PTE with physical page number and flags
-        *page_table_target = (ppn << 12) | PTE_V | (uint32_t)prot;
+		*page_table_target = (ppn << 12) | PTE_V | (uint32_t)prot;
 	}
 	else {
 		// Get the level-2 page table base address
@@ -153,7 +155,7 @@ void map(AddrSpace* as, void* va, void* pa, int prot) {
 		// Seek the level-2 PTE
 		PTE* page_table_target = page_table_base + vpn_2;
 		// Fill the level-2 PTE with physical page number and flags
-        *page_table_target = (ppn << 12) | PTE_V | (uint32_t)prot;
+		*page_table_target = (ppn << 12) | PTE_V | (uint32_t)prot;
 	}
 	// if ((((uint32_t)va)&(0xfffff000)) == 0x807f0000)
 	// {printf("Mapped va[%p] with pa[%p]\n", va, pa);}

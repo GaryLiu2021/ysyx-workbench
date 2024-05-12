@@ -83,7 +83,7 @@ static int decode_exec(Decode* s) {
 		{branch_cnt=0;} 
 
 	// #define ECALL(dnpc) { bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc)); }
-#define ECALL(dnpc) {bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc));} //Log(ANSI_FMT("ETRACE: expection called @ 0x%08x, going to 0x%08x...",ANSI_FG_BLUE),s->pc,dnpc);} // Note that mcause in qemu may be 0xb forever.
+#define ECALL(dnpc) {bool success; dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->snpc));} //Log(ANSI_FMT("ETRACE: expection called @ 0x%08x, going to 0x%08x...",ANSI_FG_BLUE),s->pc,dnpc);} // Note that mcause in qemu may be 0xb forever.
 #define CSR(i) *get_csr_register(i)
     extern void restore_intr();
 
@@ -142,7 +142,7 @@ static int decode_exec(Decode* s) {
 	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw, I, R(rd) = CSR(imm); CSR(imm) = src1);
 	INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs, I, R(rd) = CSR(imm); CSR(imm) |= src1);
 	INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall, I, ECALL(s->dnpc));
-    INSTPAT("0011000 00010 00000 000 00000 11100 11", mret, I, restore_intr(); s->dnpc = cpu.csr.mepc + 4;);
+    INSTPAT("0011000 00010 00000 000 00000 11100 11", mret, I, restore_intr(); s->dnpc = cpu.csr.mepc);
 
 
 	// S

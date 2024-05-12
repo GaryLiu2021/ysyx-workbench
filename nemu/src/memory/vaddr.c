@@ -29,8 +29,13 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 	case MMU_FAIL:
 		assert(0);
     }
-    // log_write("Mtrace: ifetching 0x%x, len=%d\n", addr, len);
+#ifdef CONFIG_MTRACE
+    word_t data = paddr_read(paddr, len);
+    log_write("Mtrace: PC = 0x%x, inst=%08x, len=%d\n", addr, data, len);
+    return data;
+#else
     return paddr_read(paddr, len);
+#endif
 }
 
 word_t vaddr_read(vaddr_t addr, int len) {
@@ -46,11 +51,13 @@ word_t vaddr_read(vaddr_t addr, int len) {
 	case MMU_FAIL:
 		assert(0);
     }
+#ifdef CONFIG_MTRACE
     word_t data = paddr_read(paddr, len);
-    // log_write("Mtrace: reading 0x%08x, paddr=0x%x, len=%d, data=%08x\n", addr, paddr, len, data);
+    log_write("Mtrace: reading 0x%08x, paddr=0x%x, len=%d, data=%08x\n", addr, paddr, len, data);
     return data;
-    // log_write("Mtrace: reading 0x%x, len=%d\n", addr, len);
-    // return paddr_read(paddr, len);
+#else
+    return paddr_read(paddr, len);
+#endif
 }
 
 void vaddr_write(vaddr_t addr, int len, word_t data) {
@@ -66,6 +73,8 @@ void vaddr_write(vaddr_t addr, int len, word_t data) {
 	case MMU_FAIL:
 		assert(0);
     }
-    // log_write("Mtrace: writing 0x%x, paddr=0x%x, len=%d, data=%x\n", addr, paddr, len, data);
+#ifdef CONFIG_MTRACE
+    log_write("Mtrace: writing 0x%x, paddr=0x%x, len=%d, data=%x\n", addr, paddr, len, data);
+#endif
     paddr_write(paddr, len, data);
 }

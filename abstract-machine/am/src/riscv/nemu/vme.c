@@ -171,7 +171,7 @@ Context* ucontext(AddrSpace* as, Area kstack, void* entry) {
 	Context* cp = (Context*)(kstack.end - sizeof(Context));
 
 	// Set the mepc with entry-4, so that CPU can jump to user process after mret
-	cp->mepc = (uintptr_t)entry - 4;
+	cp->mepc = (uintptr_t)entry;
 
 	// Set the user process's pdir with current PCB's AddrSpace
 	cp->pdir = as->ptr;

@@ -20,7 +20,9 @@ static Context* do_event(Event e, Context* c) {
 		panic("Event Error happened!");
 		break;
 	case(EVENT_IRQ_TIMER): {
-		break;
+		Log("[Nanos-lite]: %s recv EVENT_IRQ_TIMER", cur_cmd);
+		c = schedule(c);
+        break;
 	}
 	case(EVENT_IRQ_IODEV): {
 		panic("Not implemented");

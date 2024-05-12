@@ -16,11 +16,13 @@ Context* __am_irq_handle(Context* c) {
 
 	if (user_handler) {
 		Event ev = { 0 };
-		if (c->mcause == -1)
-			ev.event = EVENT_YIELD;
-		else if (c->mcause < 20)
-			ev.event = EVENT_SYSCALL;
-		else
+        if (c->mcause == -1)
+            ev.event = EVENT_YIELD;
+        else if (c->mcause < 20)
+            ev.event = EVENT_SYSCALL;
+        else if (c->mcause == 0x80000007)
+            ev.event = EVENT_IRQ_TIMER;
+        else
 			ev.event = EVENT_ERROR;
 
 		c = user_handler(ev, c);
@@ -55,8 +57,15 @@ Context* kcontext(Area kstack, void (*entry)(void*), void* arg) {
 	Context* cp = (Context*)(kstack.end - sizeof(Context));
 	cp->mepc = (uintptr_t)entry - 4;
 	cp->mstatus = 0x1800; // For difftest
+
+	// Enable hardware intr
+	cp->mstatus = (cp->mstatus & ~MPIE_MASKBIT) | (0x1 << MPIE_OFFSET);
+
+	// Pass the args due to ABI appointment(a0 is the first arg).
 	cp->gpr[10] = (uintptr_t)(arg);
-	cp->pdir = NULL; // CTE will check out this NULL ptr, and won't exchange pdir.
+
+	// CTE will check out this NULL ptr, and won't exchange pdir.
+	cp->pdir = NULL;
 	return cp;
 }
 

@@ -26,10 +26,16 @@ typedef struct {
 	word_t satp; // For VME
 }riscv32_CSRs;
 
+#define MIE_OFFSET 3
+#define MPIE_OFFSET 7
+#define MIE_MASKBIT (1<<MIE_OFFSET)
+#define MPIE_MASKBIT (1<<MPIE_OFFSET)
+
 typedef struct {
   word_t gpr[32];
   vaddr_t pc;
   riscv32_CSRs csr;
+  bool INTR;
 } riscv32_CPU_state;
 
 // decode

@@ -17,6 +17,7 @@ typedef union {
 } PCB;
 
 extern PCB* current;
+extern char* cur_cmd;
 
 uintptr_t naive_uload(PCB* pcb, const char* filename);
 

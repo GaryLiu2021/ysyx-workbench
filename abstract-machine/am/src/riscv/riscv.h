@@ -19,6 +19,11 @@ static inline void outl(uintptr_t addr, uint32_t data) { *(volatile uint32_t *)a
 #define PTE_A 0x40
 #define PTE_D 0x80
 
+#define MIE_OFFSET 3
+#define MPIE_OFFSET 7
+#define MIE_MASKBIT (1<<MIE_OFFSET)
+#define MPIE_MASKBIT (1<<MPIE_OFFSET)
+
 enum { MODE_U, MODE_S, MODE_M = 3 };
 #define MSTATUS_MXR  (1 << 19)
 #define MSTATUS_SUM  (1 << 18)

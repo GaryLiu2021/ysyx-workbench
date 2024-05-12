@@ -3,8 +3,10 @@
 #define MAX_NR_PROC 4
 
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
+static char cmd[MAX_NR_PROC][32] = {};
 static PCB pcb_boot = {};
 PCB* current = NULL;
+char* cur_cmd = "boot";
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -24,22 +26,42 @@ void init_proc() {
 	Log("Initializing processes...");
 
 	context_kload(&pcb[0], hello_fun, "h0");
-    char* argv[] = { NULL };
+	strcpy(cmd[0], "hello_fun");
+	char* argv[] = { NULL };
 	char* envp[] = { "/bin:/usr/bin", NULL };
 	context_uload(&pcb[1], "/bin/nterm", argv, envp);
+	strcpy(cmd[1], "/bin/nterm");
 	switch_boot_pcb();
 	// context_uload(&pcb[0], "/bin/dummy", argv, envp);
 
   // load program here
   // naive_uload(NULL, "/bin/nterm");
 }
+uintptr_t gpr[32], mcause, mstatus, mepc;
+void* pdir;
+
+void printCtx(Context* ctx) {
+	for (int i = 0;i < 32;i++)
+		printf("[%d]=%x,", i, ctx->gpr[i]);
+	printf("\n");
+	printf("mcause=%x\n", ctx->mcause);
+	printf("mstatus=%x\n", ctx->mstatus);
+	printf("mepc=%x\n", ctx->mepc);
+	printf("pdir=%p\n", ctx->pdir);
+}
+
 
 Context* schedule(Context* prev) {
-	PCB* tmp = current;
+	// PCB* prev_pcb = current;
+	char* prev_cmd = cur_cmd;
 	current->cp = prev;
+	Log("Saving context at %p...", current->cp);
+	// printCtx(prev);
 	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-	Log("Switching from %p to %p...", tmp, current);
+	cur_cmd = (void*)((void*)cur_cmd == &cmd[0] ? &cmd[1] : &cmd[0]);
+	Log("Switching from %s to %s...", prev_cmd, cur_cmd);
 	Log("Reloading context from %p...", current->cp);
+	// printCtx(current->cp);
 	return current->cp;
 }
 
@@ -142,7 +164,7 @@ int context_uload(PCB* p, const char* filename, char* const argv[], char* const 
 
 	// Allocate context for new user process
 	p->cp = ucontext(&p->as, (Area) { p->stack, p + 1 }, (void*)entry);
-	// Pass the argument to user
+	// Pass the argument to user, meanwhile tell the crt0 this user's stack location.
 	p->cp->GPRx = (uintptr_t)us2;
 
 	return 0;

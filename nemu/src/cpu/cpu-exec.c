@@ -101,8 +101,14 @@ static void execute(uint64_t n) {
 		g_nr_guest_inst++;
 		trace_and_difftest(&s, cpu.pc);
 		if (nemu_state.state != NEMU_RUNNING) break;
-		IFDEF(CONFIG_DEVICE, device_update());
-	}
+        IFDEF(CONFIG_DEVICE, device_update());
+
+        // Poll for the INTR to check interupt
+        word_t intr = isa_query_intr();
+        if (intr != INTR_EMPTY) {
+            cpu.pc = isa_raise_intr(intr, cpu.pc);
+        }
+    }
 }
 
 static void statistic() {

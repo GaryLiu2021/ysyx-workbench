@@ -25,15 +25,18 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(intptr_t increment) {
-	// If brk requested is lower than max_brk, it means to free
+
+    uintptr_t new_brk = current->max_brk + increment;
+    
+    // If brk requested is lower than max_brk, it means to free
 	if (increment < 0) {
         // panic("Heap free not implemented!");
+        current->max_brk = new_brk;
         return 0;
     }
 
 	// If brk requested is larger than max_brk, it means to allocate
 	if (increment > 0) {
-		uintptr_t new_brk = current->max_brk + increment;
 		int nr_page = (PG_NUM(new_brk) - PG_NUM(current->max_brk)) >> 12;
 		assert(nr_page >= 0);
 		// printf("Incre=%d, %p->%p, nr_page=%d\n", increment, current->max_brk, new_brk, nr_page);

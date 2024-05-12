@@ -56,7 +56,7 @@ static uintptr_t loader(PCB* pcb, const char* filename) {
 					map(&pcb->as, (void*)(PG_NUM(phdr[i].p_vaddr) + pg), (void*)(start + pg), PROT_RWX);
 			}
 			pcb->max_brk = phdr[i].p_vaddr + phdr[i].p_memsz - 1;
-			printf("BRK now %p\n", pcb->max_brk);
+			// printf("BRK now %p\n", pcb->max_brk);
 		}
 	}
 

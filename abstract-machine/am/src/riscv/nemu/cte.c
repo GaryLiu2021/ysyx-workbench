@@ -66,6 +66,13 @@ Context* kcontext(Area kstack, void (*entry)(void*), void* arg) {
 
 	// CTE will check out this NULL ptr, and won't exchange pdir.
 	cp->pdir = NULL;
+
+	// Set np 0
+	cp->np = P_KERNEL;
+
+	// Set sp
+	cp->gpr[sp] = (uintptr_t)kstack.end;
+
 	return cp;
 }
 

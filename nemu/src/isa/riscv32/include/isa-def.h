@@ -23,7 +23,8 @@ typedef struct {
 	vaddr_t mepc;
 	word_t mstatus;
 	word_t mtvec;
-	word_t satp; // For VME
+	word_t satp; 		// Record page table base address
+	word_t mscratch;	// Record kstack for user process
 }riscv32_CSRs;
 
 #define MIE_OFFSET 3

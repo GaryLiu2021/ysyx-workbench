@@ -178,5 +178,9 @@ Context* ucontext(AddrSpace* as, Area kstack, void* entry) {
 
 	// Enable the hardware intr
 	cp->mstatus = (cp->mstatus & ~MPIE_MASKBIT) | (0x1 << MPIE_OFFSET);
+
+	// Set np
+	cp->np = P_USER;
+
 	return cp;
 }
